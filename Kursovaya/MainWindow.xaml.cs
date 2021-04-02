@@ -1,0 +1,81 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using Kursovaya.Plot;
+using Frame = Kursovaya.Plot.Frame;
+
+namespace Kursovaya
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+        //Загрузить файл конфигурации
+        //Загрузить необходимые ресурсы
+        //Установить первый фрейм
+        //При определенных действиях установить следующий фрейм
+        
+        Frame[] CreateTestFrames()
+        {
+            Frame[] frames;
+            frames = new Frame[3];
+            ImageInfo[] imagesInfo = new ImageInfo[3];
+            
+            imagesInfo[0] = new ImageInfo("Monika", "Default.png", new Position(0, 0, 0));
+            imagesInfo[1] = new ImageInfo("lilly", "lilly_back_devious.png", new Position(100, 0, 0));
+            imagesInfo[2] = new ImageInfo("Background", "Class1.png", new Position(0, 0, -1));
+            frames[0] = new Frame(imagesInfo, "", "This is the first");
+
+            imagesInfo[0] = new ImageInfo("Monika", "Default.png", new Position(0, 0, 0));
+            imagesInfo[1] = new ImageInfo("lilly", "lilly_back_devious.png", new Position(300, 0, 0));
+            imagesInfo[2] = new ImageInfo("Background", "Class1.png", new Position(0, 0, -1));
+            frames[1] = new Frame(imagesInfo, "", "This is the second");
+
+            imagesInfo[0] = new ImageInfo("Monika", "Flirty.png", new Position(-300, 0, 0));
+            imagesInfo[1] = new ImageInfo("lilly", "lilly_back_devious.png", new Position(0, 0, 0));
+            imagesInfo[2] = new ImageInfo("Background", "Class1.png", new Position(0, 0, -1));
+            frames[2] = new Frame(imagesInfo, "", "This is the third");
+
+            return frames;
+
+        }
+
+        Scene CreateTestScene()
+        {
+            Dictionary<string, string[]> usedSprites = new Dictionary<string, string[]>();
+            usedSprites.Add("Monika", new string[] { "Default.png", "Flirty.png" });
+            usedSprites.Add("lilly", new string[] { "lilly_back_devious.png" });
+            usedSprites.Add("Background", new string[] { "Class1.png", "Class2.png"});
+
+            Scene scene = new Scene("First Scene",
+                CreateTestFrames(),
+                usedSprites
+                );
+            return scene;
+        }
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Scene scene = CreateTestScene();
+            
+
+        }
+    }
+}
