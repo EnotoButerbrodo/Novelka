@@ -7,6 +7,7 @@ using Kursovaya.Plot;
 using Frame = Kursovaya.Plot.Frame;
 using Kursovaya.Converters;
 using System.Windows.Media.Imaging;
+using Kursovaya.FileLoader;
 
 namespace Kursovaya.Playback.ResourcesControl
 {
@@ -15,9 +16,9 @@ namespace Kursovaya.Playback.ResourcesControl
      * */
     public class Setuper
     {
-        Loader loader;
+        IFileLoader loader;
         IFormanConverter converter;
-        public Setuper(Loader loader, IFormanConverter converter)
+        public Setuper(IFileLoader loader, IFormanConverter converter)
         {
             this.loader = loader;
             this.converter = converter;
