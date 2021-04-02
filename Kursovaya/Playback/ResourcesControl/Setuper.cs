@@ -5,16 +5,26 @@ using System.Windows.Controls;
 using Kursovaya.Stage;
 using Kursovaya.Plot;
 using Frame = Kursovaya.Plot.Frame;
+using Kursovaya.Converters;
+using System.Windows.Media.Imaging;
 
 namespace Kursovaya.Playback.ResourcesControl
 {
     /*
      * Цели - подготовить загруженные ресурсы, правильно их сохранить, управление доступом к ним
      * */
-    public static class SetupManager
+    public class Setuper
     {
+        Loader loader;
+        IFormanConverter converter;
+        public Setuper(Loader loader, IFormanConverter converter)
+        {
+            this.loader = loader;
+            this.converter = converter;
+        }
+
         const string ResourcesPath = "../../Resources.zip";
-        public static void SetupUsedImages(Dictionary<string, string[]> usedImages, Canvas stage)
+        public void SetupUsedImages(Dictionary<string, string[]> usedImages, Canvas stage)
         {
             StageObject stageObject;
             foreach(var stObj in usedImages)
@@ -32,19 +42,20 @@ namespace Kursovaya.Playback.ResourcesControl
                 {
                     if (!stageObject.IsSpriteInCollection(image))
                     {
-                        var loadedImage = ResourceLoader.GetImage(ResourcesPath,
-                            $"{stObj.Key}\\{image}");
-                        stageObject.AddSprite(image, loadedImage);
+                        var loadedData = loader.LoadFile(ResourcesPath,
+                            $"{stObj.Key}\\{image}");  
+                        stageObject.AddSprite(image,
+                            converter.ToBitmapImage(loadedData));
                     }
                 }    
             }
         }
 
-        public static void SetupFrameImages(Frame frame)
+        public void SetupFrameImages(Frame frame)
         {
             SetupAppearance(frame.imagesInfo);
         }
-        static void LoadSceneResources(Dictionary<string, string[]> usedImages)
+        void LoadSceneResources(Dictionary<string, string[]> usedImages)
         {
             foreach(var stageObject in usedImages)
             {
@@ -54,8 +65,7 @@ namespace Kursovaya.Playback.ResourcesControl
                 }
             }
         }
-
-        static void SetupAppearance(ImageInfo[] imageInfos)
+        void SetupAppearance(ImageInfo[] imageInfos)
         {
             foreach(ImageInfo info in imageInfos)
             {

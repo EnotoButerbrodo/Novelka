@@ -11,16 +11,13 @@ namespace Kursovaya.Playback
      * Подготовка нудного фрейма и его отображение
       */
 
-    public static class PlayManager
+    public class Play
     {
-        static Dictionary<string, Image> stageImages;
-
-        static PlayManager()
+        Canvas stage;
+        public Play(Canvas stage)
         {
-            stageImages = new Dictionary<string, Image>();
+            this.stage = stage;
         }
-
-
 
     }
 }
