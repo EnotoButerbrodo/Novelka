@@ -24,23 +24,19 @@ namespace Kursovaya.Stage
         {
             sprites.Add(spriteName, image);
         }
-
         public void AddToStage(Canvas stage)
         {
             stage.Children.Add(appearance);
         }
-
         public void RemoveFromStage(Canvas stage)
         {
             stage.Children.Remove(appearance);
         }
-
         public void RemoveSprite(string spriteName)
         {
             if(IsSpriteInCollection(spriteName))
                 sprites.Remove(spriteName);
         }
-
         public void SetAppearance(string spriteName)
         {
             appearance.Source = sprites[spriteName];
@@ -52,13 +48,9 @@ namespace Kursovaya.Stage
 
         public void Move(Position position)
         {
-            //Canvas.SetLeft(Appearance, position.x);
-            //Canvas.SetBottom(Appearance, position.y);
-            //Canvas.SetZIndex(Appearance, position.z);
             Canvas.SetLeft(appearance, position.x);
             Canvas.SetBottom(appearance, position.y);
             Canvas.SetZIndex(appearance, position.z);
-            //Panel.SetZIndex(Spot, position.z);
         }
     }
 }

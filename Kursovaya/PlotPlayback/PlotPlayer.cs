@@ -11,10 +11,10 @@ namespace Kursovaya.Playback
      * Подготовка нудного фрейма и его отображение
       */
 
-    public class Play
+    public class PlotPlayer
     {
         Canvas stage;
-        public Play(Canvas stage)
+        public PlotPlayer(Canvas stage)
         {
             this.stage = stage;
         }
