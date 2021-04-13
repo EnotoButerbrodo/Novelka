@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Media.Imaging;
-using Kursovaya.Stage;
+using Novelka.Stage;
 
-namespace Kursovaya.Playback.ResourcesControl
+namespace Novelka.Playback.ResourcesControl
 {
     public static class Resources
     {
-
         static Dictionary<string, StageObject> stageObjects = new Dictionary<string, StageObject>();
         static public void AddStageObject(string name, StageObject stageObject)
         {
-             stageObjects.Add(name, stageObject);
+            stageObjects.Add(name, stageObject);
         }
 
         static public bool IsStageObjectInList(string name)
@@ -29,6 +28,8 @@ namespace Kursovaya.Playback.ResourcesControl
         {
             stageObjects.Remove(name);
         }
+
+
 
 
 

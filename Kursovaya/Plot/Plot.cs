@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Kursovaya.Plot
+namespace Novelka.Plot
 {
     //Класс Plot содержит информацию о иерархии всех сцен, условия переходов между сценами.
     public class Plot
     {
-        SceneInfo[] scenesInfo;
+        public SceneInfo[] scenesInfo;
     }
 
-    class JumpTransition
+    public class JumpTransition
     {
-        string varName;
-        string value;
-        string transitionsSceneName;
+        public string varName;
+        public string value;
+        public string transitionsSceneName;
         public JumpTransition(string varName, string value, string transitionsSceneName)
         {
             this.varName = varName;
@@ -23,10 +23,10 @@ namespace Kursovaya.Plot
         }
     }
 
-    class SceneInfo
+    public class SceneInfo
     {
-        string name;
-        JumpTransition[] jumpTransitions;
+        public string name;
+        public JumpTransition[] jumpTransitions;
         public SceneInfo(string sceneName, JumpTransition[] jumpTransitions)
         {
             this.name = sceneName;

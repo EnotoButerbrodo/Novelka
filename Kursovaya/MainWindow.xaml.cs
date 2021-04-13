@@ -12,20 +12,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Kursovaya.Plot;
-using Frame = Kursovaya.Plot.Frame;
+using Novelka.Plot;
+using Frame = Novelka.Plot.Frame;
+using Novelka.Converters;
+using Novelka.FileLoader;
+using Novelka.Playback;
+using Novelka.Playback.ResourcesControl;
 
-namespace Kursovaya
+namespace Novelka
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        static Canvas mainStage;
+        Setuper setuper = new Setuper(new BasicFileLoader(), new BasicFormatConverter(), mainStage);
         public MainWindow()
         {
             InitializeComponent();
+            StageConfig();
         }
         //Игра загружается 
         //Создаются необходимые для работы классы
@@ -88,8 +94,19 @@ namespace Kursovaya
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Scene scene = CreateTestScene();
-            
+            setuper.SetupSceneResources(scene);
 
+            //Я хочу загрузить сцену
+            //Загрузить юзаные ресурсы
+
+
+        }
+        private void StageConfig()
+        {
+            mainStage = new Canvas();
+            MainGrid.Children.Add(mainStage);
+            mainStage.Width = MainGrid.Width;
+            mainStage.Height = MainGrid.Height;
         }
     }
 }

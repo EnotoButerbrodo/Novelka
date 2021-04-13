@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Kursovaya.Plot
+namespace Novelka.Plot
 {
     public class Frame
     {
@@ -22,11 +22,13 @@ namespace Kursovaya.Plot
         public string objectName;
         public string spriteName;
         public Position position;
-        public ImageInfo(string objectName, string spriteName, Position position)
+        public AnimationInfo animationInfo;
+        public ImageInfo(string objectName, string spriteName, Position position, AnimationInfo animationInfo = null)
         {
             this.objectName = objectName;
             this.spriteName = spriteName;
             this.position = position;
+            this.animationInfo = animationInfo;
         }
     }
 
@@ -41,6 +43,12 @@ namespace Kursovaya.Plot
             this.y = y;
             this.z = z;
         } 
+    }
+
+    public class AnimationInfo
+    {
+        public string animationScript;
+        
     }
 
 }

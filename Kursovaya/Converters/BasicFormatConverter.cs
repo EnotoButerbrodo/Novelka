@@ -4,9 +4,9 @@ using System.IO;
 using System.Text;
 using System.Windows.Media.Imaging;
 
-namespace Kursovaya.Converters
+namespace Novelka.Converters
 {
-    public class FormatConverter : IFormanConverter
+    public class BasicFormatConverter : IFormatConverter
     {
         public BitmapImage ToBitmapImage(MemoryStream data)
         {

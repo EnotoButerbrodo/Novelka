@@ -4,17 +4,19 @@ using System.Text;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Kursovaya.Plot;
+using Novelka.Plot;
 
-namespace Kursovaya.Stage
+namespace Novelka.Stage
 {
-    public class StageObject : IStage, IAppearance
+    public class StageObject
     {
-        Dictionary<string, BitmapImage> sprites = new Dictionary<string, BitmapImage>();
-        Image appearance = new Image();
+        protected Dictionary<string, BitmapImage> sprites;
+        protected Image appearance;
 
         public StageObject()
         {
+            sprites = new Dictionary<string, BitmapImage>();
+            appearance = new Image();
             appearance.RenderTransformOrigin = new System.Windows.Point(0.5, 1);
             appearance.Stretch = Stretch.Uniform;
             Canvas.SetLeft(appearance, 0);
@@ -24,7 +26,12 @@ namespace Kursovaya.Stage
         {
             sprites.Add(spriteName, image);
         }
-        public void AddToStage(Canvas stage)
+        public void RemoveSprite(string spriteName)
+        {
+            if(IsSpriteInCollection(spriteName))
+                sprites.Remove(spriteName);
+        }
+        public virtual void AddToStage(Canvas stage)
         {
             stage.Children.Add(appearance);
         }
@@ -32,25 +39,27 @@ namespace Kursovaya.Stage
         {
             stage.Children.Remove(appearance);
         }
-        public void RemoveSprite(string spriteName)
-        {
-            if(IsSpriteInCollection(spriteName))
-                sprites.Remove(spriteName);
-        }
         public void SetAppearance(string spriteName)
         {
             appearance.Source = sprites[spriteName];
         }
-        public bool IsSpriteInCollection(string spriteName)
-        {
-            return sprites.ContainsKey(spriteName);
-        }
-
         public void Move(Position position)
         {
             Canvas.SetLeft(appearance, position.x);
             Canvas.SetBottom(appearance, position.y);
             Canvas.SetZIndex(appearance, position.z);
+        }
+        public bool IsSpriteInCollection(string spriteName)
+        {
+            return sprites.ContainsKey(spriteName);
+        }
+        public void Show()
+        {
+            appearance.Opacity = 1;
+        }
+        public void Hide()
+        {
+            appearance.Opacity = 0;
         }
     }
 }

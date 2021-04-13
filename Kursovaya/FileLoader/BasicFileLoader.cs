@@ -4,9 +4,9 @@ using System.IO;
 using System.Text;
 using Ionic.Zip;
 
-namespace Kursovaya.FileLoader
+namespace Novelka.FileLoader
 {
-    class FileLoader : IFileLoader
+    class BasicFileLoader : IFileLoader
     {
         public MemoryStream LoadFile(string zipPath, string fileFullName)
         {//Чтение любого файла из архива в виде MemoryStream

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Kursovaya.Plot
+namespace Novelka.Plot
 {
     public class Scene
     {
