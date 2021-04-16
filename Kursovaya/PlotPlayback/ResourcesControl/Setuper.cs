@@ -16,10 +16,10 @@ namespace Novelka.Playback.ResourcesControl
      * */
     public class Setuper
     {
-        protected IFileLoader loader;
-        protected IFormatConverter converter;
+        protected FormatConverter converter;
+        protected FileLoader.FileLoader loader;
         Canvas stage;
-        public Setuper(IFileLoader loader, IFormatConverter converter, Canvas stage)
+        public Setuper(FileLoader.FileLoader loader, FormatConverter converter, Canvas stage)
         {
             this.loader = loader;
             this.converter = converter;

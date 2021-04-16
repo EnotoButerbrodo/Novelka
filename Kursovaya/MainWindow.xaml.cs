@@ -27,7 +27,7 @@ namespace Novelka
     public partial class MainWindow : Window
     {
         static Canvas mainStage;
-        Setuper setuper = new Setuper(new BasicFileLoader(), new BasicFormatConverter(), mainStage);
+        Setuper setuper = new Setuper(new FileLoader.FileLoader(), new FormatConverter(), mainStage);
         public MainWindow()
         {
             InitializeComponent();

@@ -1,0 +1,53 @@
+﻿<Window x:Class="NovelkaCreator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NovelkaCreator"
+        mc:Ignorable="d"
+        Title="NovelkaCreator" Height="600" Width="1200">
+    
+    <Grid x:Name="MainGrid">
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*" x:Name="ToolsPart"/>
+            <ColumnDefinition Width="4*" x:Name="MainPart"/>
+            <ColumnDefinition Width="*" x:Name="FunctionsPart"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25px" x:Name="MenuBar"/>
+            <RowDefinition Height="0.25*" x:Name="ToolsBar"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1.5*" x:Name="FramesBar"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="ToolsBarGrid" Grid.Row="1" Grid.ColumnSpan="4" Grid.Column="0" Background="Gray">
+            
+        </Grid>
+        <GridSplitter Width="6" Grid.Column="1" Grid.RowSpan="6" Grid.Row="2" ShowsPreview="True"/>
+        <GridSplitter Width="6" Grid.Column="0" Grid.RowSpan="6" Grid.Row="2" ShowsPreview="True"/>
+        <GridSplitter Grid.Row="3" Grid.Column="1" Height="6" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ShowsPreview="True"/>
+        <TabControl Grid.Row="2" Grid.Column="2" Grid.RowSpan="3">
+            <TabItem Header="Изображения">
+                <Canvas>
+                    <Button x:Name="AddImageButton" Content="Добавить изображение" Click="AddImageButton_Click"
+                            Width="151" Height="25" Canvas.Left="10" Canvas.Top="10"/>
+                </Canvas>   
+            </TabItem>
+        </TabControl>
+        <Image x:Name="PreviuImage" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"/>
+        <Image Grid.Column="1" HorizontalAlignment="Left" Height="100" Margin="485,65,0,0" Grid.Row="3" VerticalAlignment="Top" Width="100"/>
+        <ScrollViewer x:Name="FramesBlockScroll" Grid.Row="4" Grid.Column="1" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
+            <WrapPanel x:Name="FramesBlock" Grid.Row="4" Grid.Column="1">
+            </WrapPanel>
+        </ScrollViewer>
+        <Button Content="Новый кадр" Grid.Column="1" Grid.Row="2" Height="20" Width="80" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="Button_Click" Grid.RowSpan="2"/>
+        <Menu Height="25" VerticalAlignment="Top" Grid.ColumnSpan="3">
+            <MenuItem Header="Файл">
+                <MenuItem x:Name="CreateButton" Header="Создать" Click="CreateButton_Click" />
+                <MenuItem x:Name="Open" Header="Открыть"/>
+            </MenuItem>
+        </Menu>
+        <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="158,121,0,0" Grid.Row="3" VerticalAlignment="Top"/>
+    </Grid>
+</Window>

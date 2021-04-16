@@ -6,9 +6,9 @@ using System.Windows.Media.Imaging;
 
 namespace Novelka.Converters
 {
-    public class BasicFormatConverter : IFormatConverter
+    public class FormatConverter
     {
-        public BitmapImage ToBitmapImage(MemoryStream data)
+        public virtual BitmapImage ToBitmapImage(MemoryStream data)
         {
             BitmapImage src = new BitmapImage();
             src.BeginInit();

@@ -6,9 +6,9 @@ using Ionic.Zip;
 
 namespace Novelka.FileLoader
 {
-    class BasicFileLoader : IFileLoader
+    public class FileLoader
     {
-        public MemoryStream LoadFile(string zipPath, string fileFullName)
+        public virtual MemoryStream LoadFile(string zipPath, string fileFullName)
         {//Чтение любого файла из архива в виде MemoryStream
             using (ZipFile zip = ZipFile.Read(zipPath))
             {

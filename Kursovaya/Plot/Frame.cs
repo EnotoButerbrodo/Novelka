@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+
+
 namespace Novelka.Plot
 {
     public class Frame
@@ -14,6 +16,10 @@ namespace Novelka.Plot
             this.imagesInfo = imagesInfo;
             this.speaker = speaker;
             this.text = text;
+        }
+        public Frame() :this(new ImageInfo[3], "", "")
+        {
+
         }
     }
 
