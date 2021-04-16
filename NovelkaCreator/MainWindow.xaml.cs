@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using Frame = Novelka.Plot.Frame;
-
+using NovelkaCreator.Slide;
 namespace NovelkaCreator
 {
     /// <summary>
@@ -19,15 +19,20 @@ namespace NovelkaCreator
         //Вначале создается временная директория 
         static DirectoryInfo tempDirectoryInfo = new DirectoryInfo("temp");
         static DirectoryInfo currentProjectPath = tempDirectoryInfo;
-        List<Frame> Frames = new List<Frame>(10);
-        List<BitmapImage> Images = new List<BitmapImage>();
+        List<BasicSlide> Slides = new List<BasicSlide>(10);
         public MainWindow()
         {
             InitializeComponent();
-            CreateTempDirectory();
-
+            AddSlide(new MonikaSlide("1"));
+            AddSlide(new MonikaSlide("2"));
+            AddSlide(new AddNewSlide());
         }
 
+        void AddSlide(BasicSlide slide)
+        {
+            Slides.Add(slide);
+            SlidesPanel.Children.Add(slide.GetAppearance());
+        }
         void CreateTempDirectory()
         {
             if(!tempDirectoryInfo.Exists)
@@ -38,21 +43,7 @@ namespace NovelkaCreator
             Directory.Delete(tempDirectoryInfo.FullName);
             CreateTempDirectory();
         }
-        /*
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            BitmapImage bitImage = new BitmapImage();
-            bitImage.BeginInit();
-            bitImage.UriSource = new Uri(@"Resources/template.png", UriKind.Relative);
-            bitImage.EndInit();
-            Image image = new Image();
-            image.Source = bitImage;
-            image.Margin = new Thickness(20, 0, 20, 0);
-            FramesBlock.Children.Add(image);
-            FramesBlockScroll.ScrollToHorizontalOffset(FramesBlockScroll.ContentHorizontalOffset);
-            //FramesBlock.Children.Add(new Button() { Width = 200, Height = 200, Content = "+" });
-        }
-        */
+
         private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
             var sfd = new SaveFileDialog();

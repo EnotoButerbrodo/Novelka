@@ -21,15 +21,29 @@
         </Grid.RowDefinitions>
         <!--#region TabMenu-->
         <TabControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-            <TabItem Header="Файл"></TabItem>
+            <!--#region Файл-->
+            <TabItem Header="Файл">
+                <Canvas>
+                </Canvas>
+            </TabItem>
+            <!--#endregion-->
             <TabItem Header="Главная"></TabItem>
             <TabItem Header="Задний фон"></TabItem>
             <TabItem Header="Объекты"></TabItem>
         </TabControl>
         <GridSplitter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="6" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ShowsPreview="True"/>
         <!--#endregion-->
-        <GridSplitter ShowsPreview="True" Grid.Column="0" Grid.Row="1" Grid.RowSpan="3" Width="2" HorizontalAlignment="Right" />
-        <ScrollBar Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Right"/>
+        <!--#region Slides-->
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.RowSpan="3">
+            <StackPanel x:Name="SlidesPanel" Grid.Row="1" Grid.Column="0" Grid.RowSpan="3"/>
+        </ScrollViewer>
+        <ScrollBar x:Name="SlidesScrollBar" 
+            Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Right" SmallChange="1" Maximum="5" ViewportSize="1" LargeChange="0"/>
+        <GridSplitter ShowsPreview="True" Grid.Column="0" Grid.Row="1" 
+                      Grid.RowSpan="3" Width="3" HorizontalAlignment="Right"/>
+        <!--#endregion-->
+       
+        
 
     </Grid>
 </Window>
