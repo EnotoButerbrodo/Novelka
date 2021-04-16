@@ -38,6 +38,7 @@ namespace NovelkaCreator
             Directory.Delete(tempDirectoryInfo.FullName);
             CreateTempDirectory();
         }
+        /*
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             BitmapImage bitImage = new BitmapImage();
@@ -51,7 +52,7 @@ namespace NovelkaCreator
             FramesBlockScroll.ScrollToHorizontalOffset(FramesBlockScroll.ContentHorizontalOffset);
             //FramesBlock.Children.Add(new Button() { Width = 200, Height = 200, Content = "+" });
         }
-
+        */
         private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
             var sfd = new SaveFileDialog();
