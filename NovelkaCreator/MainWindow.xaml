@@ -63,7 +63,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="0*"/>
             </Grid.RowDefinitions>
-            <Image Source="Resources/Template.png" Grid.Column="1" Grid.Row="1" Stretch="Uniform"/>
+            <Image Source="Resources/MonikaTemplate.png" Grid.Column="1" Grid.Row="1" Stretch="Uniform"/>
             <Canvas Background="Transparent" Grid.Column="1" Grid.Row="1"></Canvas>
         </Grid>
         <!--#endregion-->

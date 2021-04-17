@@ -51,6 +51,8 @@ namespace NovelkaCreator.Slide
 
             Grid.SetColumn(idTextBlock, 0);
             appearance.Children.Add(idTextBlock);
+
+            appearance.Border
         }
         protected virtual void IdTextBlockSetup()
         {
