@@ -22,18 +22,18 @@ namespace NovelkaCreator
         //Вначале создается временная директория 
         static DirectoryInfo tempDirectoryInfo = new DirectoryInfo("temp");
         static DirectoryInfo currentProjectPath = tempDirectoryInfo;
-        List<BasicSlide> Slides = new List<BasicSlide>(10);
-        short slide_number = 1;
+        LinkedList<BasicSlide> Slides = new LinkedList<BasicSlide>();
         static BasicSlide selectedSlide;
         static BasicSlide prevSelectedSlide;
         public MainWindow()
         {
             InitializeComponent();
+            //AddSlide(new AddNewSlide_Slide());
         }
 
         void AddSlide(BasicSlide slide)
         {
-            Slides.Add(slide);
+            Slides.AddFirst(slide);
             SlidesPanel.Children.Add(slide.GetAppearance());
         }
         void DeleteSlide()
@@ -88,14 +88,16 @@ namespace NovelkaCreator
             if (selectedSlide == null) return;
             DeleteSlide();
             ResetSlidesId();
+
             
         }
 
         private void ResetSlidesId()
         {
-            for(int id = 0; id< Slides.Count; id++)
+            int id = Slides.Count;
+            foreach(var slide in Slides)
             {
-                Slides[id].SetId(id+1);
+                slide.SetId(id--);
             }
         }
 

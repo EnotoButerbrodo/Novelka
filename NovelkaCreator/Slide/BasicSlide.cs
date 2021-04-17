@@ -19,21 +19,27 @@ namespace NovelkaCreator.Slide
         protected TextBlock idTextBlock;
         protected Border selectBorder;
         protected MouseButtonEventHandler SlideClickEventHandler;
-        public BasicSlide(int id)
+        public BasicSlide()
         {
-            this.id = id;
-            ImageSetup();
-            IdTextBlockSetup();
-            SelectBorderSetup();
             GridSetup();
+            ImageSetup();
+            SelectBorderSetup();
             
+        }
+        public BasicSlide(int id) : this() {
+            this.id = id;
+            IdTextBlockSetup();
+
         }
         void ImageSetup()
         {
             image = new Image();
             image.Stretch = Stretch.Uniform;
             Panel.SetZIndex(image, 1);
-           
+
+            Grid.SetColumn(image, 1);
+            appearance.Children.Add(image);
+
         }
         void GridSetup()
         {
@@ -49,17 +55,6 @@ namespace NovelkaCreator.Slide
             appearance.ColumnDefinitions.Add(idColumn);
             appearance.ColumnDefinitions.Add(MainColumn);
             appearance.Margin = new System.Windows.Thickness(20, 10, 20, 10);
-
-            Grid.SetColumn(image, 1);
-            appearance.Children.Add(image);
-
-
-            Grid.SetColumn(idTextBlock, 0);
-            appearance.Children.Add(idTextBlock);
-
-            Grid.SetColumn(selectBorder, 1);
-            appearance.Children.Add(selectBorder);
-
             appearance.PreviewMouseLeftButtonUp += SlideClick;
 
         }
@@ -72,7 +67,10 @@ namespace NovelkaCreator.Slide
             idTextBlock.FontSize = 20;
             idTextBlock.Foreground = Brushes.Black;
 
-            
+            Grid.SetColumn(idTextBlock, 0);
+            appearance.Children.Add(idTextBlock);
+
+
         }
         protected virtual void SelectBorderSetup()
         {
@@ -81,6 +79,9 @@ namespace NovelkaCreator.Slide
             selectBorder.BorderBrush = Brushes.Red;
             selectBorder.BorderThickness = new Thickness(0);
             Panel.SetZIndex(selectBorder,0);
+
+            Grid.SetColumn(selectBorder, 1);
+            appearance.Children.Add(selectBorder);
         }
 
         protected virtual void SlideLeftClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -88,7 +89,9 @@ namespace NovelkaCreator.Slide
             selectBorder.BorderThickness = new Thickness(3);
             image.Margin = new Thickness(3);
             MessageBox.Show($"Выбранный слайд {id}");
-            
+
+
+
         }
         public Grid GetAppearance() => appearance;
         public int GetNumber() => id;
