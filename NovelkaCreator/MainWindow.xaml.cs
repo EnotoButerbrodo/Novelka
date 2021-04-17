@@ -23,9 +23,9 @@ namespace NovelkaCreator
         public MainWindow()
         {
             InitializeComponent();
-            AddSlide(new MonikaSlide("1"));
-            AddSlide(new MonikaSlide("2"));
-            AddSlide(new AddNewSlide());
+            AddSlide(new MonikaSlide(1));
+            AddSlide(new MonikaSlide(2));
+            //AddSlide(new AddNewSlide());
         }
 
         void AddSlide(BasicSlide slide)

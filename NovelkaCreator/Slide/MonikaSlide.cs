@@ -9,7 +9,7 @@ namespace NovelkaCreator.Slide
 {
     class MonikaSlide : BasicSlide
     {
-        public MonikaSlide(string id) : base(id)
+        public MonikaSlide(short id) : base(id)
         {
             BitmapImage bitImage = new BitmapImage();
             bitImage.BeginInit();
