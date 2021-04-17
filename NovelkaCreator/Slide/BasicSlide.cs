@@ -43,7 +43,7 @@ namespace NovelkaCreator.Slide
             };
             appearance.ColumnDefinitions.Add(idColumn);
             appearance.ColumnDefinitions.Add(MainColumn);
-            appearance.Margin = new System.Windows.Thickness(0, 5, 0, 5);
+            appearance.Margin = new System.Windows.Thickness(20, 10, 20, 10);
 
             Grid.SetColumn(image, 1);
             appearance.Children.Add(image);
@@ -59,7 +59,7 @@ namespace NovelkaCreator.Slide
             idTextBlock.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
             idTextBlock.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             idTextBlock.FontSize = 20;
-            idTextBlock.Foreground = Brushes.Red;
+            idTextBlock.Foreground = Brushes.Black;
 
             
         }

@@ -20,11 +20,10 @@ namespace NovelkaCreator
         static DirectoryInfo tempDirectoryInfo = new DirectoryInfo("temp");
         static DirectoryInfo currentProjectPath = tempDirectoryInfo;
         List<BasicSlide> Slides = new List<BasicSlide>(10);
+        short slide_number = 1;
         public MainWindow()
         {
             InitializeComponent();
-            AddSlide(new MonikaSlide(1));
-            AddSlide(new MonikaSlide(2));
             //AddSlide(new AddNewSlide());
         }
 
@@ -32,6 +31,10 @@ namespace NovelkaCreator
         {
             Slides.Add(slide);
             SlidesPanel.Children.Add(slide.GetAppearance());
+        }
+        void DeleteSlide(int number)
+        {
+            Slides.RemoveAt(number);
         }
         void CreateTempDirectory()
         {
@@ -54,11 +57,6 @@ namespace NovelkaCreator
 
         }
 
-        void CreateNewFrame()
-        {
-            var newFrame = new Frame();
-            
-        }
 
         private void AddImageButton_Click(object sender, RoutedEventArgs e)
         {
@@ -69,6 +67,21 @@ namespace NovelkaCreator
                 File.Copy(ofd.FileName, 
                     $"{currentProjectPath.FullName}\\{Path.GetFileName(ofd.FileName)}");
             }
+        }
+
+        private void AddTestSlide_Click(object sender, RoutedEventArgs e)
+        {
+            AddSlide(new MonikaSlide(slide_number++));
+            SlidesScrollBar.Maximum = Slides.Count-1;
+        }
+
+        private void DeleteTestSlide_Click(object sender, RoutedEventArgs e)
+        {
+            if (Slides.Count <= 0) return;
+            SlidesPanel.Children.Remove(Slides[Slides.Count-1].GetAppearance());
+            DeleteSlide(Slides.Count-1);
+            slide_number--;
+            SlidesScrollBar.Maximum = Slides.Count - 1;
         }
     }
 }

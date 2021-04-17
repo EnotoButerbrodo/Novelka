@@ -8,42 +8,64 @@
         Title="NovelkaCreator" Height="600" Width="1200">
     
     <Grid x:Name="MainGrid">
+        <!--#region GridDefinitions-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
         </Grid.RowDefinitions>
+        <!--#endregion-->
         <!--#region TabMenu-->
         <TabControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <!--#region Файл-->
             <TabItem Header="Файл">
-                <Canvas>
-                </Canvas>
+                <Grid x:Name="FileTabMenuGrid">
+                    <Canvas Grid.Column="0">
+                        <Button Content="Добавить тестовый слайд" x:Name="AddTestSlide"
+                                Margin="10" Click="AddTestSlide_Click"/>
+                        <Button Content="Удалить тестовый слайд" x:Name="DeleteTestSlide"
+                            Click="DeleteTestSlide_Click" Canvas.Left="10" Canvas.Top="36"/>
+                    </Canvas>
+                </Grid>
             </TabItem>
             <!--#endregion-->
             <TabItem Header="Главная"></TabItem>
             <TabItem Header="Задний фон"></TabItem>
-            <TabItem Header="Объекты"></TabItem>
+            <TabItem Header="Текстовое поле"></TabItem>
         </TabControl>
         <GridSplitter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="6" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ShowsPreview="True"/>
         <!--#endregion-->
         <!--#region Slides-->
-        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.RowSpan="3">
-            <StackPanel x:Name="SlidesPanel" Grid.Row="1" Grid.Column="0" Grid.RowSpan="3"/>
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" VerticalScrollBarVisibility="Disabled" >
+            <StackPanel x:Name="SlidesPanel" Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Background="Lavender"/>
         </ScrollViewer>
         <ScrollBar x:Name="SlidesScrollBar" 
-            Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Right" SmallChange="1" Maximum="5" ViewportSize="1" LargeChange="0"/>
+            Grid.Row="1" Grid.Column="1" Grid.RowSpan="3"  Panel.ZIndex="999" HorizontalAlignment="Right" 
+                   ViewportSize="1" SmallChange="1" Maximum="0"/>
         <GridSplitter ShowsPreview="True" Grid.Column="0" Grid.Row="1" 
                       Grid.RowSpan="3" Width="3" HorizontalAlignment="Right"/>
         <!--#endregion-->
-       
-        
-
+        <!--#region MainPreviu-->
+        <Grid Background="WhiteSmoke" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.05*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.05*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.03*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0*"/>
+            </Grid.RowDefinitions>
+            <Image Source="Resources/Template.png" Grid.Column="1" Grid.Row="1" Stretch="Uniform"/>
+            <Canvas Background="Transparent" Grid.Column="1" Grid.Row="1"></Canvas>
+        </Grid>
+        <!--#endregion-->
     </Grid>
 </Window>
