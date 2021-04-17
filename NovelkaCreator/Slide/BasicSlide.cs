@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -13,14 +14,17 @@ namespace NovelkaCreator.Slide
     class BasicSlide
     {
         protected Image image;
-        protected short id;
+        protected int id;
         protected Grid appearance;
         protected TextBlock idTextBlock;
-        public BasicSlide(short id)
+        protected Border selectBorder;
+        protected MouseButtonEventHandler SlideClickEventHandler;
+        public BasicSlide(int id)
         {
             this.id = id;
             ImageSetup();
             IdTextBlockSetup();
+            SelectBorderSetup();
             GridSetup();
             
         }
@@ -28,6 +32,7 @@ namespace NovelkaCreator.Slide
         {
             image = new Image();
             image.Stretch = Stretch.Uniform;
+            Panel.SetZIndex(image, 1);
            
         }
         void GridSetup()
@@ -52,7 +57,11 @@ namespace NovelkaCreator.Slide
             Grid.SetColumn(idTextBlock, 0);
             appearance.Children.Add(idTextBlock);
 
-            appearance.Border
+            Grid.SetColumn(selectBorder, 1);
+            appearance.Children.Add(selectBorder);
+
+            appearance.PreviewMouseLeftButtonUp += SlideClick;
+
         }
         protected virtual void IdTextBlockSetup()
         {
@@ -65,8 +74,52 @@ namespace NovelkaCreator.Slide
 
             
         }
+        protected virtual void SelectBorderSetup()
+        {
+            selectBorder = new Border();
+            selectBorder.Background = Brushes.Transparent;
+            selectBorder.BorderBrush = Brushes.Red;
+            selectBorder.BorderThickness = new Thickness(0);
+            Panel.SetZIndex(selectBorder,0);
+        }
+
+        protected virtual void SlideLeftClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            selectBorder.BorderThickness = new Thickness(3);
+            image.Margin = new Thickness(3);
+            MessageBox.Show($"Выбранный слайд {id}");
+            
+        }
         public Grid GetAppearance() => appearance;
-        public short GetNumber() => id;
-        
+        public int GetNumber() => id;
+        public void SetId(int id)
+        {
+            this.id = id;
+            idTextBlock.Text = id.ToString();
+        }
+        public void SetSlideClickEventHandler(MouseButtonEventHandler handler)
+        {
+            SlideClickEventHandler += handler;
+        }
+
+        protected void SlideClick(object sender, MouseButtonEventArgs e)
+        {
+            SlideClickEventHandler?.Invoke(this, e);
+        }
+
+        public void ActiveteSlide()
+        {
+            idTextBlock.Foreground = Brushes.Red;
+            image.Margin = new Thickness(3);
+            selectBorder.BorderThickness = new Thickness(3);
+        }
+
+        public void DeactivateSlide()
+        {
+            idTextBlock.Foreground = Brushes.Black;
+            image.Margin = new Thickness(0);
+            selectBorder.BorderThickness = new Thickness(0);
+        }
+
     }
 }

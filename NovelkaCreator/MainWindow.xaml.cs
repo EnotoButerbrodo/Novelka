@@ -7,6 +7,9 @@ using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using Frame = Novelka.Plot.Frame;
 using NovelkaCreator.Slide;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+
 namespace NovelkaCreator
 {
     /// <summary>
@@ -21,10 +24,11 @@ namespace NovelkaCreator
         static DirectoryInfo currentProjectPath = tempDirectoryInfo;
         List<BasicSlide> Slides = new List<BasicSlide>(10);
         short slide_number = 1;
+        static BasicSlide selectedSlide;
+        static BasicSlide prevSelectedSlide;
         public MainWindow()
         {
             InitializeComponent();
-            //AddSlide(new AddNewSlide());
         }
 
         void AddSlide(BasicSlide slide)
@@ -32,14 +36,16 @@ namespace NovelkaCreator
             Slides.Add(slide);
             SlidesPanel.Children.Add(slide.GetAppearance());
         }
-        void DeleteSlide(int number)
+        void DeleteSlide()
         {
-            Slides.RemoveAt(number);
+            SlidesPanel.Children.Remove(selectedSlide.GetAppearance());
+            Slides.Remove(selectedSlide);
+            SlidesScrollBar.Maximum = Slides.Count - 1;
         }
         void CreateTempDirectory()
         {
-            if(!tempDirectoryInfo.Exists)
-            tempDirectoryInfo.Create();
+            if (!tempDirectoryInfo.Exists)
+                tempDirectoryInfo.Create();
         }
         void UpdateTempDirectory()
         {
@@ -62,26 +68,45 @@ namespace NovelkaCreator
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "Images (*.png;*.jpeg)|*.png;*.jpeg";
-            if(ofd.ShowDialog() == true)
+            if (ofd.ShowDialog() == true)
             {
-                File.Copy(ofd.FileName, 
+                File.Copy(ofd.FileName,
                     $"{currentProjectPath.FullName}\\{Path.GetFileName(ofd.FileName)}");
             }
         }
 
         private void AddTestSlide_Click(object sender, RoutedEventArgs e)
         {
-            AddSlide(new MonikaSlide(slide_number++));
-            SlidesScrollBar.Maximum = Slides.Count-1;
+            var newSlide = new MonikaSlide(Slides.Count+1);
+            newSlide.SetSlideClickEventHandler(ChangeSelectedSlide);
+            AddSlide(newSlide);
+            SlidesScrollBar.Maximum = Slides.Count - 1;
         }
 
         private void DeleteTestSlide_Click(object sender, RoutedEventArgs e)
         {
-            if (Slides.Count <= 0) return;
-            SlidesPanel.Children.Remove(Slides[Slides.Count-1].GetAppearance());
-            DeleteSlide(Slides.Count-1);
-            slide_number--;
-            SlidesScrollBar.Maximum = Slides.Count - 1;
+            if (selectedSlide == null) return;
+            DeleteSlide();
+            ResetSlidesId();
+            
+        }
+
+        private void ResetSlidesId()
+        {
+            for(int id = 0; id< Slides.Count; id++)
+            {
+                Slides[id].SetId(id+1);
+            }
+        }
+
+        public void ChangeSelectedSlide(object sender, MouseButtonEventArgs e)
+        {
+            prevSelectedSlide = selectedSlide ;
+            selectedSlide = sender as BasicSlide;
+
+            prevSelectedSlide?.DeactivateSlide();
+            selectedSlide.ActiveteSlide();
+            
         }
     }
 }
