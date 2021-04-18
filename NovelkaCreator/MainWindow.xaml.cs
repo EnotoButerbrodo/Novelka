@@ -77,7 +77,7 @@ namespace NovelkaCreator
 
         private void AddTestSlide_Click(object sender, RoutedEventArgs e)
         {
-            var newSlide = new MonikaSlide(Slides.Count+1);
+            var newSlide = new BasicSlide(Slides.Count+1);
             newSlide.SetSlideClickEventHandler(ChangeSelectedSlide);
             AddSlide(newSlide);
             SlidesScrollBar.Maximum = Slides.Count - 1;

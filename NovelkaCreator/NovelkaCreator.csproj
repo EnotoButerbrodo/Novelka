@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="Resources\AddNewSlideIcon.png" />
+    <None Remove="Resources\BlankTemplate.png" />
     <None Remove="Resources\MonikaTemplate.png" />
     <None Remove="Resources\template.png" />
   </ItemGroup>
@@ -24,6 +25,7 @@
 
   <ItemGroup>
     <Resource Include="Resources\AddNewSlideIcon.png" />
+    <Resource Include="Resources\BlankTemplate.png" />
     <Resource Include="Resources\MonikaTemplate.png" />
     <Resource Include="Resources\template.png" />
   </ItemGroup>

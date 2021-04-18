@@ -9,7 +9,7 @@ namespace NovelkaCreator.Slide
 {
     class AddNewSlide_Slide : BasicSlide
     {
-        public AddNewSlide_Slide()
+        protected override void DefaultImageSetup()
         {
             BitmapImage bitImage = new BitmapImage();
             bitImage.BeginInit();

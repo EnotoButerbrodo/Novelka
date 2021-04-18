@@ -24,6 +24,7 @@ namespace NovelkaCreator.Slide
             GridSetup();
             ImageSetup();
             SelectBorderSetup();
+            DefaultImageSetup();
             
         }
         public BasicSlide(int id) : this() {
@@ -57,6 +58,14 @@ namespace NovelkaCreator.Slide
             appearance.Margin = new System.Windows.Thickness(20, 10, 20, 10);
             appearance.PreviewMouseLeftButtonUp += SlideClick;
 
+        }
+        protected virtual void DefaultImageSetup()
+        {
+            BitmapImage bitImage = new BitmapImage();
+            bitImage.BeginInit();
+            bitImage.UriSource = new Uri(@"Resources/BlankTemplate.png", UriKind.Relative);
+            bitImage.EndInit();
+            image.Source = bitImage;
         }
         protected virtual void IdTextBlockSetup()
         {
