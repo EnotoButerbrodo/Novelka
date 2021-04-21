@@ -41,14 +41,9 @@ namespace NovelkaCreator
         {
             ImagesFileWathcer = new FileSystemWatcher(currentProjectPath.FullName)
             {
-                NotifyFilter = NotifyFilters.Attributes
-                                 | NotifyFilters.CreationTime
-                                 | NotifyFilters.DirectoryName
-                                 | NotifyFilters.FileName
-                                 | NotifyFilters.LastAccess
-                                 | NotifyFilters.LastWrite
-                                 | NotifyFilters.Security
-                                 | NotifyFilters.Size
+                NotifyFilter = NotifyFilters.DirectoryName
+                               | NotifyFilters.FileName
+
             };
             ImagesFileWathcer.EnableRaisingEvents = true;
             ImagesFileWathcer.Created += new FileSystemEventHandler(ImagesDirectoryChanged);
@@ -139,13 +134,6 @@ namespace NovelkaCreator
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
-            //var files = currentProjectPath.GetFiles();
-            //foreach(var file in files)
-            //{
-            //    BackgroundImageListBox.Items.Add(file.Name);
-            //}
-            LoadBackgoundImagesNames();
-
         }
 
         async void LoadBackgoundImagesNames()
@@ -160,17 +148,40 @@ namespace NovelkaCreator
                         BackgroundImageListBox.Items.Add(file.Name);
                     });
                 }
-
             });
         }
 
         async private void BackgroundImageListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string uri = $"{currentProjectPath.FullName}\\{e.AddedItems[0]}";
-            await Dispatcher.InvokeAsync(() => MainPreviewImage.Source = new BitmapImage(new Uri(uri)));
+            var image = await Task.Run(() =>
+            {
+                using (FileStream fs = File.OpenRead(uri))
+                {
+                    BitmapImage image = new BitmapImage();
+                    image = new BitmapImage();
+                    image.BeginInit();
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.StreamSource = fs;
+                    image.EndInit();
+                    image.Freeze();
+                    return image;
+                }
+            });
+            
+            await Dispatcher.InvokeAsync(() =>
+            {
+                MainPreviewImage.Source = image;
+            });
           
         }
 
 
+
+
+        private void Background_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadBackgoundImagesNames();
+        }
     }
 }

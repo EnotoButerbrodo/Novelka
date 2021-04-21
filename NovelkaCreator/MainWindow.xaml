@@ -34,7 +34,7 @@
             <!--#endregion-->
             <TabItem Header="Главная"></TabItem>
             <!--#region Задний фон-->
-            <TabItem x:Name="Background" Header="Задний фон">
+            <TabItem x:Name="Background" Header="Задний фон" Loaded="Background_Loaded" >
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.5*"/>
