@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Threading.Tasks;
 using System.Threading;
 using System.ComponentModel;
+using System.Windows.Media;
 
 namespace NovelkaCreator
 {
@@ -34,7 +35,6 @@ namespace NovelkaCreator
         {
             InitializeComponent();
             ImagesFileWathcerSetup();
-            MenuTabControl.SelectedItem = Background;
         }
 
         void ImagesFileWathcerSetup()
@@ -130,6 +130,8 @@ namespace NovelkaCreator
 
             prevSelectedSlide?.DeactivateSlide();
             selectedSlide.ActiveteSlide();
+            
+            
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -153,10 +155,20 @@ namespace NovelkaCreator
 
         async private void BackgroundImageListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+            MainPreviewImage.Source = new BitmapImage(new Uri("Resources//template.png", UriKind.Relative));
             string uri = $"{currentProjectPath.FullName}\\{e.AddedItems[0]}";
-            var image = await Task.Run(() =>
+
+            MainPreviewImage.Source = await LoadImage(uri);
+
+          
+        }
+
+        async Task<BitmapImage> LoadImage(string path)
+        {
+            return await Task.Run(() =>
             {
-                using (FileStream fs = File.OpenRead(uri))
+                using (FileStream fs = File.OpenRead(path))
                 {
                     BitmapImage image = new BitmapImage();
                     image = new BitmapImage();
@@ -167,13 +179,8 @@ namespace NovelkaCreator
                     image.Freeze();
                     return image;
                 }
+
             });
-            
-            await Dispatcher.InvokeAsync(() =>
-            {
-                MainPreviewImage.Source = image;
-            });
-          
         }
 
 
