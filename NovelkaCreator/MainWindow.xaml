@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NovelkaCreator"
         mc:Ignorable="d"
-        Title="NovelkaCreator" Height="600" Width="1200">
-    
+        Title="NovelkaCreator" Height="600" Width="1200" Loaded="Window_Loaded">
+
     <Grid x:Name="MainGrid">
         <!--#region GridDefinitions-->
         <Grid.ColumnDefinitions>
@@ -14,7 +14,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.7*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.1*"/>
@@ -22,27 +22,45 @@
         </Grid.RowDefinitions>
         <!--#endregion-->
         <!--#region TabMenu-->
-        <TabControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+        <TabControl x:Name="MenuTabControl" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" TabStripPlacement="Top">
             <!--#region Файл-->
             <TabItem Header="Файл">
                 <Grid x:Name="FileTabMenuGrid">
                     <Canvas Grid.Column="0">
-                        <Button Content="Добавить тестовый слайд" x:Name="AddTestSlide"
-                                Margin="10" Click="AddTestSlide_Click"/>
-                        <Button Content="Удалить тестовый слайд" x:Name="DeleteTestSlide"
-                            Click="DeleteTestSlide_Click" Canvas.Left="10" Canvas.Top="36"/>
+                        
                     </Canvas>
                 </Grid>
             </TabItem>
             <!--#endregion-->
             <TabItem Header="Главная"></TabItem>
-            <TabItem Header="Задний фон"></TabItem>
+            <!--#region Задний фон-->
+            <TabItem x:Name="Background" Header="Задний фон">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="AddImage" Content="Добавить картинку" Margin="10" Click="AddImageButton_Click"/>
+                    <ListBox x:Name="BackgroundImageListBox" Background="WhiteSmoke" Grid.Column="1" 
+                             SelectionChanged="BackgroundImageListBox_SelectionChanged">
+
+                    </ListBox>
+                    <ScrollViewer Grid.Column="2" Margin="15 5 15 5">
+                    <WrapPanel x:Name="BackgroundImageWrapPanel" >
+                        
+                    </WrapPanel>
+                    </ScrollViewer>
+                        
+                </Grid>
+            </TabItem>
+            <!--#endregion-->
             <TabItem Header="Текстовое поле"></TabItem>
         </TabControl>
         <GridSplitter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="6" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ShowsPreview="True"/>
         <!--#endregion-->
         <!--#region Slides-->
-        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" VerticalScrollBarVisibility="Disabled" >
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" VerticalScrollBarVisibility="Disabled" >
             <StackPanel x:Name="SlidesPanel" Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Background="Lavender"/>
         </ScrollViewer>
         <ScrollBar x:Name="SlidesScrollBar" 
@@ -63,9 +81,22 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="0*"/>
             </Grid.RowDefinitions>
-            <Image Source="Resources/MonikaTemplate.png" Grid.Column="1" Grid.Row="1" Stretch="Uniform"/>
-            <Canvas Background="Transparent" Grid.Column="1" Grid.Row="1"></Canvas>
+            <Image x:Name="MainPreviewImage" Source="Resources/MonikaTemplate.png" 
+                   Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch" Stretch="Uniform" Panel.ZIndex="1"/>
+            <Canvas Background="White" Grid.Column="1" Grid.Row="1"></Canvas>
         </Grid>
         <!--#endregion-->
+        <Grid Grid.Column="0" Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Добавить слайд" x:Name="AddTestSlide" 
+                                 Click="AddTestSlide_Click"/>
+            <Button Content="Удалить слайд" x:Name="DeleteTestSlide" Grid.Column="1"
+                            Click="DeleteTestSlide_Click"/>
+        </Grid>
+       
     </Grid>
 </Window>

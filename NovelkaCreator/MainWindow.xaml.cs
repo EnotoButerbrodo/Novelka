@@ -9,6 +9,9 @@ using Frame = Novelka.Plot.Frame;
 using NovelkaCreator.Slide;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Threading.Tasks;
+using System.Threading;
+using System.ComponentModel;
 
 namespace NovelkaCreator
 {
@@ -25,12 +28,36 @@ namespace NovelkaCreator
         LinkedList<BasicSlide> Slides = new LinkedList<BasicSlide>();
         static BasicSlide selectedSlide;
         static BasicSlide prevSelectedSlide;
+
+        static FileSystemWatcher ImagesFileWathcer;
         public MainWindow()
         {
             InitializeComponent();
-            //AddSlide(new AddNewSlide_Slide());
+            ImagesFileWathcerSetup();
+            MenuTabControl.SelectedItem = Background;
         }
 
+        void ImagesFileWathcerSetup()
+        {
+            ImagesFileWathcer = new FileSystemWatcher(currentProjectPath.FullName)
+            {
+                NotifyFilter = NotifyFilters.Attributes
+                                 | NotifyFilters.CreationTime
+                                 | NotifyFilters.DirectoryName
+                                 | NotifyFilters.FileName
+                                 | NotifyFilters.LastAccess
+                                 | NotifyFilters.LastWrite
+                                 | NotifyFilters.Security
+                                 | NotifyFilters.Size
+            };
+            ImagesFileWathcer.EnableRaisingEvents = true;
+            ImagesFileWathcer.Created += new FileSystemEventHandler(ImagesDirectoryChanged);
+        }
+
+        void ImagesDirectoryChanged(object sender, FileSystemEventArgs e)
+        {
+            
+        }
         void AddSlide(BasicSlide slide)
         {
             Slides.AddFirst(slide);
@@ -108,7 +135,42 @@ namespace NovelkaCreator
 
             prevSelectedSlide?.DeactivateSlide();
             selectedSlide.ActiveteSlide();
-            
         }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            //var files = currentProjectPath.GetFiles();
+            //foreach(var file in files)
+            //{
+            //    BackgroundImageListBox.Items.Add(file.Name);
+            //}
+            LoadBackgoundImagesNames();
+
+        }
+
+        async void LoadBackgoundImagesNames()
+        {
+            await Task.Factory.StartNew(async () =>
+            {
+                var files = currentProjectPath.GetFiles();
+                foreach (var file in files)
+                {
+                    await BackgroundImageListBox.Dispatcher.InvokeAsync(() =>
+                    {
+                        BackgroundImageListBox.Items.Add(file.Name);
+                    });
+                }
+
+            });
+        }
+
+        async private void BackgroundImageListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string uri = $"{currentProjectPath.FullName}\\{e.AddedItems[0]}";
+            await Dispatcher.InvokeAsync(() => MainPreviewImage.Source = new BitmapImage(new Uri(uri)));
+          
+        }
+
+
     }
 }
