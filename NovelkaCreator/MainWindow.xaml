@@ -62,6 +62,7 @@
         <!--#region Slides-->
         <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" VerticalScrollBarVisibility="Disabled" >
             <StackPanel x:Name="SlidesPanel" Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Background="Lavender"/>
+            
         </ScrollViewer>
         <ScrollBar x:Name="SlidesScrollBar" 
             Grid.Row="1" Grid.Column="1" Grid.RowSpan="3"  Panel.ZIndex="999" HorizontalAlignment="Right" 

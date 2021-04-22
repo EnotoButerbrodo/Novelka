@@ -156,15 +156,16 @@ namespace NovelkaCreator
         async private void BackgroundImageListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-            MainPreviewImage.Source = new BitmapImage(new Uri("Resources//template.png", UriKind.Relative));
+            BackgroundImageListBox.IsEnabled = false;
             string uri = $"{currentProjectPath.FullName}\\{e.AddedItems[0]}";
 
-            MainPreviewImage.Source = await LoadImage(uri);
+            MainPreviewImage.Source = await LoadImageAsync(uri);
+            BackgroundImageListBox.IsEnabled = true;
 
-          
+
         }
 
-        async Task<BitmapImage> LoadImage(string path)
+        async Task<BitmapImage> LoadImageAsync(string path)
         {
             return await Task.Run(() =>
             {
