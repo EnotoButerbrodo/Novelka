@@ -46,12 +46,12 @@
                              SelectionChanged="BackgroundImageListBox_SelectionChanged">
 
                     </ListBox>
-                    <ScrollViewer Grid.Column="2" Margin="15 5 15 5">
-                    <WrapPanel x:Name="BackgroundImageWrapPanel" >
-                        
+                    <WrapPanel Grid.Column="2">
+                        <Button x:Name="SetAsBackgroundImageButton" Content="Установить как фон"
+                                Margin="5" Click="SetAsBackgroundImageButton_Click"/>
                     </WrapPanel>
-                    </ScrollViewer>
-                        
+
+
                 </Grid>
             </TabItem>
             <!--#endregion-->
@@ -71,7 +71,7 @@
                       Grid.RowSpan="3" Width="3" HorizontalAlignment="Right"/>
         <!--#endregion-->
         <!--#region MainPreviu-->
-        <Grid Background="WhiteSmoke" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2">
+        <Grid x:Name="PreviewGrid" Background="WhiteSmoke" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.05*"/>
                 <ColumnDefinition Width="*"/>
@@ -82,10 +82,12 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="0*"/>
             </Grid.RowDefinitions>
-            <Image x:Name="MainPreviewImage" Source="Resources/MonikaTemplate.png" 
+            <Grid x:Name="MainPreviewArea" Grid.Row="1" Grid.Column="1" Background="White">
+                <Image x:Name="MainPreviewImage"  Source="Resources/MonikaTemplate.png" 
                    Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch" Stretch="Uniform" Panel.ZIndex="1"/>
-            <Canvas Background="White" Grid.Column="1" Grid.Row="1"></Canvas>
+                <Canvas x:Name="MainPreviewCanvas" Background="Transparent" Panel.ZIndex="2"/>
+            </Grid>
         </Grid>
         <!--#endregion-->
         <Grid Grid.Column="0" Grid.Row="3">

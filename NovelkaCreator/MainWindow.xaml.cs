@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.ComponentModel;
 using System.Windows.Media;
+using System.Drawing;
 
 namespace NovelkaCreator
 {
@@ -30,29 +31,11 @@ namespace NovelkaCreator
         static BasicSlide selectedSlide;
         static BasicSlide prevSelectedSlide;
 
-        static FileSystemWatcher ImagesFileWathcer;
         public MainWindow()
         {
             InitializeComponent();
-            ImagesFileWathcerSetup();
         }
 
-        void ImagesFileWathcerSetup()
-        {
-            ImagesFileWathcer = new FileSystemWatcher(currentProjectPath.FullName)
-            {
-                NotifyFilter = NotifyFilters.DirectoryName
-                               | NotifyFilters.FileName
-
-            };
-            ImagesFileWathcer.EnableRaisingEvents = true;
-            ImagesFileWathcer.Created += new FileSystemEventHandler(ImagesDirectoryChanged);
-        }
-
-        void ImagesDirectoryChanged(object sender, FileSystemEventArgs e)
-        {
-            
-        }
         void AddSlide(BasicSlide slide)
         {
             Slides.AddFirst(slide);
@@ -69,22 +52,6 @@ namespace NovelkaCreator
             if (!tempDirectoryInfo.Exists)
                 tempDirectoryInfo.Create();
         }
-        void UpdateTempDirectory()
-        {
-            Directory.Delete(tempDirectoryInfo.FullName);
-            CreateTempDirectory();
-        }
-
-        private void CreateButton_Click(object sender, RoutedEventArgs e)
-        {
-            var sfd = new SaveFileDialog();
-            if (sfd.ShowDialog() == true)
-            {
-                MessageBox.Show(sfd.FileName);
-            }
-
-        }
-
 
         private void AddImageButton_Click(object sender, RoutedEventArgs e)
         {
@@ -100,6 +67,7 @@ namespace NovelkaCreator
         private void AddTestSlide_Click(object sender, RoutedEventArgs e)
         {
             var newSlide = new BasicSlide(Slides.Count+1);
+            newSlide.SetImage(CreateBitmapFromVisual(MainPreviewArea));
             newSlide.SetSlideClickEventHandler(ChangeSelectedSlide);
             AddSlide(newSlide);
             SlidesScrollBar.Maximum = Slides.Count - 1;
@@ -190,6 +158,37 @@ namespace NovelkaCreator
         private void Background_Loaded(object sender, RoutedEventArgs e)
         {
             LoadBackgoundImagesNames();
+        }
+
+        private void SetAsBackgroundImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedSlide == null) return;
+
+            selectedSlide.SetImage(CreateBitmapFromVisual(MainPreviewArea));
+            
+        }
+
+        public RenderTargetBitmap CreateBitmapFromVisual(Visual target)
+        {
+            if (target == null)
+            {
+                throw new Exception("Target = null");
+            }
+
+            Rect bounds = VisualTreeHelper.GetDescendantBounds(target);
+
+            RenderTargetBitmap renderTarget = new RenderTargetBitmap((Int32)bounds.Width, (Int32)bounds.Height, 96, 96, PixelFormats.Pbgra32);
+
+            DrawingVisual visual = new DrawingVisual();
+
+            using (DrawingContext context = visual.RenderOpen())
+            {
+                VisualBrush visualBrush = new VisualBrush(target);
+                context.DrawRectangle(visualBrush, null, new Rect(new System.Windows.Point(), bounds.Size));
+            }
+
+            renderTarget.Render(visual);
+            return renderTarget;
         }
     }
 }

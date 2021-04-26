@@ -118,6 +118,10 @@ namespace NovelkaCreator.Slide
         {
             SlideClickEventHandler?.Invoke(this, e);
         }
+        public void SetImage(ImageSource source)
+        {
+            image.Source = source;
+        }
 
         public void ActiveteSlide()
         {
