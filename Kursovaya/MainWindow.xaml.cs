@@ -31,7 +31,7 @@ namespace Novelka
         public MainWindow()
         {
             InitializeComponent();
-            StageConfig();
+            //StageConfig();
         }
         //Игра загружается 
         //Создаются необходимые для работы классы
@@ -51,6 +51,7 @@ namespace Novelka
 
         //Нужно придумать главный файл, который бы указывал, какую
         //нужно загрузить сцену
+        /*
         Frame[] CreateTestFrames()
         {
             Frame[] frames;
@@ -108,5 +109,6 @@ namespace Novelka
             mainStage.Width = MainGrid.Width;
             mainStage.Height = MainGrid.Height;
         }
+        */
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NovelkaCreator"
         mc:Ignorable="d"
-        Title="NovelkaCreator" Height="600" Width="1200" Loaded="Window_Loaded">
+        Title="NovelkaCreator" Height="600" Width="1200">
 
     <Grid x:Name="MainGrid">
         <!--#region GridDefinitions-->
@@ -60,7 +60,7 @@
         <GridSplitter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="6" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ShowsPreview="True"/>
         <!--#endregion-->
         <!--#region Slides-->
-        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" VerticalScrollBarVisibility="Disabled" >
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" VerticalScrollBarVisibility="Hidden" >
             <StackPanel x:Name="SlidesPanel" Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Background="Lavender"/>
             
         </ScrollViewer>
@@ -83,7 +83,7 @@
                 <RowDefinition Height="0*"/>
             </Grid.RowDefinitions>
             <Grid x:Name="MainPreviewArea" Grid.Row="1" Grid.Column="1" Background="White">
-                <Image x:Name="MainPreviewImage"  Source="Resources/MonikaTemplate.png" 
+                <Image x:Name="MainPreviewImage"  
                    Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch" Stretch="Uniform" Panel.ZIndex="1"/>
                 <Canvas x:Name="MainPreviewCanvas" Background="Transparent" Panel.ZIndex="2"/>

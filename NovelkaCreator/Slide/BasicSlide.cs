@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,26 +13,26 @@ using System.Windows.Media.Imaging;
 
 namespace NovelkaCreator.Slide
 {
-    class BasicSlide
+    [Serializable]
+    public class BasicSlide
     {
-        protected Image image;
-        protected int id;
+        public Image image { get; protected set; }
+        public int id { get; protected set; }
         protected Grid appearance;
         protected TextBlock idTextBlock;
         protected Border selectBorder;
         protected MouseButtonEventHandler SlideClickEventHandler;
+        public Novelka.Plot.Frame frame = new Novelka.Plot.Frame();
         public BasicSlide()
         {
             GridSetup();
             ImageSetup();
             SelectBorderSetup();
             DefaultImageSetup();
-            
+            IdTextBlockSetup();
         }
         public BasicSlide(int id) : this() {
             this.id = id;
-            IdTextBlockSetup();
-
         }
         void ImageSetup()
         {
@@ -75,7 +77,6 @@ namespace NovelkaCreator.Slide
             idTextBlock.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             idTextBlock.FontSize = 20;
             idTextBlock.Foreground = Brushes.Black;
-
             Grid.SetColumn(idTextBlock, 0);
             appearance.Children.Add(idTextBlock);
 
@@ -92,16 +93,6 @@ namespace NovelkaCreator.Slide
             Grid.SetColumn(selectBorder, 1);
             appearance.Children.Add(selectBorder);
         }
-
-        protected virtual void SlideLeftClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            selectBorder.BorderThickness = new Thickness(3);
-            image.Margin = new Thickness(3);
-            MessageBox.Show($"Выбранный слайд {id}");
-
-
-
-        }
         public Grid GetAppearance() => appearance;
         public int GetNumber() => id;
         public void SetId(int id)
@@ -113,16 +104,16 @@ namespace NovelkaCreator.Slide
         {
             SlideClickEventHandler += handler;
         }
-
         protected void SlideClick(object sender, MouseButtonEventArgs e)
         {
             SlideClickEventHandler?.Invoke(this, e);
         }
-        public void SetImage(ImageSource source)
+        public void SetImage(ImageSource source, string imageName)
         {
             image.Source = source;
+            image.Tag = imageName;
+            frame.backgroundImage = imageName;
         }
-
         public void ActiveteSlide()
         {
             idTextBlock.Foreground = Brushes.Red;
@@ -135,6 +126,14 @@ namespace NovelkaCreator.Slide
             idTextBlock.Foreground = Brushes.Black;
             image.Margin = new Thickness(0);
             selectBorder.BorderThickness = new Thickness(0);
+        }
+        
+        public BasicSlide DeepClone()
+        {
+            BasicSlide slide = new BasicSlide();
+            slide.frame = this.frame.DeepClone();
+            slide.image.Source = this.image.Source.CloneCurrentValue();
+            return slide;
         }
 
     }
