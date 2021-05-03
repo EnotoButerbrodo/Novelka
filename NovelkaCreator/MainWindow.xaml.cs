@@ -28,11 +28,12 @@ namespace NovelkaCreator
         //Вначале создается временная директория 
         public static DirectoryInfo tempDirectoryInfo = new DirectoryInfo("temp");
         public static DirectoryInfo currentProjectPath = tempDirectoryInfo;
-
+        Novelka.TextBlock.TextBlock textBlock = new Novelka.TextBlock.TextBlock();
 
         public MainWindow()
         {
             InitializeComponent();
+           //MainPreviewCanvas.Children.Add(textBlock.GetBase());
         }
 
 
@@ -78,6 +79,24 @@ namespace NovelkaCreator
             return renderTarget;
         }
 
-
+        bool ShowOpenFileDialog(string filter, out string selectedFileName)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = filter;
+            if (ofd.ShowDialog() == true)
+            {
+                selectedFileName = ofd.FileName;
+                return true;
+            }
+            else
+                selectedFileName = null;
+                return false;
+        }
+        void CopyFile(string oldFilePath, string newFilePath)
+        {
+            if (String.IsNullOrEmpty(oldFilePath) || String.IsNullOrEmpty(newFilePath))
+                throw new Exception("Path is null or empty");
+            File.Copy(oldFilePath, newFilePath, true);
+        }
     }
 }

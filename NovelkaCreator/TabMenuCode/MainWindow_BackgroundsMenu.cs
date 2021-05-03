@@ -17,12 +17,11 @@ namespace NovelkaCreator
     {
         private void AddImageButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Images (*.png;*.jpeg)|*.png;*.jpeg";
-            if (ofd.ShowDialog() == true)
+            string filter = "Images (*.png;*.jpeg)|*.png;*.jpeg";
+            if(ShowOpenFileDialog(filter, out string fileName))
             {
-                File.Copy(ofd.FileName,
-                    $"{currentProjectPath.FullName}\\{Path.GetFileName(ofd.FileName)}");
+                CopyFile(fileName,
+                    $"{currentProjectPath.FullName}\\{Path.GetFileName(fileName)}");
             }
         }
         async public void ChangeSelectedSlide(object sender, MouseButtonEventArgs e)

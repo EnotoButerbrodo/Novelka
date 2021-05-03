@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="NovelkaCreator" Height="600" Width="1200">
 
-    <Grid x:Name="MainGrid">
+    <Grid x:Name="MainGrid" Background="WhiteSmoke">
         <!--#region GridDefinitions-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.2*"/>
@@ -44,18 +44,20 @@
                     <Button x:Name="AddImage" Content="Добавить картинку" Margin="10" Click="AddImageButton_Click"/>
                     <ListBox x:Name="BackgroundImageListBox" Background="WhiteSmoke" Grid.Column="1" 
                              SelectionChanged="BackgroundImageListBox_SelectionChanged">
-
                     </ListBox>
                     <WrapPanel Grid.Column="2">
                         <Button x:Name="SetAsBackgroundImageButton" Content="Установить как фон"
                                 Margin="5" Click="SetAsBackgroundImageButton_Click"/>
                     </WrapPanel>
-
-
                 </Grid>
             </TabItem>
             <!--#endregion-->
-            <TabItem Header="Текстовое поле"></TabItem>
+            <TabItem Header="Текстовое поле">
+                <WrapPanel>
+                    <Button x:Name="SetTextBoxImage" Content="Установить изображение" Margin="5" Click="SetTextBoxImage_Click"/>
+                </WrapPanel>
+                
+            </TabItem>
         </TabControl>
         <GridSplitter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="6" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ShowsPreview="True"/>
         <!--#endregion-->
@@ -71,22 +73,38 @@
                       Grid.RowSpan="3" Width="3" HorizontalAlignment="Right"/>
         <!--#endregion-->
         <!--#region MainPreviu-->
-        <Grid x:Name="PreviewGrid" Background="WhiteSmoke" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2">
+        <Grid x:Name="MainPreviewArea" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" 
+              Background="White" Margin="20,10,20,10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.05*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="0.05*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.03*"/>
+                <RowDefinition Height="2*"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="0*"/>
+                <RowDefinition Height="0.05*"/>
             </Grid.RowDefinitions>
-            <Grid x:Name="MainPreviewArea" Grid.Row="1" Grid.Column="1" Background="White">
-                <Image x:Name="MainPreviewImage"  
-                   Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch" Stretch="Uniform" Panel.ZIndex="1"/>
-                <Canvas x:Name="MainPreviewCanvas" Background="Transparent" Panel.ZIndex="2"/>
+            <Image x:Name="MainPreviewImage"  
+               Grid.ColumnSpan="3" Grid.RowSpan="2" HorizontalAlignment="Stretch"
+               VerticalAlignment="Stretch" Stretch="Uniform" Panel.ZIndex="1"/>
+            <Canvas x:Name="MainPreviewCanvas" Background="Transparent" Panel.ZIndex="2"
+                     Grid.ColumnSpan="3" Grid.RowSpan="2">
+            </Canvas>
+            <Grid x:Name="GameTextBlock" Grid.Row="1" Grid.Column="1" Panel.ZIndex="100">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition MinHeight="20"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="SpeakerTextBlock" Foreground="Wheat" Text="Моника" Margin="5" Panel.ZIndex="5"/>
+                <TextBlock x:Name="TextTextBlock"  Foreground="Wheat" Text="Привет мир" Margin="5" Panel.ZIndex="5"  Grid.Row="1" Grid.ColumnSpan="2"/>
+                <Image x:Name="TextBlockBackgroundImage" Grid.RowSpan="2" Grid.ColumnSpan="2"
+                       Stretch="Fill" Source="Resources/TextBlockTemplate.png" Margin="-70,-20,-70,0" Panel.ZIndex="0"
+                       Opacity="0.7"/>
             </Grid>
         </Grid>
         <!--#endregion-->

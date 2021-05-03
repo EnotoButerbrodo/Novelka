@@ -11,6 +11,7 @@
     <None Remove="Resources\BlankTemplate.png" />
     <None Remove="Resources\MonikaTemplate.png" />
     <None Remove="Resources\template.png" />
+    <None Remove="Resources\TextBlockTemplate.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +29,7 @@
     <Resource Include="Resources\BlankTemplate.png" />
     <Resource Include="Resources\MonikaTemplate.png" />
     <Resource Include="Resources\template.png" />
+    <Resource Include="Resources\TextBlockTemplate.png" />
   </ItemGroup>
 
   <ItemGroup>
