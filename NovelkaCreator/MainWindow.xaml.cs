@@ -29,14 +29,19 @@ namespace NovelkaCreator
         public static DirectoryInfo tempDirectoryInfo = new DirectoryInfo("temp");
         public static DirectoryInfo currentProjectPath = tempDirectoryInfo;
         Novelka.TextBlock.TextBlock textBlock = new Novelka.TextBlock.TextBlock();
+        public Action PreviewAreaChangedEvent;
 
         public MainWindow()
         {
             InitializeComponent();
-           //MainPreviewCanvas.Children.Add(textBlock.GetBase());
+            PreviewAreaChangedEvent += PreviewAreaChangedHandler;
+            //MainPreviewCanvas.Children.Add(textBlock.GetBase());
         }
 
-
+        void PreviewAreaChangedHandler()
+        {
+            selectedSlide.SetSlideImage(CreateBitmapFromVisual(MainPreviewArea));
+        }
         async Task<BitmapImage> LoadImageAsync(string path)
         {
             return await Task.Run(() =>
@@ -97,6 +102,19 @@ namespace NovelkaCreator
             if (String.IsNullOrEmpty(oldFilePath) || String.IsNullOrEmpty(newFilePath))
                 throw new Exception("Path is null or empty");
             File.Copy(oldFilePath, newFilePath, true);
+        }
+
+        private void SpeakerTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void TextTextbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (selectedSlide == null) return;
+
+            selectedSlide.frame.text = (sender as TextBox).Text;
+            PreviewAreaChangedEvent?.Invoke();
         }
     }
 }

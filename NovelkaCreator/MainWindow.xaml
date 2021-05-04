@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NovelkaCreator"
         mc:Ignorable="d"
-        Title="NovelkaCreator" Height="600" Width="1200">
+        Title="NovelkaCreator" Height="600" Width="1200" ResizeMode="NoResize">
 
     <Grid x:Name="MainGrid" Background="WhiteSmoke">
         <!--#region GridDefinitions-->
@@ -100,8 +100,9 @@
                     <RowDefinition MinHeight="20"/>
                     <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
-                <TextBlock x:Name="SpeakerTextBlock" Foreground="Wheat" Text="Моника" Margin="5" Panel.ZIndex="5"/>
-                <TextBlock x:Name="TextTextBlock"  Foreground="Wheat" Text="Привет мир" Margin="5" Panel.ZIndex="5"  Grid.Row="1" Grid.ColumnSpan="2"/>
+                <TextBox x:Name="SpeakerTextBox" Foreground="Wheat" Margin="5" Panel.ZIndex="5" Background="Transparent" TextChanged="SpeakerTextBox_TextChanged"/>
+                <TextBox x:Name="TextTextbox"  Foreground="Wheat"  Margin="5" Panel.ZIndex="5"  Grid.Row="1" Grid.ColumnSpan="2" 
+                         Background="Transparent" TextWrapping="Wrap" TextChanged="TextTextbox_TextChanged"/>
                 <Image x:Name="TextBlockBackgroundImage" Grid.RowSpan="2" Grid.ColumnSpan="2"
                        Stretch="Fill" Source="Resources/TextBlockTemplate.png" Margin="-70,-20,-70,0" Panel.ZIndex="0"
                        Opacity="0.7"/>
