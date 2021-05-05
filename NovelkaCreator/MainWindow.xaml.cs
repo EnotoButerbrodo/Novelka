@@ -114,6 +114,7 @@ namespace NovelkaCreator
             if (selectedSlide == null) return;
 
             selectedSlide.frame.text = (sender as TextBox).Text;
+            //MessageBox.Show(TextTextbox.MaxLength.ToString());
             PreviewAreaChangedEvent?.Invoke();
         }
     }

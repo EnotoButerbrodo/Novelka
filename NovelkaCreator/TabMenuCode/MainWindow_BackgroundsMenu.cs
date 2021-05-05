@@ -54,7 +54,7 @@ namespace NovelkaCreator
         }
         private void SetAsBackgroundImageButton_Click(object sender, RoutedEventArgs e)
         {
-            if (selectedSlide == null) return;
+            if (selectedSlide == null || BackgroundImageListBox.SelectedItem == null) return;
             selectedSlide.frame.backgroundImage = BackgroundImageListBox.SelectedItem.ToString();
 
             PreviewAreaChangedEvent?.Invoke();
