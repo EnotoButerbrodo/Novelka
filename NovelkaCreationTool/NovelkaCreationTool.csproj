@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Commands\" />
-    <Folder Include="Models\" />
     <Folder Include="ViewModels\Base\" />
   </ItemGroup>
 
