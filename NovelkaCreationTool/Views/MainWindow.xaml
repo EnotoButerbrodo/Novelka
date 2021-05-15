@@ -6,7 +6,24 @@
         xmlns:local="clr-namespace:NovelkaCreationTool"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Name="TabMenuRow" Height="*"/>
+            <RowDefinition Name="ContentRow" Height="3*"/>
+            <RowDefinition Name="StatusRow"  Height="0.2*"/>
+        </Grid.RowDefinitions>
 
+        <TabControl Grid.Row="0">
+        </TabControl>
+
+        <Grid Name="ContentGrid" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <GridSplitter Grid.Column="0" 
+                          HorizontalAlignment="Right"
+                          Width="3"/>
+        </Grid>
     </Grid>
 </Window>

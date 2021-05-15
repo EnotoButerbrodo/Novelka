@@ -14,6 +14,7 @@ namespace NovelkaCreator
 {
     public partial class MainWindow
     {
+        /*
         private void AddImageButton_Click(object sender, RoutedEventArgs e)
         {
             string filter = "Images (*.png;*.jpeg)|*.png;*.jpeg";
@@ -77,6 +78,6 @@ namespace NovelkaCreator
         {
             LoadBackgoundImagesNames();
         }
-
+        */
     }
 }
