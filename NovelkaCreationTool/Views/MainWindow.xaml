@@ -13,12 +13,15 @@
             <RowDefinition Name="SlidesRow" Height="*"/>
             <RowDefinition Name="StatusRow"  Height="20"/>
         </Grid.RowDefinitions>
+        <Grid.DataContext>
+            <vm:SlidesViewModel/>
+        </Grid.DataContext>
 
         <TabControl Grid.Row="0">
-            
+
             <TabItem Name="SlidesTabItem" Header="Слайды">
                 <WrapPanel>
-                    <Button Name="AddSlide">
+                    <Button Name="AddSlide" Command="{Binding AddSlideCommand}">
                         Добавить слайд
                     </Button>
                 </WrapPanel>
@@ -26,9 +29,6 @@
         </TabControl>
 
         <Grid Name="SlidesGrid" Grid.Row="1">
-            <Grid.DataContext>
-                <vm:SlidesViewModel/>
-            </Grid.DataContext>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="4*"/>
@@ -36,18 +36,24 @@
             <GridSplitter Grid.Column="1" 
                           HorizontalAlignment="Left"
                           Width="3"/>
-            <ListBox Name="SlidesListBox" ItemsSource="{Binding Path=Slides}"
+            <ListBox Name="SlidesListBox" ItemsSource="{Binding Path=Slides, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
                      SelectedItem="{Binding SelectedSlide}"
                      Background="LightGray">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="10" Background="Snow">
-                            <TextBlock Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding Path=Id, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
                             <Image Margin="10" Source="{Binding Image, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            
         </Grid>
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock Text="{Binding Slides.Count, UpdateSourceTrigger=PropertyChanged}"/>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>

@@ -8,6 +8,7 @@ using NovelkaCreationTool.ViewModels.Base;
 using NovelkaCreationTool.Commands.Base;
 using System.Windows.Input;
 using NovelkaCreationTool.Commands;
+using System.Diagnostics;
 
 namespace NovelkaCreationTool.ViewModels
 {
@@ -32,6 +33,7 @@ namespace NovelkaCreationTool.ViewModels
             {
                 Id = Slides.Count + 1
             });
+            Debug.WriteLine(Slides.Count);
         }
         private bool CanAddSlideCommandExecute(object p)
         {
@@ -44,7 +46,6 @@ namespace NovelkaCreationTool.ViewModels
             #region Commands
 
             AddSlideCommand = new LambdaCommand(OnAddSlideCommandExecuted, CanAddSlideCommandExecute);
-
             #endregion
         }
     }
