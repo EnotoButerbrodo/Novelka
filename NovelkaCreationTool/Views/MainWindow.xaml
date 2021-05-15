@@ -4,13 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NovelkaCreationTool"
+        xmlns:vm="clr-namespace:NovelkaCreationTool.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Name="TabMenuRow" Height="*"/>
-            <RowDefinition Name="ContentRow" Height="3*"/>
-            <RowDefinition Name="StatusRow"  Height="0.2*"/>
+            <RowDefinition Name="TabMenuRow" Height="100"/>
+            <RowDefinition Name="ContentRow" Height="*"/>
+            <RowDefinition Name="StatusRow"  Height="20"/>
         </Grid.RowDefinitions>
 
         <TabControl Grid.Row="0">
@@ -29,15 +30,19 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            <GridSplitter Grid.Column="0" 
-                          HorizontalAlignment="Right"
+            <GridSplitter Grid.Column="1" 
+                          HorizontalAlignment="Left"
                           Width="3"/>
-            <ListBox Name="SlidesListBox">
+            <ListBox Name="SlidesListBox" ItemsSource="{Binding Slides}"
+                     SelectedItem="{Binding SelectedSlide}">
+                <ListBox.DataContext>
+                    <vm:SlidesViewModel/>
+                </ListBox.DataContext>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock/>
-                            <Image/>
+                            <TextBlock Text="{Binding Id}"/>
+                            <Image Source="{Binding Image}" Margin="10"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
