@@ -32,6 +32,16 @@
             <GridSplitter Grid.Column="0" 
                           HorizontalAlignment="Right"
                           Width="3"/>
+            <ListBox Name="SlidesListBox">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock/>
+                            <Image/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
     </Grid>
 </Window>
