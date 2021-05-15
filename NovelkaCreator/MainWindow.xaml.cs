@@ -15,6 +15,7 @@ using System.ComponentModel;
 using System.Windows.Media;
 using System.Drawing;
 using System.Runtime.Serialization.Formatters.Binary;
+using NovelkaCreator.ViewModel;
 
 namespace NovelkaCreator
 {
@@ -31,10 +32,13 @@ namespace NovelkaCreator
         Novelka.TextBlock.TextBlock textBlock = new Novelka.TextBlock.TextBlock();
         public Action PreviewAreaChangedEvent;
 
+        public MainViewModel model = new MainViewModel();
+
         public MainWindow()
         {
             InitializeComponent();
             PreviewAreaChangedEvent += PreviewAreaChangedHandler;
+            DataContext = model;
             //MainPreviewCanvas.Children.Add(textBlock.GetBase());
         }
 

@@ -17,11 +17,10 @@ namespace NovelkaCreator
         void AddSlide(BasicSlide slide)
         {
             Slides.AddLast(slide);
-            SlidesPanel.Children.Add(slide.GetAppearance());
+          
         }
         void DeleteSlide()
         {
-            SlidesPanel.Children.Remove(selectedSlide.GetAppearance());
             Slides.Remove(selectedSlide);
             SlidesScrollBar.Maximum = Slides.Count - 1;
         }

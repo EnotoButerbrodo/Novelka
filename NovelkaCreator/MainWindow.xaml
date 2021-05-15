@@ -4,9 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NovelkaCreator"
+        xmlns:vm="clr-namespace:NovelkaCreator.ViewModel"
         mc:Ignorable="d"
         Title="NovelkaCreator" Height="600" Width="1200" ResizeMode="NoResize">
-
+    <Window.Resources>
+        <vm:MainViewModel x:Key="mainVM"/>
+    </Window.Resources>
     <Grid x:Name="MainGrid" Background="WhiteSmoke">
         <!--#region GridDefinitions-->
         <Grid.ColumnDefinitions>
@@ -62,10 +65,17 @@
         <GridSplitter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="6" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ShowsPreview="True"/>
         <!--#endregion-->
         <!--#region Slides-->
-        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" VerticalScrollBarVisibility="Hidden" >
-            <StackPanel x:Name="SlidesPanel" Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Background="Lavender"/>
-            
-        </ScrollViewer>
+        <ListBox ItemsSource="{Binding Slides}" SelectedItem="{Binding SelectedSlide}" 
+            Grid.Row="1" Grid.RowSpan="2">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Id}"/>
+                        <Image Source="{Binding Image}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <ScrollBar x:Name="SlidesScrollBar" 
             Grid.Row="1" Grid.Column="1" Grid.RowSpan="3"  Panel.ZIndex="999" HorizontalAlignment="Right" 
                    ViewportSize="1" SmallChange="1" Maximum="0"/>
