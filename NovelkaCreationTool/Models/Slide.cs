@@ -25,6 +25,7 @@ namespace NovelkaCreationTool.Models
             get => Data.BackgroundImageName;
             set => Data.BackgroundImageName = value;
         }
+        
 
     }
 

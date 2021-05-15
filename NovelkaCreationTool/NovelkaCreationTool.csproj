@@ -7,7 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Default\SlideDefaultImage.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Infrastructure\Commands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Default\SlideDefaultImage.png" />
   </ItemGroup>
 
 </Project>

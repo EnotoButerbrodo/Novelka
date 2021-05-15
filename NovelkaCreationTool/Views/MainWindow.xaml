@@ -33,16 +33,17 @@
             <GridSplitter Grid.Column="1" 
                           HorizontalAlignment="Left"
                           Width="3"/>
-            <ListBox Name="SlidesListBox" ItemsSource="{Binding Slides}"
+            <ListBox Name="SlidesListBox" ItemsSource="{Binding Path=Slides}"
                      SelectedItem="{Binding SelectedSlide}">
                 <ListBox.DataContext>
                     <vm:SlidesViewModel/>
                 </ListBox.DataContext>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Margin="10">
                             <TextBlock Text="{Binding Id}"/>
-                            <Image Source="{Binding Image}" Margin="10"/>
+                            <Image Margin="10" Source="{Binding Image, UpdateSourceTrigger=PropertyChanged}">
+                            </Image>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
