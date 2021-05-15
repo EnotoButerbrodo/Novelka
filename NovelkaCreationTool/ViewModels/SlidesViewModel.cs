@@ -5,13 +5,16 @@ using System.Text;
 using System.Windows.Media.Imaging;
 using NovelkaCreationTool.Models;
 using NovelkaCreationTool.ViewModels.Base;
+using NovelkaCreationTool.Commands.Base;
+using System.Windows.Input;
+using NovelkaCreationTool.Commands;
 
 namespace NovelkaCreationTool.ViewModels
 {
     public class SlidesViewModel : ViewModelBase
     {
-        
-        public ObservableCollection<Slide> Slides { get; set; }
+
+        public ObservableCollection<Slide> Slides { get; set; } = new ObservableCollection<Slide>();
         Slide selectedSlide;
         public Slide SelectedSlide
         {
@@ -19,15 +22,30 @@ namespace NovelkaCreationTool.ViewModels
             set => Set(ref selectedSlide, value);
         }
 
+        #region AddSlideCommand
+
+        public ICommand AddSlideCommand { get; }
+
+        private void OnAddSlideCommandExecuted(object p)
+        {
+            Slides.Add(new Slide
+            {
+                Id = Slides.Count + 1
+            });
+        }
+        private bool CanAddSlideCommandExecute(object p)
+        {
+            return true;
+        }
+
+        #endregion
         public SlidesViewModel()
         {
-            Slides = new ObservableCollection<Slide>();
-            Slide slide = new Slide
-            {
-                Image = new BitmapImage(new Uri("Resources\\Default\\SlideDefaultImage.png", UriKind.Relative)),
-                Id = Slides.Count + 1
-            };
-            Slides.Add(slide); 
+            #region Commands
+
+            AddSlideCommand = new LambdaCommand(OnAddSlideCommandExecuted, CanAddSlideCommandExecute);
+
+            #endregion
         }
     }
 }
