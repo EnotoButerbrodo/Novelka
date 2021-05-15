@@ -21,8 +21,11 @@
 
             <TabItem Name="SlidesTabItem" Header="Слайды">
                 <WrapPanel>
-                    <Button Name="AddSlide" Command="{Binding AddSlideCommand}">
+                    <Button Name="AddSlideButton" Command="{Binding AddSlideCommand}">
                         Добавить слайд
+                    </Button>
+                    <Button Name="DeleteSlideButton" Command="{Binding DeleteSlideCommand}">
+                       Удалить слайд
                     </Button>
                 </WrapPanel>
             </TabItem>
@@ -36,7 +39,7 @@
             <GridSplitter Grid.Column="1" 
                           HorizontalAlignment="Left"
                           Width="3"/>
-            <ListBox Name="SlidesListBox" ItemsSource="{Binding Path=Slides, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
+            <ListBox Name="SlidesListBox" ItemsSource="{Binding Path=Slides, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      SelectedItem="{Binding SelectedSlide}"
                      Background="LightGray">
                 <ListBox.ItemTemplate>
@@ -52,7 +55,7 @@
         </Grid>
         <StatusBar Grid.Row="2">
             <StatusBarItem>
-                <TextBlock Text="{Binding Slides.Count, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="{Binding Slides.Count, StringFormat=Слайдов {0}, UpdateSourceTrigger=PropertyChanged}"/>
             </StatusBarItem>
         </StatusBar>
     </Grid>

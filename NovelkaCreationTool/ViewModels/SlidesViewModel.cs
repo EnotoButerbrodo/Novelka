@@ -9,6 +9,7 @@ using NovelkaCreationTool.Commands.Base;
 using System.Windows.Input;
 using NovelkaCreationTool.Commands;
 using System.Diagnostics;
+using System.Linq;
 
 namespace NovelkaCreationTool.ViewModels
 {
@@ -41,11 +42,31 @@ namespace NovelkaCreationTool.ViewModels
         }
 
         #endregion
+        #region DeleteSlideCommand
+
+        public ICommand DeleteSlideCommand { get; }
+
+        private void OnDeleteSlideCommandExecuted(object p)
+        {
+            Slides.Remove(SelectedSlide);
+            if (Slides.Count > 0)
+            {
+                SelectedSlide = Slides.Last();
+            }
+        }
+        private bool CanDeleteSlideCommandExecute(object p)
+        {
+            if (SelectedSlide == null) return false;
+            return true;
+        }
+
+        #endregion
         public SlidesViewModel()
         {
             #region Commands
 
             AddSlideCommand = new LambdaCommand(OnAddSlideCommandExecuted, CanAddSlideCommandExecute);
+            DeleteSlideCommand = new LambdaCommand(OnDeleteSlideCommandExecuted, CanDeleteSlideCommandExecute);
             #endregion
         }
     }
