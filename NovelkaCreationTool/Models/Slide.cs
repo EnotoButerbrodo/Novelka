@@ -7,7 +7,7 @@ namespace NovelkaCreationTool.Models
 {
     public class Slide
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public BitmapImage Image { get; set; }
         SlideData Data { get; set; } = new SlideData();
         public string Speaker

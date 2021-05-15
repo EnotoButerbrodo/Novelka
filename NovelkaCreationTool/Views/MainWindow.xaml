@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:NovelkaCreationTool"
         xmlns:vm="clr-namespace:NovelkaCreationTool.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="NovelkaCreationTool" Height="450" Width="800">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Name="TabMenuRow" Height="100"/>
-            <RowDefinition Name="ContentRow" Height="*"/>
+            <RowDefinition Name="SlidesRow" Height="*"/>
             <RowDefinition Name="StatusRow"  Height="20"/>
         </Grid.RowDefinitions>
 
@@ -25,7 +25,10 @@
             </TabItem>
         </TabControl>
 
-        <Grid Name="ContentGrid" Grid.Row="1">
+        <Grid Name="SlidesGrid" Grid.Row="1">
+            <Grid.DataContext>
+                <vm:SlidesViewModel/>
+            </Grid.DataContext>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="4*"/>
@@ -34,16 +37,13 @@
                           HorizontalAlignment="Left"
                           Width="3"/>
             <ListBox Name="SlidesListBox" ItemsSource="{Binding Path=Slides}"
-                     SelectedItem="{Binding SelectedSlide}">
-                <ListBox.DataContext>
-                    <vm:SlidesViewModel/>
-                </ListBox.DataContext>
+                     SelectedItem="{Binding SelectedSlide}"
+                     Background="LightGray">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Margin="10">
-                            <TextBlock Text="{Binding Id}"/>
-                            <Image Margin="10" Source="{Binding Image, UpdateSourceTrigger=PropertyChanged}">
-                            </Image>
+                        <StackPanel Orientation="Horizontal" Margin="10" Background="Snow">
+                            <TextBlock Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Image Margin="10" Source="{Binding Image, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

@@ -25,7 +25,7 @@ namespace NovelkaCreationTool.ViewModels
             Slide slide = new Slide
             {
                 Image = new BitmapImage(new Uri("Resources\\Default\\SlideDefaultImage.png", UriKind.Relative)),
-                Id = "1"
+                Id = Slides.Count + 1
             };
             Slides.Add(slide); 
         }
