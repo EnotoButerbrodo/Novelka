@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:NovelkaCreationTool"
         xmlns:vm="clr-namespace:NovelkaCreationTool.ViewModels"
         mc:Ignorable="d"
-        Title="NovelkaCreationTool" Height="450" Width="800">
+        Title="NovelkaCreationTool" Height="450" Width="800"
+        Background="LightGray">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Name="TabMenuRow" Height="100"/>
@@ -51,6 +52,11 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Canvas Name="PreviewCanvas" Grid.Column="1" Margin="15 10" Background="White">
+                <Image Name="PreviewImage" Width="{Binding ElementName=PreviewCanvas, Path=ActualWidth}"
+                       Height="{Binding ElementName=PreviewCanvas, Path=ActualHeight}"
+                       />
+            </Canvas>
             
         </Grid>
         <StatusBar Grid.Row="2">
