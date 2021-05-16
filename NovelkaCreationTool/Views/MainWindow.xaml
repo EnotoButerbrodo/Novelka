@@ -8,19 +8,19 @@
         mc:Ignorable="d"
         Title="NovelkaCreationTool" Height="450" Width="800"
         Background="LightGray">
+    <Window.Resources>
+        <vm:SlidesViewModel x:Key="SlidesViewModel"/>
+    </Window.Resources>
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Name="TabMenuRow" Height="100"/>
             <RowDefinition Name="SlidesRow" Height="*"/>
             <RowDefinition Name="StatusRow"  Height="20"/>
         </Grid.RowDefinitions>
-        <Grid.DataContext>
-            <vm:SlidesViewModel/>
-        </Grid.DataContext>
 
         <TabControl Grid.Row="0">
 
-            <TabItem Name="SlidesTabItem" Header="Слайды">
+            <TabItem Name="SlidesTabItem" Header="Слайды" DataContext="{StaticResource SlidesViewModel}">
                 <WrapPanel>
                     <Button Name="AddSlideButton" Command="{Binding AddSlideCommand}">
                         Добавить слайд
@@ -40,7 +40,8 @@
             <GridSplitter Grid.Column="1" 
                           HorizontalAlignment="Left"
                           Width="3"/>
-            <ListBox Name="SlidesListBox" ItemsSource="{Binding Path=Slides, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+            <ListBox Name="SlidesListBox" DataContext="{StaticResource SlidesViewModel}"
+                     ItemsSource="{Binding Path=Slides, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      SelectedItem="{Binding SelectedSlide}"
                      Background="LightGray">
                 <ListBox.ItemTemplate>
@@ -57,11 +58,15 @@
                        Height="{Binding ElementName=PreviewCanvas, Path=ActualHeight}"
                        />
             </Canvas>
-            
         </Grid>
         <StatusBar Grid.Row="2">
-            <StatusBarItem>
-                <TextBlock Text="{Binding Slides.Count, StringFormat=Слайдов {0}, UpdateSourceTrigger=PropertyChanged}"/>
+            <StatusBarItem Name="SlidesCountBarItem" DataContext="{StaticResource SlidesViewModel}">
+                <TextBlock >
+                    <Run Text="Слайд"/>
+                    <Run Text="{Binding SelectedSlide.Id, FallbackValue=0}"/>
+                    <Run Text=" из "/>
+                    <Run Text="{Binding Slides.Count, Mode=OneWay}"/>
+                </TextBlock>
             </StatusBarItem>
         </StatusBar>
     </Grid>
