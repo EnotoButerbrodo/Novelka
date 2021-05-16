@@ -53,11 +53,33 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Canvas Name="PreviewCanvas" Grid.Column="1" Margin="15 10" Background="White">
-                <Image Name="PreviewImage" Width="{Binding ElementName=PreviewCanvas, Path=ActualWidth}"
-                       Height="{Binding ElementName=PreviewCanvas, Path=ActualHeight}"
-                       />
-            </Canvas>
+
+            <Viewbox Grid.Column="1" Stretch="Uniform" Margin="20 5">
+                <Grid Width="720px" Height="480px">
+                    <Canvas Name="PreviewCanvas" Background="White"/>
+                    <Grid Name="TextBoxGrid" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="50 5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="100"/>
+                        </Grid.RowDefinitions>
+                        <TextBox Name="SpeakerTextBox"
+                                    Width="200"
+                                    HorizontalAlignment="Left"
+                                    Grid.Row="0"
+                                    Padding="5"
+                                    Background="LightGray"/>
+                        <TextBox Grid.Row="1"
+                                 Padding="20"
+                                 Background="LightSlateGray"
+                                 Foreground="White"
+                                    
+                                 />
+                        <Image Grid.RowSpan="2"/>
+                    </Grid>
+                    <Image Name="PreviewImage"/>
+                </Grid>
+            </Viewbox>
+
         </Grid>
         <StatusBar Grid.Row="2">
             <StatusBarItem Name="SlidesCountBarItem" DataContext="{StaticResource SlidesViewModel}">
