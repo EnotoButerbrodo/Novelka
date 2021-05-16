@@ -24,6 +24,7 @@ namespace NovelkaCreationTool.ViewModels
             set => Set(ref selectedSlide, value);
         }
 
+
         #region AddSlideCommand
 
         public ICommand AddSlideCommand { get; }
@@ -53,9 +54,9 @@ namespace NovelkaCreationTool.ViewModels
             Slides.Remove(SelectedSlide);
             if (Slides.Count > 0)
             {
-                for (int i = 1; i < Slides.Count; i++)
+                for (int i = 0; i < Slides.Count; i++)
                 {
-                    Slides[i].Id = i;
+                    Slides[i].Id = i+1;
                 }
                 SelectedSlide = Slides.Last();
             }

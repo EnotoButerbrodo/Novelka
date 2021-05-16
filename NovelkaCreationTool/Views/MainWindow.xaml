@@ -55,20 +55,22 @@
             </ListBox>
 
             <Viewbox Grid.Column="1" Stretch="Uniform" Margin="20 5">
-                <Grid Width="720px" Height="480px">
+                <Grid Width="720px" Height="480px" DataContext="{StaticResource SlidesViewModel}">
                     <Canvas Name="PreviewCanvas" Background="White"/>
                     <Grid Name="TextBoxGrid" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="50 5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="100"/>
                         </Grid.RowDefinitions>
-                        <TextBox Name="SpeakerTextBox"
+                        <TextBox Text="{Binding Path=SelectedSlide.Speaker}"
+                            Name="SpeakerTextBox"
                                     Width="200"
                                     HorizontalAlignment="Left"
                                     Grid.Row="0"
                                     Padding="5"
                                     Background="LightGray"/>
-                        <TextBox Grid.Row="1"
+                        <TextBox Text="{Binding Path=SelectedSlide.Text, Mode=TwoWay}" 
+                                Grid.Row="1"
                                  Padding="20"
                                  Background="LightSlateGray"
                                  Foreground="White"
