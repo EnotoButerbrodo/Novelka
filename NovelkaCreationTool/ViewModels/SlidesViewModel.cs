@@ -30,11 +30,13 @@ namespace NovelkaCreationTool.ViewModels
 
         private void OnAddSlideCommandExecuted(object p)
         {
-            Slides.Add(new Slide
+            var slide = new Slide
             {
                 Id = Slides.Count + 1
-            });
-            Debug.WriteLine(Slides.Count);
+            };
+            Slides.Add(slide);
+            SelectedSlide = slide;
+            
         }
         private bool CanAddSlideCommandExecute(object p)
         {
@@ -51,6 +53,10 @@ namespace NovelkaCreationTool.ViewModels
             Slides.Remove(SelectedSlide);
             if (Slides.Count > 0)
             {
+                for (int i = 1; i < Slides.Count; i++)
+                {
+                    Slides[i].Id = i;
+                }
                 SelectedSlide = Slides.Last();
             }
         }
