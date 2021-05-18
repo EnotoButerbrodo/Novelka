@@ -62,7 +62,7 @@
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="100"/>
                         </Grid.RowDefinitions>
-                        <TextBox Text="{Binding Path=SelectedSlide.Speaker}"
+                        <TextBox Text="{Binding Path=SelectedSlide.Speaker, Mode=TwoWay}"
                             Name="SpeakerTextBox"
                                     Width="200"
                                     HorizontalAlignment="Left"
