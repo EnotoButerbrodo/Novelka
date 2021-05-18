@@ -43,9 +43,9 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <WrapPanel>
-                        <Button>
-                        Установить как задний фон
-                    </Button>
+                        <Button Command="{Binding SetImageAsBackgroundCommand}">
+                            Установить как задний фон
+                        </Button>
                     </WrapPanel>
                     <ListBox Name="BackgroundsList" Grid.Column="1"
                              SelectedItem="{Binding SelectedBackground}"
