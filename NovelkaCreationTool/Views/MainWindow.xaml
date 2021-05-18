@@ -11,7 +11,7 @@
     <Window.Resources>
         <vm:SlidesViewModel x:Key="SlidesViewModel"/>
     </Window.Resources>
-    <Grid Name="MainGrid">
+    <Grid Name="MainGrid" DataContext="{StaticResource SlidesViewModel}">
         <Grid.RowDefinitions>
             <RowDefinition Name="TabMenuRow" Height="100"/>
             <RowDefinition Name="SlidesRow" Height="*"/>
@@ -20,7 +20,7 @@
 
         <TabControl Grid.Row="0">
 
-            <TabItem Name="SlidesTabItem" Header="Слайды" DataContext="{StaticResource SlidesViewModel}">
+            <TabItem Name="SlidesTabItem" Header="Слайды">
                 <WrapPanel>
                     <Button Name="AddSlideButton" Command="{Binding AddSlideCommand}">
                         Добавить слайд
@@ -29,6 +29,22 @@
                        Удалить слайд
                     </Button>
                 </WrapPanel>
+            </TabItem>
+            <TabItem Name="BackgroundTabItem" Header="Задний фон">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <WrapPanel>
+                        <Button>
+                        Установить как задний фон
+                    </Button>
+                    </WrapPanel>
+                    <ListBox Name="BackgroundsList" Grid.Column="1" Padding="10"
+                             SelectedItem="{Binding SelectedBackground}"/>
+
+                </Grid>
             </TabItem>
         </TabControl>
 
@@ -40,7 +56,7 @@
             <GridSplitter Grid.Column="1" 
                           HorizontalAlignment="Left"
                           Width="3"/>
-            <ListBox Name="SlidesListBox" DataContext="{StaticResource SlidesViewModel}"
+            <ListBox Name="SlidesListBox"
                      ItemsSource="{Binding Path=Slides, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      SelectedItem="{Binding SelectedSlide}"
                      Background="LightGray">
@@ -55,7 +71,7 @@
             </ListBox>
 
             <Viewbox Grid.Column="1" Stretch="Uniform" Margin="20 5">
-                <Grid Width="720px" Height="480px" DataContext="{StaticResource SlidesViewModel}">
+                <Grid Width="720px" Height="480px">
                     <Canvas Name="PreviewCanvas" Background="White"/>
                     <Grid Name="TextBoxGrid" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="50 5">
                         <Grid.RowDefinitions>
@@ -84,7 +100,7 @@
 
         </Grid>
         <StatusBar Grid.Row="2">
-            <StatusBarItem Name="SlidesCountBarItem" DataContext="{StaticResource SlidesViewModel}">
+            <StatusBarItem Name="SlidesCountBarItem">
                 <TextBlock >
                     <Run Text="Слайд"/>
                     <Run Text="{Binding SelectedSlide.Id, FallbackValue=0}"/>

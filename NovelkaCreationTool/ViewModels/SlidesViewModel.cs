@@ -17,13 +17,22 @@ namespace NovelkaCreationTool.ViewModels
     {
 
         public ObservableCollection<Slide> Slides { get; set; } = new ObservableCollection<Slide>();
+        public ObservableCollection<string> Backgrounds { get; set; } = new ObservableCollection<string>();
         Slide selectedSlide;
+        string selectedBackground;
+
         public Slide SelectedSlide
         {
             get => selectedSlide;
             set => Set(ref selectedSlide, value);
+        }  
+        public string SelectedBackground
+        {
+            get => selectedBackground;
+            set => Set(ref selectedBackground, value);
         }
 
+        
 
         #region AddSlideCommand
 
