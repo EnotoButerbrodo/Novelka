@@ -16,7 +16,7 @@
     </Window.Resources>
     <Grid Name="MainGrid" DataContext="{StaticResource SlidesViewModel}">
         <Grid.RowDefinitions>
-            <RowDefinition Name="TabMenuRow" Height="100"/>
+            <RowDefinition Name="TabMenuRow" Height="125"/>
             <RowDefinition Name="SlidesRow" Height="*"/>
             <RowDefinition Name="StatusRow"  Height="20"/>
         </Grid.RowDefinitions>
@@ -42,18 +42,25 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <WrapPanel>
+                    <WrapPanel Grid.Column="2">
                         <Button Command="{Binding SetImageAsBackgroundCommand}">
                             Установить как задний фон
                         </Button>
                     </WrapPanel>
-                    <ListBox Name="BackgroundsList" Grid.Column="1"
+                    <ListBox Name="BackgroundsList" Grid.Column="0"
                              SelectedItem="{Binding SelectedBackground}"
                              ItemsSource="{Binding Backgrounds}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
-
+                    <Image Grid.Column="1"
+                           Source="{Binding SelectedBackground.FullName, Converter={StaticResource PathToImageLoaderConverter}}"/>
                 </Grid>
             </TabItem>
         </TabControl>
@@ -93,19 +100,17 @@
                                     Width="200"
                                     HorizontalAlignment="Left"
                                     Grid.Row="0"
-                                    Padding="5"
-                                    Background="LightGray"/>
+                                    Padding="5"/>
                         <TextBox Text="{Binding Path=SelectedSlide.Text, Mode=TwoWay}" 
                                 Grid.Row="1"
                                  Padding="20"
-                                 Background="LightSlateGray"
-                                 Foreground="White"
-                                    
-                                 />
+                                 Foreground="White"/>
                         <Image Grid.RowSpan="2"/>
+                        <Border Background="Gray" Grid.RowSpan="2" Opacity="0.7" Panel.ZIndex="0"/>
                     </Grid>
                     <Image Name="PreviewImage" 
-                           Source="{Binding SelectedSlide.BackgroundImageName, Converter={StaticResource PathToImageLoaderConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+                           Source="{Binding SelectedSlide.BackgroundImageName, Converter={StaticResource PathToImageLoaderConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                           Stretch="UniformToFill"/>
                 </Grid>
             </Viewbox>
 

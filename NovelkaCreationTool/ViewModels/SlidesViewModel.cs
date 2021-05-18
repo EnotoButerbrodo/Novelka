@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace NovelkaCreationTool.ViewModels
 {
@@ -19,9 +20,9 @@ namespace NovelkaCreationTool.ViewModels
     {
         DirectoryInfo FolderPath = new DirectoryInfo("temp");
         public ObservableCollection<Slide> Slides { get; set; } = new ObservableCollection<Slide>();
-        public ObservableCollection<string> Backgrounds { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<Background> Backgrounds { get; set; } = new ObservableCollection<Background>();
         Slide selectedSlide;
-        string selectedBackground;
+        Background selectedBackground;
         BitmapImage previewImage;
 
         public Slide SelectedSlide
@@ -29,7 +30,7 @@ namespace NovelkaCreationTool.ViewModels
             get => selectedSlide;
             set => Set(ref selectedSlide, value);
         }  
-        public string SelectedBackground
+        public Background SelectedBackground
         {
             get => selectedBackground;
             set => Set(ref selectedBackground, value);
@@ -94,7 +95,12 @@ namespace NovelkaCreationTool.ViewModels
              var files = FolderPath.GetFiles();
              foreach (var file in files)
              {
-                Backgrounds.Add(file.Name);
+                Background background = new Background
+                {
+                    Name = file.Name,
+                    FullName = file.FullName
+                };
+                Backgrounds.Add(background);
              }
 
         }
@@ -110,8 +116,7 @@ namespace NovelkaCreationTool.ViewModels
 
         private void OnSetImageAsBackgroundExecuted(object p)
         {
-            SelectedSlide.BackgroundImageName = $"{FolderPath.FullName}\\{SelectedBackground}";
-            //PreviewImage = LoadImage($"{FolderPath.FullName}\\{SelectedBackground}");
+            SelectedSlide.BackgroundImageName = SelectedBackground.FullName;
 
         }
         private bool CanSetImageAsBackgroundExecute(object p)
@@ -119,21 +124,6 @@ namespace NovelkaCreationTool.ViewModels
             return (SelectedBackground != null && SelectedSlide != null);
         }
 
-        BitmapImage LoadImage(string path)
-        {
-            using (FileStream fs = File.OpenRead(path))
-            {
-                BitmapImage image = new BitmapImage();
-                image = new BitmapImage();
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.StreamSource = fs;
-                image.EndInit();
-                image.Freeze();
-                return image;
-            }
-
-        }
         #endregion
         public SlidesViewModel()
         {
