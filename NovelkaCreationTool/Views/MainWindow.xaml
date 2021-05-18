@@ -81,7 +81,7 @@
             <Viewbox Grid.Column="1" Stretch="Uniform" Margin="20 5">
                 <Grid Width="720px" Height="480px">
                     <Canvas Name="PreviewCanvas" Background="White"/>
-                    <Grid Name="TextBoxGrid" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="50 5">
+                    <Grid Name="TextBoxGrid" Panel.ZIndex="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="50 5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="100"/>
@@ -102,7 +102,8 @@
                                  />
                         <Image Grid.RowSpan="2"/>
                     </Grid>
-                    <Image Name="PreviewImage"/>
+                    <Image Name="PreviewImage" 
+                           Source="{Binding PreviewImage, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
                 </Grid>
             </Viewbox>
 

@@ -22,6 +22,7 @@ namespace NovelkaCreationTool.ViewModels
         public ObservableCollection<string> Backgrounds { get; set; } = new ObservableCollection<string>();
         Slide selectedSlide;
         string selectedBackground;
+        BitmapImage previewImage;
 
         public Slide SelectedSlide
         {
@@ -32,6 +33,11 @@ namespace NovelkaCreationTool.ViewModels
         {
             get => selectedBackground;
             set => Set(ref selectedBackground, value);
+        }
+        public BitmapImage PreviewImage
+        {
+            get => previewImage;
+            set => Set(ref previewImage, value);
         }
 
         
@@ -105,6 +111,7 @@ namespace NovelkaCreationTool.ViewModels
         private void OnSetImageAsBackgroundExecuted(object p)
         {
             SelectedSlide.BackgroundImageName = SelectedBackground;
+            PreviewImage = LoadImage($"{FolderPath.FullName}\\{SelectedBackground}");
 
         }
         private bool CanSetImageAsBackgroundExecute(object p)
@@ -112,6 +119,21 @@ namespace NovelkaCreationTool.ViewModels
             return (SelectedBackground != null && SelectedSlide != null);
         }
 
+        BitmapImage LoadImage(string path)
+        {
+            using (FileStream fs = File.OpenRead(path))
+            {
+                BitmapImage image = new BitmapImage();
+                image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.StreamSource = fs;
+                image.EndInit();
+                image.Freeze();
+                return image;
+            }
+
+        }
         #endregion
         public SlidesViewModel()
         {
