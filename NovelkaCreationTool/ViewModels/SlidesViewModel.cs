@@ -110,8 +110,8 @@ namespace NovelkaCreationTool.ViewModels
 
         private void OnSetImageAsBackgroundExecuted(object p)
         {
-            SelectedSlide.BackgroundImageName = SelectedBackground;
-            PreviewImage = LoadImage($"{FolderPath.FullName}\\{SelectedBackground}");
+            SelectedSlide.BackgroundImageName = $"{FolderPath.FullName}\\{SelectedBackground}";
+            //PreviewImage = LoadImage($"{FolderPath.FullName}\\{SelectedBackground}");
 
         }
         private bool CanSetImageAsBackgroundExecute(object p)

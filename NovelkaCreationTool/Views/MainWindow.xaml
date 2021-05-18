@@ -6,11 +6,13 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:NovelkaCreationTool"
         xmlns:vm="clr-namespace:NovelkaCreationTool.ViewModels"
+        xmlns:converter="clr-namespace:NovelkaCreationTool.Infrastructure.Converters"
         mc:Ignorable="d"
         Title="NovelkaCreationTool" Height="450" Width="800"
         Background="LightGray">
     <Window.Resources>
         <vm:SlidesViewModel x:Key="SlidesViewModel"/>
+        <converter:PathToImageLoaderConverter x:Key="PathToImageLoaderConverter"/>
     </Window.Resources>
     <Grid Name="MainGrid" DataContext="{StaticResource SlidesViewModel}">
         <Grid.RowDefinitions>
@@ -103,7 +105,7 @@
                         <Image Grid.RowSpan="2"/>
                     </Grid>
                     <Image Name="PreviewImage" 
-                           Source="{Binding PreviewImage, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+                           Source="{Binding SelectedSlide.BackgroundImageName, Converter={StaticResource PathToImageLoaderConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
                 </Grid>
             </Viewbox>
 
