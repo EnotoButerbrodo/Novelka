@@ -10,12 +10,14 @@ using System.Windows.Input;
 using NovelkaCreationTool.Commands;
 using System.Diagnostics;
 using System.Linq;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace NovelkaCreationTool.ViewModels
 {
     public class SlidesViewModel : ViewModelBase
     {
-
+        DirectoryInfo FolderPath = new DirectoryInfo("temp");
         public ObservableCollection<Slide> Slides { get; set; } = new ObservableCollection<Slide>();
         public ObservableCollection<string> Backgrounds { get; set; } = new ObservableCollection<string>();
         Slide selectedSlide;
@@ -77,12 +79,32 @@ namespace NovelkaCreationTool.ViewModels
         }
 
         #endregion
+        #region LoadBackgroundsList
+
+        public ICommand LoadBackgroundsListCommand { get; }
+
+        private void OnLoadBackgroundsListExecuted(object p)
+        {
+             var files = FolderPath.GetFiles();
+             foreach (var file in files)
+             {
+                Backgrounds.Add(file.Name);
+             }
+
+        }
+        private bool CanLoadBackgroundsListExecute(object p)
+        {
+            return true;
+        }
+
+        #endregion
         public SlidesViewModel()
         {
             #region Commands
 
             AddSlideCommand = new LambdaCommand(OnAddSlideCommandExecuted, CanAddSlideCommandExecute);
             DeleteSlideCommand = new LambdaCommand(OnDeleteSlideCommandExecuted, CanDeleteSlideCommandExecute);
+            LoadBackgroundsListCommand = new LambdaCommand(OnLoadBackgroundsListExecuted, CanLoadBackgroundsListExecute);
             #endregion
         }
     }

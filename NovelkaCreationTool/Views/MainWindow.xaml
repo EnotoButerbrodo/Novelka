@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:NovelkaCreationTool"
         xmlns:vm="clr-namespace:NovelkaCreationTool.ViewModels"
         mc:Ignorable="d"
@@ -31,6 +32,11 @@
                 </WrapPanel>
             </TabItem>
             <TabItem Name="BackgroundTabItem" Header="Задний фон">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding Path=LoadBackgroundsListCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -41,8 +47,10 @@
                         Установить как задний фон
                     </Button>
                     </WrapPanel>
-                    <ListBox Name="BackgroundsList" Grid.Column="1" Padding="10"
-                             SelectedItem="{Binding SelectedBackground}"/>
+                    <ListBox Name="BackgroundsList" Grid.Column="1"
+                             SelectedItem="{Binding SelectedBackground}"
+                             ItemsSource="{Binding Backgrounds}">
+                    </ListBox>
 
                 </Grid>
             </TabItem>
