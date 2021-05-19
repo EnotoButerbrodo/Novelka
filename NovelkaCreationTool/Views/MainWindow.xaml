@@ -10,6 +10,7 @@
         mc:Ignorable="d"
         Title="NovelkaCreationTool" Height="450" Width="800"
         Background="LightGray">
+    
     <Window.Resources>
         <vm:SlidesViewModel x:Key="SlidesViewModel"/>
         <converter:PathToImageLoaderConverter x:Key="PathToImageLoaderConverter"/>
@@ -89,7 +90,23 @@
 
             <Viewbox Grid.Column="1" Stretch="Uniform" Margin="20 5">
                 <Grid Width="720px" Height="480px">
-                    <Canvas Name="PreviewCanvas" Background="White"/>
+                    <ItemsControl Name="SlideImages" ItemsSource="{Binding Path=SlideImages, UpdateSourceTrigger=PropertyChanged}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas Background="White"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Path=ImageName,Converter={StaticResource PathToImageLoaderConverter}}"
+                                       Canvas.Left="{Binding Path=X}"
+                                       Canvas.Bottom="{Binding Path=Y}"
+                                       Panel.ZIndex="{Binding Path=Z}"
+                                       Width="{Binding Path=Width}"
+                                       Height="{Binding Path=Height}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                     <Grid Name="TextBoxGrid" Panel.ZIndex="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="50 5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
@@ -103,10 +120,9 @@
                                     Padding="5"/>
                         <TextBox Text="{Binding Path=SelectedSlide.Text, Mode=TwoWay}" 
                                 Grid.Row="1"
-                                 Padding="20"
-                                 Foreground="White"/>
+                                 Padding="20"/>
                         <Image Grid.RowSpan="2"/>
-                        <Border Background="Gray" Grid.RowSpan="2" Opacity="0.7" Panel.ZIndex="0"/>
+                        
                     </Grid>
                     <Image Name="PreviewImage" 
                            Source="{Binding SelectedSlide.BackgroundImageName, Converter={StaticResource PathToImageLoaderConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"

@@ -21,6 +21,7 @@ namespace NovelkaCreationTool.ViewModels
         DirectoryInfo FolderPath = new DirectoryInfo("temp");
         public ObservableCollection<Slide> Slides { get; set; } = new ObservableCollection<Slide>();
         public ObservableCollection<Background> Backgrounds { get; set; } = new ObservableCollection<Background>();
+        public ObservableCollection<SlideImage> SlideImages { get; set; } = new ObservableCollection<SlideImage>();
         Slide selectedSlide;
         Background selectedBackground;
         BitmapImage previewImage;
@@ -134,6 +135,24 @@ namespace NovelkaCreationTool.ViewModels
             LoadBackgroundsListCommand = new LambdaCommand(OnLoadBackgroundsListExecuted, CanLoadBackgroundsListExecute);
             SetImageAsBackgroundCommand = new LambdaCommand(OnSetImageAsBackgroundExecuted, CanSetImageAsBackgroundExecute);
             #endregion
+            SlideImages.Add(new SlideImage
+            {
+                ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
+                Width = 100,
+                Height = 100,
+                X = 0,
+                Y = 0,
+                Z = 0
+            });
+            SlideImages.Add(new SlideImage
+            {
+                ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
+                Width = 200,
+                Height = 100,
+                X = 300,
+                Y = 400,
+                Z = 0
+            });
         }
     }
 }
