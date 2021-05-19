@@ -96,11 +96,15 @@
                                 <Canvas Background="White"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Left" Value="{Binding Path=X}" />
+                                <Setter Property="Canvas.Bottom" Value="{Binding Path=Y}" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding Path=ImageName,Converter={StaticResource PathToImageLoaderConverter}}"
-                                       Canvas.Left="{Binding Path=X}"
-                                       Canvas.Bottom="{Binding Path=Y}"
                                        Panel.ZIndex="{Binding Path=Z}"
                                        Width="{Binding Path=Width}"
                                        Height="{Binding Path=Height}"/>

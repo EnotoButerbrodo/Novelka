@@ -150,7 +150,7 @@ namespace NovelkaCreationTool.ViewModels
                 Width = 200,
                 Height = 100,
                 X = 300,
-                Y = 400,
+                Y = 0,
                 Z = 0
             });
         }
