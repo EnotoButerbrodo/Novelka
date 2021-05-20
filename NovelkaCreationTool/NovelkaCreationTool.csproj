@@ -29,4 +29,11 @@
     <Resource Include="Resources\Default\SlideDefaultImage.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="ViewModels\SlidesViewModel.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CustomToolNamespace>NovelkaCreationTool.ViewModels</CustomToolNamespace>
+    </Compile>
+  </ItemGroup>
+
 </Project>

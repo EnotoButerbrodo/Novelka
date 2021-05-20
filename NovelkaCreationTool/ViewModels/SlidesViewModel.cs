@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Media.Imaging;
 using NovelkaCreationTool.Models;
 using NovelkaCreationTool.ViewModels.Base;
-using NovelkaCreationTool.Commands.Base;
 using System.Windows.Input;
 using NovelkaCreationTool.Commands;
-using System.Diagnostics;
 using System.Linq;
 using System.IO;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace NovelkaCreationTool.ViewModels
 {

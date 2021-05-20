@@ -9,15 +9,17 @@
         xmlns:converter="clr-namespace:NovelkaCreationTool.Infrastructure.Converters"
         mc:Ignorable="d"
         Title="NovelkaCreationTool" Height="450" Width="800"
-        Background="LightGray">
-
-
+        Background="LightGray"
+        >
+    <Window.DataContext>
+        <vm:SlidesViewModel/>
+    </Window.DataContext>
     <Window.Resources>
-        <vm:SlidesViewModel x:Key="SlidesViewModel"/>
         <converter:PathToImageLoaderConverter x:Key="PathToImageLoaderConverter"/>
         <converter:FullFileNameToShortNameConverter x:Key="FullFileNameToShortConverter"/>
     </Window.Resources>
-    <Grid Name="MainGrid" DataContext="{StaticResource SlidesViewModel}">
+
+    <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Name="TabMenuRow" Height="125"/>
             <RowDefinition Name="SlidesRow" Height="*"/>
