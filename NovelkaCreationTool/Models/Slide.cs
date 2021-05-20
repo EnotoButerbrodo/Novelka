@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Media.Imaging;
 
@@ -25,6 +26,11 @@ namespace NovelkaCreationTool.Models
             get => Data.BackgroundImageName;
             set => Data.BackgroundImageName = value;
         }
+        public ObservableCollection<SlideImage> Images
+        {
+            get => Data.Images;
+            set => Data.Images = value;
+        }
         
 
     }
@@ -34,5 +40,6 @@ namespace NovelkaCreationTool.Models
         public string Speaker { get; set; } = "";
         public string Text { get; set; } = "";
         public string BackgroundImageName { get; set; } = "";
+        public ObservableCollection<SlideImage> Images = new ObservableCollection<SlideImage>();
     }
 }

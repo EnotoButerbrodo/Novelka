@@ -18,7 +18,7 @@ namespace NovelkaCreationTool.ViewModels
         Slide selectedSlide;
         Background selectedBackground;
         BitmapImage previewImage;
-
+        SlideImage selectedSlideImage;
         public Slide SelectedSlide
         {
             get => selectedSlide;
@@ -29,11 +29,12 @@ namespace NovelkaCreationTool.ViewModels
             get => selectedBackground;
             set => Set(ref selectedBackground, value);
         }
-        public BitmapImage PreviewImage
+        public SlideImage SelectedSlideImage
         {
-            get => previewImage;
-            set => Set(ref previewImage, value);
+            get => selectedSlideImage;
+            set => Set(ref selectedSlideImage, value);
         }
+
 
         
 
@@ -128,6 +129,15 @@ namespace NovelkaCreationTool.ViewModels
             LoadBackgroundsListCommand = new LambdaCommand(OnLoadBackgroundsListExecuted, CanLoadBackgroundsListExecute);
             SetImageAsBackgroundCommand = new LambdaCommand(OnSetImageAsBackgroundExecuted, CanSetImageAsBackgroundExecute);
             #endregion
+            Slides.Add(new Slide
+            {
+                Id = 1
+            });
+            Slides[0].Images.Add(new SlideImage
+            {
+                Name = "Image 1",
+                
+            })
             SlideImages.Add(new SlideImage
             {
                 ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",

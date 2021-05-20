@@ -11,21 +11,20 @@
         Title="NovelkaCreationTool" Height="450" Width="800"
         Background="LightGray"
         >
-    <Window.DataContext>
-        <vm:SlidesViewModel/>
-    </Window.DataContext>
+  
     <Window.Resources>
+        <vm:SlidesViewModel x:Key="SlidesViewModel"/>
         <converter:PathToImageLoaderConverter x:Key="PathToImageLoaderConverter"/>
         <converter:FullFileNameToShortNameConverter x:Key="FullFileNameToShortConverter"/>
     </Window.Resources>
-
-    <Grid Name="MainGrid">
+    
+    <Grid Name="MainGrid" DataContext="{StaticResource SlidesViewModel}">
         <Grid.RowDefinitions>
             <RowDefinition Name="TabMenuRow" Height="125"/>
             <RowDefinition Name="SlidesRow" Height="*"/>
             <RowDefinition Name="StatusRow"  Height="20"/>
         </Grid.RowDefinitions>
-        
+
 
         <TabControl Grid.Row="0">
 
@@ -35,7 +34,7 @@
                         Добавить слайд
                     </Button>
                     <Button Name="DeleteSlideButton" Command="{Binding DeleteSlideCommand}">
-                       Удалить слайд
+                        Удалить слайд
                     </Button>
                 </WrapPanel>
             </TabItem>
@@ -69,6 +68,31 @@
                            Source="{Binding SelectedBackground.FullName, Converter={StaticResource PathToImageLoaderConverter}}"/>
                 </Grid>
             </TabItem>
+            <TabItem Name="SlideImagesTabItem" Header="Картинки слайда">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox ItemsSource="{Binding Path=SelectedSlide.Images}"
+                             SelectedItem="{Binding Path=SelectedSlideImage}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Path=Name}"/>
+                                    <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
         </TabControl>
 
         <Grid Name="SlidesGrid" Grid.Row="1">
@@ -95,7 +119,7 @@
 
             <Viewbox Grid.Column="1" Stretch="Uniform" Margin="20 5">
                 <Grid Width="720px" Height="480px">
-                    <ItemsControl Name="SlideImages" ItemsSource="{Binding Path=SlideImages, UpdateSourceTrigger=PropertyChanged}">
+                    <ItemsControl Name="SlideImages" ItemsSource="{Binding Path=SelectedSlide.Images, UpdateSourceTrigger=PropertyChanged}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Background="White"/>
@@ -131,7 +155,7 @@
                                 Grid.Row="1"
                                  Padding="20"/>
                         <Image Grid.RowSpan="2"/>
-                        
+
                     </Grid>
                     <Image Name="PreviewImage" 
                            Source="{Binding SelectedSlide.BackgroundImageName, Converter={StaticResource PathToImageLoaderConverter}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
