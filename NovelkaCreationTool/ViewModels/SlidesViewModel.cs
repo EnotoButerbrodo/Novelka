@@ -149,7 +149,7 @@ namespace NovelkaCreationTool.ViewModels
                 ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
                 Width = 200,
                 Height = 100,
-                X = 300,
+                X = 500,
                 Y = 0,
                 Z = 0
             });

@@ -10,10 +10,11 @@
         mc:Ignorable="d"
         Title="NovelkaCreationTool" Height="450" Width="800"
         Background="LightGray">
-    
+
     <Window.Resources>
         <vm:SlidesViewModel x:Key="SlidesViewModel"/>
         <converter:PathToImageLoaderConverter x:Key="PathToImageLoaderConverter"/>
+        <converter:FullFileNameToShortNameConverter x:Key="FullFileNameToShortConverter"/>
     </Window.Resources>
     <Grid Name="MainGrid" DataContext="{StaticResource SlidesViewModel}">
         <Grid.RowDefinitions>
@@ -21,6 +22,7 @@
             <RowDefinition Name="SlidesRow" Height="*"/>
             <RowDefinition Name="StatusRow"  Height="20"/>
         </Grid.RowDefinitions>
+        
 
         <TabControl Grid.Row="0">
 

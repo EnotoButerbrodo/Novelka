@@ -3,8 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:NovelkaCreationTool"
              xmlns:vm="clr-namespace:NovelkaCreationTool.ViewModels"
+             xmlns:converter="clr-namespace:NovelkaCreationTool.Infrastructure.Converters"
              
              StartupUri="Views\MainWindow.xaml">
     <Application.Resources>
+        <vm:SlidesViewModel x:Key="SlidesViewModel"/>
+        <converter:PathToImageLoaderConverter x:Key="PathToImageLoaderConverter"/>
+        <converter:FullFileNameToShortNameConverter x:Key="FullFileNameToShortConverter"/>
     </Application.Resources>
 </Application>
