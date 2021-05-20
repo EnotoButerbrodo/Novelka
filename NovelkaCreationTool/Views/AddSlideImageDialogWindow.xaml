@@ -1,0 +1,34 @@
+﻿<Window x:Class="NovelkaCreationTool.Views.AddSlideImageDialogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NovelkaCreationTool.Views"
+        xmlns:vm="clr-namespace:NovelkaCreationTool.ViewModels"
+        mc:Ignorable="d"
+        Title="Добавить изображение" Height="150" Width="300"
+        ResizeMode="NoResize"
+        >
+    <Window.DataContext>
+        <vm:SlidesViewModel/>
+    </Window.DataContext>
+    <Grid Margin="20" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="Путь"/>
+        <TextBox Grid.Column="2"/>
+        <Label Content="Имя" Grid.Row="1" Grid.Column="0"/>
+        <TextBox Grid.Row="1" Grid.Column="1"/>
+        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="Добавить"/>
+
+
+
+    </Grid>
+</Window>

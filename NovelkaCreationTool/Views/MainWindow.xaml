@@ -11,13 +11,13 @@
         Title="NovelkaCreationTool" Height="450" Width="800"
         Background="LightGray"
         >
-  
+
     <Window.Resources>
         <vm:SlidesViewModel x:Key="SlidesViewModel"/>
         <converter:PathToImageLoaderConverter x:Key="PathToImageLoaderConverter"/>
         <converter:FullFileNameToShortNameConverter x:Key="FullFileNameToShortConverter"/>
     </Window.Resources>
-    
+
     <Grid Name="MainGrid" DataContext="{StaticResource SlidesViewModel}">
         <Grid.RowDefinitions>
             <RowDefinition Name="TabMenuRow" Height="125"/>
@@ -47,8 +47,8 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition Width="0.5*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <WrapPanel Grid.Column="2">
                         <Button Command="{Binding SetImageAsBackgroundCommand}">
@@ -105,7 +105,7 @@
                         </ListBox.ItemContainerStyle>
                     </ListBox>
 
-                    <UniformGrid Grid.Column="1" Columns="4" Rows="4">
+                    <!--<UniformGrid Grid.Column="1" Columns="4" Rows="4">
                         <Label>
                             Ширина
                         </Label>
@@ -137,8 +137,12 @@
                         <TextBox
                                  Text="{Binding Path=SelectedSlideImage.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </UniformGrid>
+                    -->
+                    <WrapPanel Grid.Column="2">
+                        <Button Content="Добавать картинку"/>
+                    </WrapPanel>
                 </Grid>
-                
+
             </TabItem>
         </TabControl>
 
@@ -147,7 +151,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
-            
+
             <GridSplitter Grid.Column="1" 
                           HorizontalAlignment="Left"
                           Width="3"/>
@@ -171,7 +175,7 @@
                         Width="25" Height="25" />
                 <Button Command="{Binding DeleteSlideCommand}" Content="-" Width="25" Height="25"/>
             </StackPanel>
-                
+
             <Viewbox Grid.Column="1" Stretch="Uniform" Margin="20 5">
                 <Grid Width="720px" Height="480px">
                     <ListBox ItemsSource="{Binding Path=SelectedSlide.Images}"
@@ -198,7 +202,7 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    
+
                     <Grid Name="TextBoxGrid" Panel.ZIndex="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="50 5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
