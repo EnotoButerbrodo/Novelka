@@ -76,7 +76,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <ListBox ItemsSource="{Binding Path=SelectedSlide.Images}"
-                             SelectedItem="{Binding Path=SelectedSlideImage}">
+                             SelectedItem="{Binding Path=SelectedSlideImage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel/>
@@ -85,8 +85,10 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock Text="{Binding Path=Name}"/>
-                                    <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}}"/>
+                                    <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Center"/>
+                                    <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}}"
+                                           Width="100"
+                                           Height="50"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -119,29 +121,31 @@
 
             <Viewbox Grid.Column="1" Stretch="Uniform" Margin="20 5">
                 <Grid Width="720px" Height="480px">
-                    <ListBox Name="SlideImages" ItemsSource="{Binding Path=SelectedSlide.Images, UpdateSourceTrigger=PropertyChanged}"
-                             SelectedItem="{Binding Path=SelectedSlideImage}">
-                        <ItemsControl.ItemsPanel>
+                    <ListBox ItemsSource="{Binding Path=SelectedSlide.Images}"
+                             SelectedItem="{Binding Path=SelectedSlideImage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                        <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Background="White"/>
                             </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="ContentPresenter">
-                                <Setter Property="Canvas.Left" Value="{Binding Path=X}" />
-                                <Setter Property="Canvas.Bottom" Value="{Binding Path=Y}" />
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="Canvas.Left"
+                                Value="{Binding Path=X}"/>
+                                <Setter Property="Canvas.Bottom"
+                                Value="{Binding Path=Y}"/>
                             </Style>
-                        </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.ItemTemplate>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Image Source="{Binding Path=ImageName,Converter={StaticResource PathToImageLoaderConverter}}"
-                                       Panel.ZIndex="{Binding Path=Z}"
+                                <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}}"
                                        Width="{Binding Path=Width}"
                                        Height="{Binding Path=Height}"
                                        />
                             </DataTemplate>
-                        </ItemsControl.ItemTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
+                    
                     <Grid Name="TextBoxGrid" Panel.ZIndex="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="50 5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
