@@ -7,8 +7,5 @@
              
              StartupUri="Views\MainWindow.xaml">
     <Application.Resources>
-        <vm:SlidesViewModel x:Key="SlidesViewModel"/>
-        <converter:PathToImageLoaderConverter x:Key="PathToImageLoaderConverter"/>
-        <converter:FullFileNameToShortNameConverter x:Key="FullFileNameToShortConverter"/>
     </Application.Resources>
 </Application>

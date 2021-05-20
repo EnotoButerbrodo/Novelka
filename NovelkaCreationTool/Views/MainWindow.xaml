@@ -11,6 +11,7 @@
         Title="NovelkaCreationTool" Height="450" Width="800"
         Background="LightGray">
 
+
     <Window.Resources>
         <vm:SlidesViewModel x:Key="SlidesViewModel"/>
         <converter:PathToImageLoaderConverter x:Key="PathToImageLoaderConverter"/>

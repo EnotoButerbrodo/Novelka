@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovelkaCreator", "NovelkaCr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestPoligon", "TestPoligon\TestPoligon.csproj", "{067A078F-6FE3-4F5D-B98F-9183FA58EF66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovelkaCreationTool", "NovelkaCreationTool\NovelkaCreationTool.csproj", "{39FE14A2-504A-40F5-BC01-DA19D4BFF910}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NovelkaCreationTool", "NovelkaCreationTool\NovelkaCreationTool.csproj", "{39FE14A2-504A-40F5-BC01-DA19D4BFF910}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
