@@ -75,7 +75,7 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <ListBox ItemsSource="{Binding Path=SelectedSlide.Images}"
+                    <ListBox Name="SlideImagesListBox" ItemsSource="{Binding Path=SelectedSlide.Images}"
                              SelectedItem="{Binding Path=SelectedSlideImage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -93,6 +93,7 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
+                    
                 </Grid>
             </TabItem>
         </TabControl>
@@ -102,6 +103,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
+            
             <GridSplitter Grid.Column="1" 
                           HorizontalAlignment="Left"
                           Width="3"/>
@@ -119,6 +121,13 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
+            <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="1"
+                        Orientation="Horizontal">
+                <Button Command="{Binding AddSlideCommand}" Content="+"
+                        Width="25" Height="25" />
+                <Button Command="{Binding DeleteSlideCommand}" Content="-" Width="25" Height="25"/>
+            </StackPanel>
+                
             <Viewbox Grid.Column="1" Stretch="Uniform" Margin="20 5">
                 <Grid Width="720px" Height="480px">
                     <ListBox ItemsSource="{Binding Path=SelectedSlide.Images}"
