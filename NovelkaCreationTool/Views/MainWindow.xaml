@@ -92,9 +92,53 @@
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="ContextMenu">
+                                    <Setter.Value>
+                                        <ContextMenu DataContext="{StaticResource SlidesViewModel}">
+                                            <MenuItem Header="Delete" Command="{Binding Path=DeleteSlideCommand}"/>
+                                        </ContextMenu>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                     </ListBox>
-                    
+
+                    <UniformGrid Grid.Column="1" Columns="4" Rows="4">
+                        <Label>
+                            Ширина
+                        </Label>
+                        <TextBox
+                                 Text="{Binding Path=SelectedSlideImage.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label>
+                            Высота
+                        </Label>
+                        <TextBox 
+                                 Text="{Binding Path=SelectedSlideImage.Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label>
+                            X
+                        </Label>
+                        <TextBox
+                                 Text="{Binding Path=SelectedSlideImage.X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label>
+                            Y
+                        </Label>
+                        <TextBox
+                                 Text="{Binding Path=SelectedSlideImage.Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label>
+                            Z
+                        </Label>
+                        <TextBox
+                                 Text="{Binding Path=SelectedSlideImage.Z, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label>
+                            Name
+                        </Label>
+                        <TextBox
+                                 Text="{Binding Path=SelectedSlideImage.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </UniformGrid>
                 </Grid>
+                
             </TabItem>
         </TabControl>
 
