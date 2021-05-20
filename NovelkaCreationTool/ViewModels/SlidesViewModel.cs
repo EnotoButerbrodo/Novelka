@@ -136,8 +136,8 @@ namespace NovelkaCreationTool.ViewModels
             Slides[0].Images.Add(new SlideImage
             {
                 Name = "Image 1",
-                
-            })
+
+            });
             SlideImages.Add(new SlideImage
             {
                 ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",

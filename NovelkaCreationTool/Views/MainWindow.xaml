@@ -119,7 +119,8 @@
 
             <Viewbox Grid.Column="1" Stretch="Uniform" Margin="20 5">
                 <Grid Width="720px" Height="480px">
-                    <ItemsControl Name="SlideImages" ItemsSource="{Binding Path=SelectedSlide.Images, UpdateSourceTrigger=PropertyChanged}">
+                    <ListBox Name="SlideImages" ItemsSource="{Binding Path=SelectedSlide.Images, UpdateSourceTrigger=PropertyChanged}"
+                             SelectedItem="{Binding Path=SelectedSlideImage}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Background="White"/>
@@ -136,10 +137,11 @@
                                 <Image Source="{Binding Path=ImageName,Converter={StaticResource PathToImageLoaderConverter}}"
                                        Panel.ZIndex="{Binding Path=Z}"
                                        Width="{Binding Path=Width}"
-                                       Height="{Binding Path=Height}"/>
+                                       Height="{Binding Path=Height}"
+                                       />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    </ListBox>
                     <Grid Name="TextBoxGrid" Panel.ZIndex="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="50 5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
