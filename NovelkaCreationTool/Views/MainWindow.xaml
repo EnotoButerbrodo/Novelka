@@ -156,10 +156,12 @@
                                     Width="200"
                                     HorizontalAlignment="Left"
                                     Grid.Row="0"
-                                    Padding="5"/>
+                                    Padding="5"
+                                    Background="Transparent"/>
                         <TextBox Text="{Binding Path=SelectedSlide.Text, Mode=TwoWay}" 
                                 Grid.Row="1"
-                                 Padding="20"/>
+                                 Padding="20"
+                                 Background="Transparent"/>
                         <Image Grid.RowSpan="2"/>
 
                     </Grid>
