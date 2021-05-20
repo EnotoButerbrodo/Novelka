@@ -139,7 +139,7 @@
                     </UniformGrid>
                     -->
                     <WrapPanel Grid.Column="2">
-                        <Button Content="Добавать картинку"/>
+                        <Button Content="Добавать картинку" Command="{Binding AddNewSlideImageCommand}"/>
                     </WrapPanel>
                 </Grid>
 
