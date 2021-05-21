@@ -122,6 +122,26 @@ namespace NovelkaCreationTool.ViewModels
         }
 
         #endregion
+        #region AddImageToSlideCommand
+        public ICommand AddImageToSlideCommand { get; }
+        void OnAddImageToSlideCommandEx(object p)
+        {
+            SelectedSlide.Images.Add(new SlideImage
+            {
+                Name = SelectedBackground.Name,
+                ImageName = SelectedBackground.FullName,
+                Height = 200,
+                Width = 200,
+                X = 0,
+                Y = 0,
+                Z = 0
+            });
+        }
+        bool CanAddImageToSlideCommandEx(object p)
+        {
+            return (SelectedBackground != null && SelectedSlide != null);
+        }
+        #endregion
         public ICommand AddNewSlideImageCommand { get; }
         private void OnAddNewSlideImageCommandEx(object p)
         {
@@ -141,6 +161,7 @@ namespace NovelkaCreationTool.ViewModels
             LoadBackgroundsListCommand = new LambdaCommand(OnLoadBackgroundsListExecuted, CanLoadBackgroundsListExecute);
             SetImageAsBackgroundCommand = new LambdaCommand(OnSetImageAsBackgroundExecuted, CanSetImageAsBackgroundExecute);
             AddNewSlideImageCommand = new LambdaCommand(OnAddNewSlideImageCommandEx, (obj)=> { return true; });
+            AddImageToSlideCommand = new LambdaCommand(OnAddImageToSlideCommandEx, CanAddImageToSlideCommandEx);
             #endregion
             Slides.Add(new Slide
             {

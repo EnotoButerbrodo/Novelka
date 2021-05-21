@@ -38,7 +38,7 @@
                     </Button>
                 </WrapPanel>
             </TabItem>
-            <TabItem Name="BackgroundTabItem" Header="Задний фон">
+            <TabItem Name="BackgroundTabItem" Header="Картинки">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Loaded">
                         <i:InvokeCommandAction Command="{Binding Path=LoadBackgroundsListCommand}"/>
@@ -47,12 +47,12 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.5*"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <WrapPanel Grid.Column="2">
-                        <Button Command="{Binding SetImageAsBackgroundCommand}">
-                            Установить как задний фон
+                        <Button Command="{Binding AddImageToSlideCommand}">
+                            Добавить на слайд
                         </Button>
                     </WrapPanel>
                     <ListBox Name="BackgroundsList" Grid.Column="0"
