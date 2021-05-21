@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Добавить изображение" Height="170" Width="300"
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterOwner"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False" WindowStyle="None"
         >
     <Window.DataContext>
         <vm:AddSlideImageDialogViewModel/>
