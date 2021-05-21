@@ -79,7 +79,7 @@
                              SelectedItem="{Binding Path=SelectedSlideImage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel/>
+                                <WrapPanel Orientation="Horizontal"/>
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
@@ -105,7 +105,7 @@
                         </ListBox.ItemContainerStyle>
                     </ListBox>
 
-                    <!--<UniformGrid Grid.Column="1" Columns="4" Rows="4">
+                    <UniformGrid Grid.Column="1" Columns="4" Rows="4">
                         <Label>
                             Ширина
                         </Label>
@@ -137,7 +137,6 @@
                         <TextBox
                                  Text="{Binding Path=SelectedSlideImage.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </UniformGrid>
-                    -->
                     <WrapPanel Grid.Column="2">
                         <Button Content="Добавать картинку" Command="{Binding AddNewSlideImageCommand}"/>
                     </WrapPanel>
