@@ -8,6 +8,7 @@ using System.Linq;
 using System.IO;
 using NovelkaCreationTool.Views;
 using System.Windows;
+using NovelkaCreationTool.Infrastructure.Commands;
 
 namespace NovelkaCreationTool.ViewModels
 {
@@ -144,11 +145,32 @@ namespace NovelkaCreationTool.ViewModels
             SelectedSlideImage.Height = previewHeight;
             SelectedSlideImage.X = 0;
             SelectedSlideImage.Y = 0;
+            OnPropertyChanged(nameof(selectedSlideImage));
+            //OnPropertyChanged(nameof(SlideImages));
         }
         bool CanSetAsBackgroundImageCommandEx(object p)
         {
             return (SelectedSlideImage != null && SelectedSlide != null);
         }
+        #endregion
+        #region LoadImagesListAsyncCommand
+
+        public ICommand LoadImagesListAsyncCommand { get; }
+
+        private void OnLoadImagesListAsyncCommandExecuted(object p)
+        {
+            var files = FolderPath.GetFiles();
+            foreach (var file in files)
+            {
+                Images.Add(file.FullName);
+            }
+
+        }
+        private bool CanLoadImagesListAsyncCommandExecute(object p)
+        {
+            return true;
+        }
+
         #endregion
 
         public ICommand AddNewSlideImageCommand { get; }
@@ -171,12 +193,33 @@ namespace NovelkaCreationTool.ViewModels
             AddNewSlideImageCommand = new LambdaCommand(OnAddNewSlideImageCommandEx, (obj)=> { return true; });
             AddImageToSlideCommand = new LambdaCommand(OnAddImageToSlideCommandEx, CanAddImageToSlideCommandEx);
             SetAsBackgroundImageCommand = new LambdaCommand(OnSetAsBackgroundImageCommandEx, CanSetAsBackgroundImageCommandEx);
+            LoadImagesListAsyncCommand = new AsyncLambdaCommand(OnLoadImagesListAsyncCommandExecuted, CanLoadImagesListAsyncCommandExecute);
             #endregion
             PreviewHeight = 480;
             PreviewWidth = 720;
             Slides.Add(new Slide
             {
                 Id = 1
+            });
+            Slides[0].Images.Add(new SlideImage
+            {
+                Name = "Image 1",
+                ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
+                X = 200,
+                Y = 200,
+                Height = 200,
+                Width = 200
+
+            });
+            Slides[0].Images.Add(new SlideImage
+            {
+                Name = "Image 2",
+                ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
+                X = 300,
+                Y = 0,
+                Height = 100,
+                Width = 100
+
             });
             Slides[0].Images.Add(new SlideImage
             {

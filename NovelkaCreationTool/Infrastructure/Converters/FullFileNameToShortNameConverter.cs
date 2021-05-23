@@ -15,8 +15,11 @@ namespace NovelkaCreationTool.Infrastructure.Converters
         {
             string path = value as string;
             if (String.IsNullOrEmpty(path)) return "Unnamed";
+            return Task.Run(() =>
+            {
+                return Path.GetFileName(path);
 
-            return Path.GetFileName(path);
+            }).Result;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

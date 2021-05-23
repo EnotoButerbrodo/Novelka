@@ -17,18 +17,21 @@ namespace NovelkaCreationTool.Infrastructure.Converters
         {
 
             string path = value as string;
-            if (String.IsNullOrEmpty(path)) return new BitmapImage();
-            using (FileStream fs = File.OpenRead(path))
+            if (String.IsNullOrEmpty(path)) return null;
+            return Task.Run(() =>
             {
-                BitmapImage image = new BitmapImage();
-                image = new BitmapImage();
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.StreamSource = fs;
-                image.EndInit();
-                image.Freeze();
-                return image;
-            }
+                using (FileStream fs = File.OpenRead(path))
+                {
+                    BitmapImage image = new BitmapImage();
+                    image = new BitmapImage();
+                    image.BeginInit();
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.StreamSource = fs;
+                    image.EndInit();
+                    image.Freeze();
+                    return image;
+                }
+            }).Result;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

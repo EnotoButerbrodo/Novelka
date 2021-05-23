@@ -73,12 +73,12 @@
                              ItemsSource="{Binding Images}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Converter={StaticResource FullFileNameToShortConverter}}"/>
+                                <TextBlock Text="{Binding Converter={StaticResource FullFileNameToShortConverter}, IsAsync=True}"/>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                     <Image Grid.Column="1"
-                           Source="{Binding SelectedImage, Converter={StaticResource PathToImageLoaderConverter}}"/>
+                           Source="{Binding SelectedImage, Converter={StaticResource PathToImageLoaderConverter}, IsAsync=True}"/>
                 </Grid>
             </TabItem>
             <TabItem Name="SlideImagesTabItem" Header="Картинки слайда">
@@ -88,7 +88,7 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <ListBox Name="SlideImagesListBox" ItemsSource="{Binding Path=SelectedSlide.Images}"
+                    <ListBox Name="SlideImagesListBox" ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
                              SelectedItem="{Binding Path=SelectedSlideImage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -170,8 +170,8 @@
                           HorizontalAlignment="Left"
                           Width="3"/>
             <ListBox Name="SlidesListBox"
-                     ItemsSource="{Binding Path=Slides, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                     SelectedItem="{Binding SelectedSlide}"
+                     ItemsSource="{Binding Path=Slides, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, IsAsync=True}"
+                     SelectedItem="{Binding SelectedSlide, IsAsync=True}"
                      Background="LightGray">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
