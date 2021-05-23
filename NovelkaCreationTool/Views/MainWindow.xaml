@@ -26,8 +26,19 @@
         </Grid.RowDefinitions>
 
 
-        <TabControl Grid.Row="0">
-
+        <TabControl Grid.Row="0" >
+            <TabItem Name="ProjectSettingTabItem" Header="Проект">
+                <StackPanel Orientation="Horizontal">
+                    <GroupBox Header="Размер слайда">
+                        <UniformGrid Columns="2">
+                            <Label Content="Ширина"/>
+                            <TextBox Text="{Binding Path=PreviewWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label Content="Высота"/>
+                            <TextBox Text="{Binding Path=PreviewHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </UniformGrid>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
             <TabItem Name="SlidesTabItem" Header="Слайды">
                 <WrapPanel>
                     <Button Name="AddSlideButton" Command="{Binding AddSlideCommand}">
@@ -50,22 +61,24 @@
                         <ColumnDefinition Width="0.5*"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <WrapPanel Grid.Column="2">
+                    <WrapPanel Grid.Column="2" Margin="5">
                         <Button Command="{Binding AddImageToSlideCommand}">
                             Добавить на слайд
                         </Button>
+                       
+
                     </WrapPanel>
-                    <ListBox Name="BackgroundsList" Grid.Column="0"
-                             SelectedItem="{Binding SelectedBackground}"
-                             ItemsSource="{Binding Backgrounds}">
+                    <ListBox Name="ImagesList" Grid.Column="0"
+                             SelectedItem="{Binding SelectedImage}"
+                             ItemsSource="{Binding Images}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}"/>
+                                <TextBlock Text="{Binding Converter={StaticResource FullFileNameToShortConverter}}"/>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                     <Image Grid.Column="1"
-                           Source="{Binding SelectedBackground.FullName, Converter={StaticResource PathToImageLoaderConverter}}"/>
+                           Source="{Binding SelectedImage, Converter={StaticResource PathToImageLoaderConverter}}"/>
                 </Grid>
             </TabItem>
             <TabItem Name="SlideImagesTabItem" Header="Картинки слайда">
@@ -139,6 +152,8 @@
                     </UniformGrid>
                     <WrapPanel Grid.Column="2">
                         <Button Content="Добавать картинку" Command="{Binding AddNewSlideImageCommand}"/>
+                        <Button Content="Установить как задний фон"
+                                Command="{Binding SetAsBackgroundImageCommand}"/>
                     </WrapPanel>
                 </Grid>
 
@@ -176,7 +191,7 @@
             </StackPanel>
 
             <Viewbox Grid.Column="1" Stretch="Uniform" Margin="20 5">
-                <Grid Width="720px" Height="480px">
+                <Grid Width="{Binding Path=PreviewWidth}" Height="{Binding Path=PreviewHeight}">
                     <ListBox ItemsSource="{Binding Path=SelectedSlide.Images}"
                              SelectedItem="{Binding Path=SelectedSlideImage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <ListBox.ItemsPanel>
@@ -187,16 +202,18 @@
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="{x:Type ListBoxItem}">
                                 <Setter Property="Canvas.Left"
-                                Value="{Binding Path=X}"/>
+                                Value="{Binding Path=X, Mode=TwoWay}"/>
                                 <Setter Property="Canvas.Bottom"
-                                Value="{Binding Path=Y}"/>
+                                Value="{Binding Path=Y, Mode=TwoWay}"/>
+                                <Setter Property="Panel.ZIndex"
+                                Value="{Binding Path=Z, Mode=TwoWay}"/>
                             </Style>
                         </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}}"
-                                       Width="{Binding Path=Width}"
-                                       Height="{Binding Path=Height}"
+                                       Width="{Binding Path=Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                       Height="{Binding Path=Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                        Stretch="Fill"
                                        />
                             </DataTemplate>
