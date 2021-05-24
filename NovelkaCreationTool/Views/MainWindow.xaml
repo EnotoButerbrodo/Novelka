@@ -92,13 +92,13 @@
                              SelectedItem="{Binding Path=SelectedSlideImage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <UniformGrid Columns="2"/>
+                                <WrapPanel MaxWidth="{Binding ElementName=SlideImagesListBox, Path=ActualWidth}"/>
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Center" MaxWidth="100"/>
                                     <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}}"
                                            Width="100"
                                            Height="50"/>
@@ -154,6 +154,8 @@
                         <Button Content="Добавать картинку" Command="{Binding AddNewSlideImageCommand}"/>
                         <Button Content="Установить как задний фон"
                                 Command="{Binding SetAsBackgroundImageCommand}"/>
+                        <Button Content="Переместить назад" Command="{Binding Path=DecreaseImageZCommand}"/>
+                        <Button Content="Переместить вперед" Command="{Binding Path=IncreaseImageZCommand}"/>
                     </WrapPanel>
                 </Grid>
 

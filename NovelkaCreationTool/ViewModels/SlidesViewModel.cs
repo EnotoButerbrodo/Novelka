@@ -9,6 +9,7 @@ using System.IO;
 using NovelkaCreationTool.Views;
 using System.Windows;
 using NovelkaCreationTool.Infrastructure.Commands;
+using System.Collections;
 
 namespace NovelkaCreationTool.ViewModels
 {
@@ -53,7 +54,7 @@ namespace NovelkaCreationTool.ViewModels
         }
 
         AddSlideImageDialogWindow addSlideImageDialogWindow;
-
+        #region Command
 
         #region AddSlideCommand
 
@@ -129,7 +130,7 @@ namespace NovelkaCreationTool.ViewModels
                 Width = 200,
                 X = 0,
                 Y = 0,
-                Z = 0
+                Z = SelectedSlide.Images.Count
             });
         }
         bool CanAddImageToSlideCommandEx(object p)
@@ -172,7 +173,39 @@ namespace NovelkaCreationTool.ViewModels
         }
 
         #endregion
+        #region IncreaseImageZCommand
+        public ICommand IncreaseImageZCommand { get; }
+        void OnIncreaseImageZCommandEx(object p)
+        {
+            int index = SelectedSlide.Images.IndexOf(SelectedSlideImage);
+            int newIndex = index + 1;
+            SwapImagesZPosition(index, newIndex);
+        }
+        bool CanIncreaseImageZCommandEx(object p)
+        {
+            if (SelectedSlide != null)
+                if (SelectedSlide.Images.IndexOf(SelectedSlideImage) < SelectedSlide.Images.Count-1)
+                    return true;
+            return false;
+        }
+        #endregion
+        #region DecreaseImageZCommand
+        public ICommand DecreaseImageZCommand { get; }
+        void OnDecreaseImageZCommandEx(object p)
+        {
+            int index = SelectedSlide.Images.IndexOf(SelectedSlideImage);
+            int newIndex = index - 1;
+            SwapImagesZPosition(index, newIndex);
+        }
+        bool CanDecreaseImageZCommandEx(object p)
+        {
+            if (SelectedSlide != null)
+                if (SelectedSlide.Images.IndexOf(SelectedSlideImage) > 0)
+                    return true;
+            return false;
+        }
 
+        #endregion
         public ICommand AddNewSlideImageCommand { get; }
         private void OnAddNewSlideImageCommandEx(object p)
         {
@@ -183,6 +216,15 @@ namespace NovelkaCreationTool.ViewModels
             addSlideImageDialogWindow = window;
             addSlideImageDialogWindow.ShowDialog();
         }
+        #endregion
+
+        void SwapImagesZPosition(int firstIndex, int secondIndex)
+        {
+            SelectedSlide.Images[firstIndex].Z = secondIndex;
+            SelectedSlide.Images[secondIndex].Z = firstIndex;
+            SelectedSlide.Images.Move(firstIndex, secondIndex);
+        }
+        
         public SlidesViewModel()
         {
             #region Commands
@@ -194,6 +236,8 @@ namespace NovelkaCreationTool.ViewModels
             AddImageToSlideCommand = new LambdaCommand(OnAddImageToSlideCommandEx, CanAddImageToSlideCommandEx);
             SetAsBackgroundImageCommand = new LambdaCommand(OnSetAsBackgroundImageCommandEx, CanSetAsBackgroundImageCommandEx);
             LoadImagesListAsyncCommand = new AsyncLambdaCommand(OnLoadImagesListAsyncCommandExecuted, CanLoadImagesListAsyncCommandExecute);
+            IncreaseImageZCommand = new LambdaCommand(OnIncreaseImageZCommandEx, CanIncreaseImageZCommandEx);
+            DecreaseImageZCommand = new LambdaCommand(OnDecreaseImageZCommandEx, CanDecreaseImageZCommandEx);
             #endregion
             PreviewHeight = 480;
             PreviewWidth = 720;
@@ -207,6 +251,7 @@ namespace NovelkaCreationTool.ViewModels
                 ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
                 X = 200,
                 Y = 200,
+                Z = Slides[0].Images.Count,
                 Height = 200,
                 Width = 200
 
@@ -217,26 +262,29 @@ namespace NovelkaCreationTool.ViewModels
                 ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
                 X = 300,
                 Y = 0,
+                Z = Slides[0].Images.Count,
                 Height = 100,
                 Width = 100
 
             });
             Slides[0].Images.Add(new SlideImage
             {
-                Name = "Image 1",
+                Name = "Image 4",
                 ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
                 X = 200,
                 Y = 200,
+                Z = Slides[0].Images.Count,
                 Height = 200,
                 Width = 200
 
             });
             Slides[0].Images.Add(new SlideImage
             {
-                Name = "Image 2",
+                Name = "Image 3",
                 ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
                 X = 300,
                 Y = 0,
+                Z = Slides[0].Images.Count,
                 Height = 100,
                 Width = 100
 
