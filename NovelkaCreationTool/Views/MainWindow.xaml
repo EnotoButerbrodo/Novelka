@@ -191,7 +191,7 @@
                 <Button Command="{Binding DeleteSlideCommand}" Content="-" Width="25" Height="25"/>
             </StackPanel>
 
-            <Viewbox Grid.Column="1" Stretch="Uniform">
+            <Viewbox Name="SlidePreviewViewbox" Grid.Column="1" Stretch="Uniform">
                 <Grid Width="{Binding Path=PreviewWidth}" Height="{Binding Path=PreviewHeight}" Margin="20 5">
                     <ItemsControl ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}">
                         
@@ -216,7 +216,10 @@
                                        Width="{Binding Path=Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                        Height="{Binding Path=Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                        Stretch="Fill"
+                                       MaxWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualWidth}"
+                                       MaxHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualHeight}"
                                        />
+
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.InputBindings>
