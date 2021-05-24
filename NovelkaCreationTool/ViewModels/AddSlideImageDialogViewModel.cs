@@ -22,7 +22,7 @@ namespace NovelkaCreationTool.ViewModels
 
         public AddSlideImageDialogViewModel()
         {
-            AddButtonCommand = new LambdaCommand(AddButtonEx, (obj) => { return true; });
+            AddButtonCommand = new RelayCommand(AddButtonEx, (obj) => { return true; });
         }
     }
 }

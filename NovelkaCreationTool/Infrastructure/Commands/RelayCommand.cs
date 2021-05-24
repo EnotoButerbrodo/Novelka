@@ -3,12 +3,12 @@ using NovelkaCreationTool.Commands.Base;
 
 namespace NovelkaCreationTool.Commands
 {
-    internal class LambdaCommand : Command
+    internal class RelayCommand : Command
     {
         private readonly Action<object> _Execute;
         private readonly Func<object, bool> _CanExecute;
 
-        public LambdaCommand(Action<object> Execute, Func<object, bool> CanExecute = null)
+        public RelayCommand(Action<object> Execute, Func<object, bool> CanExecute = null)
         {
             _Execute = Execute ?? throw new ArgumentNullException(nameof(Execute));
             _CanExecute = CanExecute;

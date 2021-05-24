@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:NovelkaCreationTool"
         xmlns:vm="clr-namespace:NovelkaCreationTool.ViewModels"
         xmlns:converter="clr-namespace:NovelkaCreationTool.Infrastructure.Converters"
+        xmlns:infr="clr-namespace:NovelkaCreationTool.Infrastructure"
         xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
         mc:Ignorable="d"
         Title="NovelkaCreationTool" Height="450" Width="800"
@@ -147,7 +148,6 @@
                                  Text="{Binding Path=SelectedSlideImage.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </UniformGrid>
                     <WrapPanel Grid.Column="2">
-                        <Button Content="Добавать картинку" Command="{Binding AddNewSlideImageCommand}"/>
                         <Button Content="Установить как задний фон"
                                 Command="{Binding SetAsBackgroundImageCommand}"/>
                         <Button Content="Переместить назад" Command="{Binding Path=DecreaseImageZCommand}"/>
@@ -194,7 +194,6 @@
             <Viewbox Name="SlidePreviewViewbox" Grid.Column="1" Stretch="Uniform">
                 <Grid Width="{Binding Path=PreviewWidth}" Height="{Binding Path=PreviewHeight}" Margin="20 5">
                     <ItemsControl ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}">
-                        
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Background="White"/>
@@ -218,7 +217,12 @@
                                        Stretch="Fill"
                                        MaxWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualWidth}"
                                        MaxHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualHeight}"
+                                       dd:DragDrop.IsDragSource="True"
+                                       dd:DragDrop.IsDropTarget="True"
+                                       dd:DragDrop.UseDefaultDragAdorner="True"
+                                       
                                        />
+                               
 
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

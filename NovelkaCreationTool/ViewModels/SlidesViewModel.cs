@@ -206,23 +206,9 @@ namespace NovelkaCreationTool.ViewModels
         }
 
         #endregion
-        public ICommand AddNewSlideImageCommand { get; }
-        private void OnAddNewSlideImageCommandEx(object p)
-        {
-            var window = new AddSlideImageDialogWindow
-            {
-                Owner = Application.Current.MainWindow
-            };
-        }
-
-
-
-        public ICommand DragCommand { get; }
-        void OnDragCommandEx(object p)
-        {
-           
-        }
         #endregion
+
+        
 
         void SwapImagesZPosition(int firstIndex, int secondIndex)
         {
@@ -231,36 +217,19 @@ namespace NovelkaCreationTool.ViewModels
             SelectedSlide.Images.Move(firstIndex, secondIndex);
         }
 
-        //public void DragOver(IDropInfo dropInfo)
-        //{
-        //    if (dropInfo.Data is SlideImage &&
-        //       dropInfo.TargetItem is SlideImage)
-        //    {
-        //        dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
-        //        dropInfo.Effects = DragDropEffects.Move;
-        //    }
-        //}
-
-        //public void Drop(IDropInfo dropInfo)
-        //{
-        //    SchoolViewModel school = (SchoolViewModel)dropInfo.TargetItem;
-        //    PupilViewModel pupil = (PupilViewModel)dropInfo.Data;
-        //    school.Pupils.Add(pupil);
-        //}
 
         public SlidesViewModel()
         {
             #region Commands
 
-            AddSlideCommand = new LambdaCommand(OnAddSlideCommandExecuted, CanAddSlideCommandExecute);
-            DeleteSlideCommand = new LambdaCommand(OnDeleteSlideCommandExecuted, CanDeleteSlideCommandExecute);
-            LoadBackgroundsListCommand = new LambdaCommand(OnLoadBackgroundsListExecuted, CanLoadBackgroundsListExecute);
-            AddNewSlideImageCommand = new LambdaCommand(OnAddNewSlideImageCommandEx, (obj)=> { return true; });
-            AddImageToSlideCommand = new LambdaCommand(OnAddImageToSlideCommandEx, CanAddImageToSlideCommandEx);
-            SetAsBackgroundImageCommand = new LambdaCommand(OnSetAsBackgroundImageCommandEx, CanSetAsBackgroundImageCommandEx);
+            AddSlideCommand = new RelayCommand(OnAddSlideCommandExecuted, CanAddSlideCommandExecute);
+            DeleteSlideCommand = new RelayCommand(OnDeleteSlideCommandExecuted, CanDeleteSlideCommandExecute);
+            LoadBackgroundsListCommand = new RelayCommand(OnLoadBackgroundsListExecuted, CanLoadBackgroundsListExecute);
+            AddImageToSlideCommand = new RelayCommand(OnAddImageToSlideCommandEx, CanAddImageToSlideCommandEx);
+            SetAsBackgroundImageCommand = new RelayCommand(OnSetAsBackgroundImageCommandEx, CanSetAsBackgroundImageCommandEx);
             LoadImagesListAsyncCommand = new AsyncLambdaCommand(OnLoadImagesListAsyncCommandExecuted, CanLoadImagesListAsyncCommandExecute);
-            IncreaseImageZCommand = new LambdaCommand(OnIncreaseImageZCommandEx, CanIncreaseImageZCommandEx);
-            DecreaseImageZCommand = new LambdaCommand(OnDecreaseImageZCommandEx, CanDecreaseImageZCommandEx);
+            IncreaseImageZCommand = new RelayCommand(OnIncreaseImageZCommandEx, CanIncreaseImageZCommandEx);
+            DecreaseImageZCommand = new RelayCommand(OnDecreaseImageZCommandEx, CanDecreaseImageZCommandEx);
             #endregion
             PreviewHeight = 480;
             PreviewWidth = 720;
