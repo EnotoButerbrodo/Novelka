@@ -194,16 +194,16 @@
 
             <Viewbox Grid.Column="1" Stretch="Uniform">
                 <Grid Width="{Binding Path=PreviewWidth}" Height="{Binding Path=PreviewHeight}" Margin="20 5">
-                    <ListBox ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}"
-                             SelectedItem="{Binding Path=SelectedSlideImage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" BorderThickness="0,0,0,0" Margin="0,0,0,0">
+                    <ItemsControl ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}"
+                             >
                         
-                        <ListBox.ItemsPanel>
+                        <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Background="White"/>
                             </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListBoxItem}">
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
                                 <Setter Property="Canvas.Left"
                                 Value="{Binding Path=X, Mode=TwoWay}"/>
                                 <Setter Property="Canvas.Bottom"
@@ -211,8 +211,8 @@
                                 <Setter Property="Panel.ZIndex"
                                 Value="{Binding Path=Z, Mode=TwoWay}"/>
                             </Style>
-                        </ListBox.ItemContainerStyle>
-                        <ListBox.ItemTemplate>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}, IsAsync=True}"
                                        Width="{Binding Path=Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -220,9 +220,9 @@
                                        Stretch="Fill"
                                        />
                             </DataTemplate>
-                        </ListBox.ItemTemplate>
+                        </ItemsControl.ItemTemplate>
                         
-                    </ListBox>
+                    </ItemsControl>
 
                     <Grid Name="TextBoxGrid" Panel.ZIndex="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="50 5">
                         <Grid.RowDefinitions>
