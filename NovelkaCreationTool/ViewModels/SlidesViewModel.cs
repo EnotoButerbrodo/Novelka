@@ -10,6 +10,8 @@ using NovelkaCreationTool.Views;
 using System.Windows;
 using NovelkaCreationTool.Infrastructure.Commands;
 using System.Collections;
+using System.Windows.Controls;
+using GongSolutions.Wpf.DragDrop;
 
 namespace NovelkaCreationTool.ViewModels
 {
@@ -53,7 +55,6 @@ namespace NovelkaCreationTool.ViewModels
             set => Set(ref previewHeight, value);
         }
 
-        AddSlideImageDialogWindow addSlideImageDialogWindow;
         #region Commands
 
         #region AddSlideCommand
@@ -183,7 +184,7 @@ namespace NovelkaCreationTool.ViewModels
         bool CanIncreaseImageZCommandEx(object p)
         {
             if (SelectedSlide != null)
-                if (SelectedSlide.Images.IndexOf(SelectedSlideImage) < SelectedSlide.Images.Count-1)
+                if (SelectedSlide.Images.IndexOf(SelectedSlideImage) < SelectedSlide.Images.Count - 1)
                     return true;
             return false;
         }
@@ -212,8 +213,14 @@ namespace NovelkaCreationTool.ViewModels
             {
                 Owner = Application.Current.MainWindow
             };
-            addSlideImageDialogWindow = window;
-            addSlideImageDialogWindow.ShowDialog();
+        }
+
+
+
+        public ICommand DragCommand { get; }
+        void OnDragCommandEx(object p)
+        {
+           
         }
         #endregion
 
@@ -223,7 +230,24 @@ namespace NovelkaCreationTool.ViewModels
             SelectedSlide.Images[secondIndex].Z = firstIndex;
             SelectedSlide.Images.Move(firstIndex, secondIndex);
         }
-        
+
+        //public void DragOver(IDropInfo dropInfo)
+        //{
+        //    if (dropInfo.Data is SlideImage &&
+        //       dropInfo.TargetItem is SlideImage)
+        //    {
+        //        dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
+        //        dropInfo.Effects = DragDropEffects.Move;
+        //    }
+        //}
+
+        //public void Drop(IDropInfo dropInfo)
+        //{
+        //    SchoolViewModel school = (SchoolViewModel)dropInfo.TargetItem;
+        //    PupilViewModel pupil = (PupilViewModel)dropInfo.Data;
+        //    school.Pupils.Add(pupil);
+        //}
+
         public SlidesViewModel()
         {
             #region Commands

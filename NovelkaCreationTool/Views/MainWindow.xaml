@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:NovelkaCreationTool"
         xmlns:vm="clr-namespace:NovelkaCreationTool.ViewModels"
         xmlns:converter="clr-namespace:NovelkaCreationTool.Infrastructure.Converters"
+        xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
         mc:Ignorable="d"
         Title="NovelkaCreationTool" Height="450" Width="800"
         Background="LightGray"
@@ -140,11 +141,6 @@
                         <TextBox
                                  Text="{Binding Path=SelectedSlideImage.Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label>
-                            Z
-                        </Label>
-                        <TextBox
-                                 Text="{Binding Path=SelectedSlideImage.Z, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label>
                             Name
                         </Label>
                         <TextBox
@@ -174,7 +170,10 @@
             <ListBox Name="SlidesListBox"
                      ItemsSource="{Binding Path=Slides, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, IsAsync=True}"
                      SelectedItem="{Binding SelectedSlide, IsAsync=True}"
-                     Background="LightGray">
+                     Background="LightGray"
+                     dd:DragDrop.IsDragSource="True"
+                     dd:DragDrop.IsDropTarget="True"
+                     dd:DragDrop.DropHandler="{Binding}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="10" Background="Snow">
@@ -194,8 +193,7 @@
 
             <Viewbox Grid.Column="1" Stretch="Uniform">
                 <Grid Width="{Binding Path=PreviewWidth}" Height="{Binding Path=PreviewHeight}" Margin="20 5">
-                    <ItemsControl ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}"
-                             >
+                    <ItemsControl ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}">
                         
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -221,6 +219,9 @@
                                        />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
+                        <ItemsControl.InputBindings>
+                            <MouseBinding MouseAction="LeftClick" Command="{Binding Path=DragCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
+                        </ItemsControl.InputBindings>
                         
                     </ItemsControl>
 
