@@ -147,7 +147,6 @@ namespace NovelkaCreationTool.ViewModels
             SelectedSlideImage.X = 0;
             SelectedSlideImage.Y = 0;
             SwapImagesZPosition(SelectedSlide.Images.IndexOf(SelectedSlideImage), 0);
-            //OnPropertyChanged(nameof(SlideImages));
         }
         bool CanSetAsBackgroundImageCommandEx(object p)
         {
