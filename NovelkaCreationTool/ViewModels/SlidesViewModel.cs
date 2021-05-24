@@ -54,7 +54,7 @@ namespace NovelkaCreationTool.ViewModels
         }
 
         AddSlideImageDialogWindow addSlideImageDialogWindow;
-        #region Command
+        #region Commands
 
         #region AddSlideCommand
 
@@ -146,7 +146,7 @@ namespace NovelkaCreationTool.ViewModels
             SelectedSlideImage.Height = previewHeight;
             SelectedSlideImage.X = 0;
             SelectedSlideImage.Y = 0;
-            OnPropertyChanged(nameof(selectedSlideImage));
+            SwapImagesZPosition(SelectedSlide.Images.IndexOf(SelectedSlideImage), 0);
             //OnPropertyChanged(nameof(SlideImages));
         }
         bool CanSetAsBackgroundImageCommandEx(object p)
