@@ -23,8 +23,8 @@
 
     <Grid Name="MainGrid">
         <i:Interaction.Behaviors>
-            <infr:MouseBehaviour MouseX="{Binding MouseX, Mode=TwoWay}"
-                             MouseY="{Binding MouseY, Mode=TwoWay}" />
+            <infr:MouseBehaviour MouseX="{Binding MouseX, Mode=OneWayToSource}"
+                             MouseY="{Binding MouseY, Mode=OneWayToSource}" />
         </i:Interaction.Behaviors>
         <Grid.RowDefinitions>
             <RowDefinition Name="TabMenuRow" Height="125"/>
@@ -198,7 +198,12 @@
             </StackPanel>
 
             <Viewbox Name="SlidePreviewViewbox" Grid.Column="1" Stretch="Uniform">
+                
                 <Grid Width="{Binding Path=PreviewWidth}" Height="{Binding Path=PreviewHeight}" Margin="20 5">
+                    <i:Interaction.Behaviors>
+                        <infr:MouseBehaviour MouseX="{Binding MousePreviewX, Mode=OneWayToSource}"
+                             MouseY="{Binding MousePreviewY, Mode=OneWayToSource}" />
+                    </i:Interaction.Behaviors>
                     <ListBox ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}"
                              SelectedItem="{Binding Path=SelectedSlideImage}">
                         <ItemsControl.ItemsPanel>
@@ -282,6 +287,14 @@
                     <Run Text="{Binding MouseX}"/>
                     <Run Text="MouseY: "/>
                     <Run Text="{Binding MouseY}"/>
+                </TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock>
+                    <Run Text="MousePrevX: "/>
+                    <Run Text="{Binding MousePreviewX}"/>
+                    <Run Text="MousePrewY: "/>
+                    <Run Text="{Binding MousePreviewY}"/>
                 </TextBlock>
             </StatusBarItem>
         </StatusBar>
