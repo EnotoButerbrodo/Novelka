@@ -13,6 +13,7 @@
         Title="NovelkaCreationTool" Height="450" Width="800"
         Background="LightGray"
         DataContext="{StaticResource SlidesViewModel}"
+        Name="MainMainWindow"
         >
 
     <Window.Resources>
@@ -158,6 +159,7 @@
                                 Command="{Binding SetAsBackgroundImageCommand}"/>
                         <Button Content="Переместить назад" Command="{Binding Path=DecreaseImageZCommand}"/>
                         <Button Content="Переместить вперед" Command="{Binding Path=IncreaseImageZCommand}"/>
+                        <Button Content="Переместить" Command="{Binding}"/>
                     </WrapPanel>
                 </Grid>
 
@@ -205,7 +207,18 @@
                              MouseY="{Binding MousePreviewY, Mode=OneWayToSource}" />
                     </i:Interaction.Behaviors>
                     <ListBox ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}"
-                             SelectedItem="{Binding Path=SelectedSlideImage}">
+                             SelectedItem="{Binding Path=SelectedSlideImage}"
+                              BorderThickness="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" RenderTransformOrigin="0,0"
+                              
+                             >
+                        <ListBox.LayoutTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </ListBox.LayoutTransform>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Background="White"/>
@@ -215,7 +228,7 @@
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Canvas.Left"
                                 Value="{Binding Path=X, Mode=TwoWay}"/>
-                                <Setter Property="Canvas.Bottom"
+                                <Setter Property="Canvas.Top"
                                 Value="{Binding Path=Y, Mode=TwoWay}"/>
                                 <Setter Property="Panel.ZIndex"
                                 Value="{Binding Path=Z, Mode=TwoWay}"/>
@@ -229,7 +242,6 @@
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
-                                
                             </Style>
                         </ItemsControl.ItemContainerStyle>
                         <ItemsControl.ItemTemplate>
@@ -240,10 +252,22 @@
                                        Stretch="Fill"
                                        MaxWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualWidth}"
                                        MaxHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualHeight}"
-                                       dd:DragDrop.IsDragSource="True"
-                                       dd:DragDrop.IsDropTarget="True"
-                                       Margin="0"
-                                       />
+                                       Margin="0" RenderTransformOrigin="0.5,0" 
+                                       
+                                       >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.StartDrag}"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.StopDrag}"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="MouseMove">
+                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.Drag}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                   
+                                </Image>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
 

@@ -12,6 +12,8 @@ using NovelkaCreationTool.Infrastructure.Commands;
 using System.Collections;
 using System.Windows.Controls;
 using GongSolutions.Wpf.DragDrop;
+using System.Windows.Data;
+using System;
 
 namespace NovelkaCreationTool.ViewModels
 {
@@ -24,7 +26,6 @@ namespace NovelkaCreationTool.ViewModels
         Slide selectedSlide;
         SlideImage selectedSlideImage;
         string selectedImage;
-
         int previewWidth;
         int previewHeight;
 
@@ -45,6 +46,7 @@ namespace NovelkaCreationTool.ViewModels
         }
 
         double mouseX, mouseY;
+        double mousePreviewX, mousePreviewY;
         public double MouseX
         {
             get => mouseX;
@@ -55,7 +57,6 @@ namespace NovelkaCreationTool.ViewModels
             get => mouseY;
             set => Set(ref mouseY, value);
         }
-        double mousePreviewX, mousePreviewY;
         public double MousePreviewX
         {
             get => mousePreviewX;
@@ -229,6 +230,26 @@ namespace NovelkaCreationTool.ViewModels
         }
 
         #endregion
+        public ICommand StartDrag { get; }
+        void OnStartDragEx(object p)
+        {
+            SelectedSlideImage.IsDrag = true;
+        }
+
+        public ICommand Drag { get; }
+        void OnDragEx(object p)
+        {
+            if (SelectedSlideImage.IsDrag)
+            {
+                SelectedSlideImage.X = Convert.ToInt32(MousePreviewX) - SelectedSlideImage.Width/2;
+                SelectedSlideImage.Y = Convert.ToInt32(MousePreviewY) - SelectedSlideImage.Height / 2;
+            }
+        }
+        public ICommand StopDrag { get; }
+        void OnStopDragEx(object p)
+        {
+            SelectedSlideImage.IsDrag = false;
+        }
         #endregion
 
         
@@ -253,6 +274,9 @@ namespace NovelkaCreationTool.ViewModels
             LoadImagesListAsyncCommand = new AsyncLambdaCommand(OnLoadImagesListAsyncCommandExecuted, CanLoadImagesListAsyncCommandExecute);
             IncreaseImageZCommand = new RelayCommand(OnIncreaseImageZCommandEx, CanIncreaseImageZCommandEx);
             DecreaseImageZCommand = new RelayCommand(OnDecreaseImageZCommandEx, CanDecreaseImageZCommandEx);
+            StartDrag = new RelayCommand(OnStartDragEx, (obj) => { return SelectedSlideImage != null; });
+            Drag = new RelayCommand(OnDragEx, (obj) => { return SelectedSlideImage != null; });
+            StopDrag = new RelayCommand(OnStopDragEx, (obj) => { return SelectedSlideImage != null; });
             #endregion
             PreviewHeight = 480;
             PreviewWidth = 720;

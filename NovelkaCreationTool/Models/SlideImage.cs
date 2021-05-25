@@ -12,6 +12,7 @@ namespace NovelkaCreationTool.Models
     {
         int x, y, z, width, height;
         string name, imageName;
+        bool isDrag;
         public int X
         {
             get => x;
@@ -47,6 +48,10 @@ namespace NovelkaCreationTool.Models
             get => imageName;
             set => Set(ref imageName, value);
         }
-
+        public bool IsDrag
+        {
+            get => isDrag;
+            set => Set(ref isDrag, value);
+        }
     }
 }
