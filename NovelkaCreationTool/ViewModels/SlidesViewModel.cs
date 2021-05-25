@@ -44,6 +44,18 @@ namespace NovelkaCreationTool.ViewModels
             set => Set(ref selectedImage, value);
         }
 
+        double mouseX, mouseY;
+        public double MouseX
+        {
+            get => mouseX;
+            set => Set(ref mouseX, value);
+        }
+        public double MouseY
+        {
+            get => mouseY;
+            set => Set(ref mouseY, value);
+        }
+
         public int PreviewWidth
         {
             get => previewWidth;

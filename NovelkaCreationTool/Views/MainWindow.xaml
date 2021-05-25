@@ -12,6 +12,7 @@
         mc:Ignorable="d"
         Title="NovelkaCreationTool" Height="450" Width="800"
         Background="LightGray"
+        DataContext="{StaticResource SlidesViewModel}"
         >
 
     <Window.Resources>
@@ -20,14 +21,18 @@
         <converter:FullFileNameToShortNameConverter x:Key="FullFileNameToShortConverter"/>
     </Window.Resources>
 
-    <Grid Name="MainGrid" DataContext="{StaticResource SlidesViewModel}">
+    <Grid Name="MainGrid">
+        <i:Interaction.Behaviors>
+            <infr:MouseBehaviour MouseX="{Binding MouseX, Mode=TwoWay}"
+                             MouseY="{Binding MouseY, Mode=TwoWay}" />
+        </i:Interaction.Behaviors>
         <Grid.RowDefinitions>
             <RowDefinition Name="TabMenuRow" Height="125"/>
             <RowDefinition Name="SlidesRow" Height="*"/>
             <RowDefinition Name="StatusRow"  Height="20"/>
         </Grid.RowDefinitions>
 
-
+        
         <TabControl Grid.Row="0" >
             <TabItem Name="ProjectSettingTabItem" Header="Проект">
                 <StackPanel Orientation="Horizontal">
@@ -39,6 +44,7 @@
                             <TextBox Text="{Binding Path=PreviewHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </UniformGrid>
                     </GroupBox>
+                    
                 </StackPanel>
             </TabItem>
             <TabItem Name="SlidesTabItem" Header="Слайды">
@@ -193,20 +199,32 @@
 
             <Viewbox Name="SlidePreviewViewbox" Grid.Column="1" Stretch="Uniform">
                 <Grid Width="{Binding Path=PreviewWidth}" Height="{Binding Path=PreviewHeight}" Margin="20 5">
-                    <ItemsControl ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}">
+                    <ListBox ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}"
+                             SelectedItem="{Binding Path=SelectedSlideImage}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Background="White"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="ContentPresenter">
+                            <Style TargetType="ListBoxItem">
                                 <Setter Property="Canvas.Left"
                                 Value="{Binding Path=X, Mode=TwoWay}"/>
                                 <Setter Property="Canvas.Bottom"
                                 Value="{Binding Path=Y, Mode=TwoWay}"/>
                                 <Setter Property="Panel.ZIndex"
                                 Value="{Binding Path=Z, Mode=TwoWay}"/>
+                                <Setter Property="Background" Value="{x:Null}"/>
+                                <Setter Property="Width" Value="{Binding Path=Width}"/>
+                                <Setter Property="Height" Value="{Binding Path=Height}"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                            <ContentPresenter/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                
                             </Style>
                         </ItemsControl.ItemContainerStyle>
                         <ItemsControl.ItemTemplate>
@@ -219,18 +237,12 @@
                                        MaxHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualHeight}"
                                        dd:DragDrop.IsDragSource="True"
                                        dd:DragDrop.IsDropTarget="True"
-                                       dd:DragDrop.UseDefaultDragAdorner="True"
-                                       
+                                       Margin="0"
                                        />
-                               
-
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                        <ItemsControl.InputBindings>
-                            <MouseBinding MouseAction="LeftClick" Command="{Binding Path=DragCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
-                        </ItemsControl.InputBindings>
-                        
-                    </ItemsControl>
+
+                    </ListBox>
 
                     <Grid Name="TextBoxGrid" Panel.ZIndex="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="50 5">
                         <Grid.RowDefinitions>
@@ -262,6 +274,14 @@
                     <Run Text="{Binding SelectedSlide.Id, FallbackValue=0}"/>
                     <Run Text=" из "/>
                     <Run Text="{Binding Slides.Count, Mode=OneWay}"/>
+                </TextBlock>
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock>
+                    <Run Text="MouseX: "/>
+                    <Run Text="{Binding MouseX}"/>
+                    <Run Text="MouseY: "/>
+                    <Run Text="{Binding MouseY}"/>
                 </TextBlock>
             </StatusBarItem>
         </StatusBar>
