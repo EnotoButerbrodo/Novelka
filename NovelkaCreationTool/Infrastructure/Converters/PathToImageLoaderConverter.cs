@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using NovelkaCreationTool.ViewModels;
 
 namespace NovelkaCreationTool.Infrastructure.Converters
 {
@@ -18,20 +19,18 @@ namespace NovelkaCreationTool.Infrastructure.Converters
 
             string path = value as string;
             if (String.IsNullOrEmpty(path)) return null;
-            return Task.Run(() =>
+            using (FileStream fs = File.OpenRead(path))
             {
-                using (FileStream fs = File.OpenRead(path))
-                {
-                    BitmapImage image = new BitmapImage();
-                    image = new BitmapImage();
-                    image.BeginInit();
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.StreamSource = fs;
-                    image.EndInit();
-                    image.Freeze();
-                    return image;
-                }
-            }).Result;
+                BitmapImage image = new BitmapImage();
+                image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.StreamSource = fs;
+                image.EndInit();
+                image.Freeze();
+                
+                return image;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
