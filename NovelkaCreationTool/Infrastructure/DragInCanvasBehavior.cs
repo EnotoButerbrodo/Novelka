@@ -55,6 +55,7 @@ namespace NovelkaCreationTool.Infrastructure
             isDragging = true;
             ZBuff = Panel.GetZIndex(FixedAssociatedObject);
             Panel.SetZIndex(FixedAssociatedObject, 1000);
+            FixedAssociatedObject.Opacity = 0.7;
 
             // Получение позиции нажатия относительно элемента
             mouseOffset = e.GetPosition(AssociatedObject);
@@ -92,6 +93,7 @@ namespace NovelkaCreationTool.Infrastructure
                 FixedAssociatedObject.ReleaseMouseCapture();
                 isDragging = false;
                 Panel.SetZIndex(FixedAssociatedObject, ZBuff);
+                FixedAssociatedObject.Opacity = 1;
             }
         }
 
