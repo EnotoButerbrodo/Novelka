@@ -233,9 +233,9 @@ namespace NovelkaCreationTool.ViewModels
         public ICommand StartDrag { get; }
         void OnStartDragEx(object p)
         {
-            SelectedSlideImage.IsDrag = true;
-        }
+            if (!SelectedSlideImage.IsDrag) SelectedSlideImage.IsDrag = true;
 
+        }
         public ICommand Drag { get; }
         void OnDragEx(object p)
         {
@@ -248,7 +248,7 @@ namespace NovelkaCreationTool.ViewModels
         public ICommand StopDrag { get; }
         void OnStopDragEx(object p)
         {
-            SelectedSlideImage.IsDrag = false;
+           if(SelectedSlideImage.IsDrag) SelectedSlideImage.IsDrag = false;
         }
         #endregion
 

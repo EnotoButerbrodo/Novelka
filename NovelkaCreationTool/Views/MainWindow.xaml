@@ -208,17 +208,10 @@
                     </i:Interaction.Behaviors>
                     <ListBox ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}"
                              SelectedItem="{Binding Path=SelectedSlideImage}"
-                              BorderThickness="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" RenderTransformOrigin="0,0"
-                              
+                             BorderThickness="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" RenderTransformOrigin="0,0"
+                             Background="Transparent" 
                              >
-                        <ListBox.LayoutTransform>
-                            <TransformGroup>
-                                <ScaleTransform ScaleX="1" ScaleY="1"/>
-                                <SkewTransform/>
-                                <RotateTransform/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </ListBox.LayoutTransform>
+         
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Background="White"/>
