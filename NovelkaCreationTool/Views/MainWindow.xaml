@@ -23,10 +23,12 @@
     </Window.Resources>
 
     <Grid Name="MainGrid">
+        <!--
         <i:Interaction.Behaviors>
             <infr:MouseBehaviour MouseX="{Binding MouseX, Mode=OneWayToSource}"
                              MouseY="{Binding MouseY, Mode=OneWayToSource}" />
         </i:Interaction.Behaviors>
+        -->
         <Grid.RowDefinitions>
             <RowDefinition Name="TabMenuRow" Height="125"/>
             <RowDefinition Name="SlidesRow" Height="*"/>
@@ -200,7 +202,6 @@
             </StackPanel>
 
             <Viewbox Name="SlidePreviewViewbox" Grid.Column="1" Stretch="Uniform">
-                
                 <Grid Width="{Binding Path=PreviewWidth}" Height="{Binding Path=PreviewHeight}" Margin="20 5">
                     <i:Interaction.Behaviors>
                         <infr:MouseBehaviour MouseX="{Binding MousePreviewX, Mode=OneWayToSource}"
@@ -221,8 +222,8 @@
                         <ItemsControl.ItemContainerStyle>
                             
                             <Style TargetType="ListBoxItem">
-                                <Setter Property="Canvas.Left" Value="{Binding Path=X, Mode=TwoWay}"/>
-                                <Setter Property="Canvas.Top" Value="{Binding Path=Y, Mode=TwoWay}"/>
+                                <Setter Property="Canvas.Left" Value="{Binding Path=X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Setter Property="Canvas.Top" Value="{Binding Path=Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Setter Property="Panel.ZIndex"
                                 Value="{Binding Path=Z, Mode=TwoWay}"/>
                                 <Setter Property="Background" Value="{x:Null}"/>
@@ -255,8 +256,7 @@
                                        Width="{Binding Path=Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                        Height="{Binding Path=Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                        Stretch="Fill"
-                                       MaxWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualWidth}"
-                                       MaxHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualHeight}"
+                                      
                                        Margin="0"
                                        >
                                     <i:Interaction.Behaviors>
