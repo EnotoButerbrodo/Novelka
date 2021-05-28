@@ -239,7 +239,19 @@
                         </ItemsControl.ItemContainerStyle>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}, IsAsync=True}"
+                                <Border Background="Transparent" BorderThickness="1">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="BorderThickness" Value="2"/>
+                                                    <Setter Property="BorderBrush" Value="Red"/>
+
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}, IsAsync=True}"
                                        Width="{Binding Path=Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                        Height="{Binding Path=Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                        Stretch="Fill"
@@ -251,10 +263,11 @@
                                         <infr:DragInCanvasBehavior/>
                                     </i:Interaction.Behaviors>
                                 </Image>
-                                   
-                                
+                                    
+                                </Border>
+
+
                             </DataTemplate>
-                            
                         </ItemsControl.ItemTemplate>
 
                     </ListBox>
