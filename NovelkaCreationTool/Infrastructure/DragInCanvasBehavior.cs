@@ -15,6 +15,7 @@ namespace NovelkaCreationTool.Infrastructure
     {
         private Canvas canvas;
         ListBoxItem FixedAssociatedObject;
+        int ZBuff;
 
         protected override void OnAttached()
         {
@@ -25,6 +26,7 @@ namespace NovelkaCreationTool.Infrastructure
             this.AssociatedObject.MouseLeftButtonDown += AssociatedObject_MouseLeftButtonDown;
             this.AssociatedObject.MouseMove += AssociatedObject_MouseMove;
             this.AssociatedObject.MouseLeftButtonUp += AssociatedObject_MouseLeftButtonUp;
+            this.AssociatedObject.MouseLeave += new MouseEventHandler((s, e) => { AssociatedObject_MouseLeftButtonUp(s, null); });
         }
 
         protected override void OnDetaching()
@@ -36,6 +38,7 @@ namespace NovelkaCreationTool.Infrastructure
             this.AssociatedObject.MouseLeftButtonDown -= AssociatedObject_MouseLeftButtonDown;
             this.AssociatedObject.MouseMove -= AssociatedObject_MouseMove;
             this.AssociatedObject.MouseLeftButtonUp -= AssociatedObject_MouseLeftButtonUp;
+            
         }
 
         // Отслеживание перетаскивания элемента
@@ -50,6 +53,8 @@ namespace NovelkaCreationTool.Infrastructure
            // if (canvas == null) canvas = LogicalTreeHelper.GetParent(this.AssociatedObject) as Canvas;
             // Режим перетаскивания
             isDragging = true;
+            ZBuff = Panel.GetZIndex(FixedAssociatedObject);
+            Panel.SetZIndex(FixedAssociatedObject, 1000);
 
             // Получение позиции нажатия относительно элемента
             mouseOffset = e.GetPosition(AssociatedObject);
@@ -86,7 +91,9 @@ namespace NovelkaCreationTool.Infrastructure
             {
                 FixedAssociatedObject.ReleaseMouseCapture();
                 isDragging = false;
+                Panel.SetZIndex(FixedAssociatedObject, ZBuff);
             }
         }
+
     }
 }
