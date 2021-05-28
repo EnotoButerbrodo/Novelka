@@ -241,8 +241,8 @@ namespace NovelkaCreationTool.ViewModels
         {
             if (SelectedSlideImage.IsDrag)
             {
-                SelectedSlideImage.X = Convert.ToInt32(MousePreviewX) - SelectedSlideImage.Width/2;
-                SelectedSlideImage.Y = Convert.ToInt32(MousePreviewY) - SelectedSlideImage.Height / 2;
+                SelectedSlideImage.X += Convert.ToInt32(MousePreviewX) - SelectedSlideImage.Width/2;
+                SelectedSlideImage.Y += Convert.ToInt32(MousePreviewY) - SelectedSlideImage.Height / 2;
             }
         }
         public ICommand StopDrag { get; }
@@ -252,7 +252,6 @@ namespace NovelkaCreationTool.ViewModels
         }
         #endregion
 
-        
 
         void SwapImagesZPosition(int firstIndex, int secondIndex)
         {

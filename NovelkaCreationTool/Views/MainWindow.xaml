@@ -13,7 +13,7 @@
         Title="NovelkaCreationTool" Height="450" Width="800"
         Background="LightGray"
         DataContext="{StaticResource SlidesViewModel}"
-        Name="MainMainWindow"
+        x:Name="MainMainWindow"
         >
 
     <Window.Resources>
@@ -209,20 +209,20 @@
                     <ListBox ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}"
                              SelectedItem="{Binding Path=SelectedSlideImage}"
                              BorderThickness="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" RenderTransformOrigin="0,0"
-                             Background="Transparent" 
-                             >
-         
-                        <ItemsControl.ItemsPanel>
+                             Background="Transparent" >
+                        <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <Canvas Background="White"/>
+                                <Canvas Background="White"
+                                        Margin="0">
+                                    
+                                </Canvas>
                             </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
+                        </ListBox.ItemsPanel>
                         <ItemsControl.ItemContainerStyle>
+                            
                             <Style TargetType="ListBoxItem">
-                                <Setter Property="Canvas.Left"
-                                Value="{Binding Path=X, Mode=TwoWay}"/>
-                                <Setter Property="Canvas.Top"
-                                Value="{Binding Path=Y, Mode=TwoWay}"/>
+                                <Setter Property="Canvas.Left" Value="{Binding Path=X, Mode=TwoWay}"/>
+                                <Setter Property="Canvas.Top" Value="{Binding Path=Y, Mode=TwoWay}"/>
                                 <Setter Property="Panel.ZIndex"
                                 Value="{Binding Path=Z, Mode=TwoWay}"/>
                                 <Setter Property="Background" Value="{x:Null}"/>
@@ -245,23 +245,16 @@
                                        Stretch="Fill"
                                        MaxWidth="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualWidth}"
                                        MaxHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Canvas}}, Path=ActualHeight}"
-                                       Margin="0" RenderTransformOrigin="0.5,0" 
-                                       
+                                       Margin="0"
                                        >
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.StartDrag}"/>
-                                        </i:EventTrigger>
-                                        <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
-                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.StopDrag}"/>
-                                        </i:EventTrigger>
-                                        <i:EventTrigger EventName="MouseMove">
-                                            <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.Drag}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                   
+                                    <i:Interaction.Behaviors>
+                                        <infr:DragInCanvasBehavior/>
+                                    </i:Interaction.Behaviors>
                                 </Image>
+                                   
+                                
                             </DataTemplate>
+                            
                         </ItemsControl.ItemTemplate>
 
                     </ListBox>
