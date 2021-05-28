@@ -256,7 +256,6 @@
                                        Width="{Binding Path=Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                        Height="{Binding Path=Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                        Stretch="Fill"
-                                      
                                        Margin="0"
                                        >
                                     <i:Interaction.Behaviors>

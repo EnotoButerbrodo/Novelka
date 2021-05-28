@@ -152,7 +152,8 @@ namespace NovelkaCreationTool.ViewModels
             {
                 Name = Path.GetFileName(SelectedImage),
                 ImageName = SelectedImage,
-
+                Height = imageHeight,
+                Width = imageWidth,
                 X = 0,
                 Y = 0,
                 Z = SelectedSlide.Images.Count
