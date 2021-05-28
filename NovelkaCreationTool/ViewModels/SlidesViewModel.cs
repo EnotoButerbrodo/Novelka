@@ -67,7 +67,6 @@ namespace NovelkaCreationTool.ViewModels
             get => mousePreviewY;
             set => Set(ref mousePreviewY, value);
         }
-
         public int PreviewWidth
         {
             get => previewWidth;
@@ -147,12 +146,13 @@ namespace NovelkaCreationTool.ViewModels
         public ICommand AddImageToSlideCommand { get; }
         void OnAddImageToSlideCommandEx(object p)
         {
+            int imageHeight = PreviewHeight/4;
+            int imageWidth = imageHeight*2;
             SelectedSlide.Images.Add(new SlideImage
             {
                 Name = Path.GetFileName(SelectedImage),
                 ImageName = SelectedImage,
-                Height = 200,
-                Width = 200,
+
                 X = 0,
                 Y = 0,
                 Z = SelectedSlide.Images.Count
