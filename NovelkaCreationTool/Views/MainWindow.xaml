@@ -23,19 +23,14 @@
     </Window.Resources>
 
     <Grid Name="MainGrid">
-        <!--
-        <i:Interaction.Behaviors>
-            <infr:MouseBehaviour MouseX="{Binding MouseX, Mode=OneWayToSource}"
-                             MouseY="{Binding MouseY, Mode=OneWayToSource}" />
-        </i:Interaction.Behaviors>
-        -->
+        <!--Definition-->
         <Grid.RowDefinitions>
             <RowDefinition Name="TabMenuRow" Height="125"/>
             <RowDefinition Name="SlidesRow" Height="*"/>
             <RowDefinition Name="StatusRow"  Height="20"/>
         </Grid.RowDefinitions>
-
         
+        <!--Menu-->
         <TabControl Grid.Row="0" >
             <TabItem Name="ProjectSettingTabItem" Header="Проект">
                 <StackPanel Orientation="Horizontal">
@@ -168,15 +163,18 @@
             </TabItem>
         </TabControl>
 
+        <!--MainPart-->
         <Grid Name="SlidesGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
 
             <GridSplitter Grid.Column="1" 
                           HorizontalAlignment="Left"
                           Width="3"/>
+            
+            <!--SlidesList-->
             <ListBox Name="SlidesListBox"
                      ItemsSource="{Binding Path=Slides, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, IsAsync=True}"
                      SelectedItem="{Binding SelectedSlide, IsAsync=True}"
@@ -194,19 +192,23 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
+            <!--AddAndDeleteSlidesButton-->
             <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Panel.ZIndex="1"
                         Orientation="Horizontal">
                 <Button Command="{Binding AddSlideCommand}" Content="+"
                         Width="25" Height="25" />
                 <Button Command="{Binding DeleteSlideCommand}" Content="-" Width="25" Height="25"/>
             </StackPanel>
-
+            
+            <!--SlidePreview-->
             <Viewbox Name="SlidePreviewViewbox" Grid.Column="1" Stretch="Uniform">
                 <Grid Width="{Binding Path=PreviewWidth}" Height="{Binding Path=PreviewHeight}" Margin="20 5">
                     <i:Interaction.Behaviors>
                         <infr:MouseBehaviour MouseX="{Binding MousePreviewX, Mode=OneWayToSource}"
                              MouseY="{Binding MousePreviewY, Mode=OneWayToSource}" />
                     </i:Interaction.Behaviors>
+                    
+                    <!--SlideImages-->
                     <ListBox ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}"
                              SelectedItem="{Binding Path=SelectedSlideImage}"
                              BorderThickness="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" RenderTransformOrigin="0,0"
@@ -214,13 +216,10 @@
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <Canvas Background="White"
-                                        Margin="0">
-                                    
-                                </Canvas>
+                                        Margin="0"/>
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
-                        <ItemsControl.ItemContainerStyle>
-                            
+                        <ItemsControl.ItemContainerStyle>   
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Canvas.Left" Value="{Binding Path=X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Setter Property="Canvas.Top" Value="{Binding Path=Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -240,7 +239,7 @@
                         </ItemsControl.ItemContainerStyle>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border Background="Transparent" BorderThickness="1">
+                                <Border Background="Transparent" BorderThickness="1" >
                                     <Border.Style>
                                         <Style TargetType="Border">
                                             <Style.Triggers>
@@ -258,19 +257,19 @@
                                        Stretch="Fill"
                                        Margin="0"
                                        >
-                                    <i:Interaction.Behaviors>
-                                        <infr:DragInCanvasBehavior/>
-                                    </i:Interaction.Behaviors>
-                                </Image>
-                                    
+                                        <i:Interaction.Behaviors>
+                                            <infr:DragInCanvasBehavior/>
+                                        </i:Interaction.Behaviors>
+                                    </Image>
                                 </Border>
+
 
 
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-
                     </ListBox>
-
+                    
+                    <!--SlideTextBox-->
                     <Grid Name="TextBoxGrid" Panel.ZIndex="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="50 5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
@@ -290,10 +289,13 @@
                         <Image Grid.RowSpan="2"/>
 
                     </Grid>
+                    
                 </Grid>
             </Viewbox>
 
         </Grid>
+        
+        <!--StatusBar-->
         <StatusBar Grid.Row="2">
             <StatusBarItem Name="SlidesCountBarItem">
                 <TextBlock >
