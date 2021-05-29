@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="ViewModels\SlidesViewModel.cs">
+    <Compile Update="ViewModels\MainViewModel.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CustomToolNamespace>NovelkaCreationTool.ViewModels</CustomToolNamespace>
     </Compile>

@@ -12,12 +12,12 @@
         mc:Ignorable="d"
         Title="NovelkaCreationTool" Height="450" Width="800"
         Background="LightGray"
-        DataContext="{StaticResource SlidesViewModel}"
+        DataContext="{StaticResource MainViewModel}"
         x:Name="MainMainWindow"
         >
 
     <Window.Resources>
-        <vm:SlidesViewModel x:Key="SlidesViewModel"/>
+        <vm:MainViewModel x:Key="MainViewModel"/>
         <converter:PathToImageLoaderConverter x:Key="PathToImageLoaderConverter"/>
         <converter:FullFileNameToShortNameConverter x:Key="FullFileNameToShortConverter"/>
     </Window.Resources>
@@ -115,7 +115,7 @@
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="ContextMenu">
                                     <Setter.Value>
-                                        <ContextMenu DataContext="{StaticResource SlidesViewModel}">
+                                        <ContextMenu>
                                             <MenuItem Header="Delete" Command="{Binding Path=DeleteSlideCommand}"/>
                                         </ContextMenu>
                                     </Setter.Value>

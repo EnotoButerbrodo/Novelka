@@ -8,7 +8,7 @@
              StartupUri="Views\MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <vm:SlidesViewModel x:Key="SlidesViewModel"/>
+            <vm:MainViewModel x:Key="MainViewModel"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

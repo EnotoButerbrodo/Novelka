@@ -17,7 +17,7 @@ using System;
 
 namespace NovelkaCreationTool.ViewModels
 {
-    public class SlidesViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         DirectoryInfo FolderPath = new DirectoryInfo("temp");
         public ObservableCollection<Slide> Slides { get; set; } = new ObservableCollection<Slide>();
@@ -242,7 +242,7 @@ namespace NovelkaCreationTool.ViewModels
         }
 
 
-        public SlidesViewModel()
+        public MainViewModel()
         {
             #region Commands
 
