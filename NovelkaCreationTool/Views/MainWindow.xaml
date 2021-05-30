@@ -150,6 +150,8 @@
                         </Label>
                         <TextBox
                                  Text="{Binding Path=SelectedSlideImage.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Slider Maximum="{Binding PreviewHeight}" Value="{Binding SelectedSlideImage.Height}"/>
+                        <Slider Maximum="{Binding PreviewWidth}" Value="{Binding SelectedSlideImage.Width}"/>
                     </UniformGrid>
                     <WrapPanel Grid.Column="2">
                         <Button Content="Установить как задний фон"
@@ -251,16 +253,17 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Border.Style>
-                                    <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}, IsAsync=True}"
-                                       Width="{Binding Path=Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                       Height="{Binding Path=Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                       Stretch="Fill"
-                                       Margin="0"
-                                       >
-                                        <i:Interaction.Behaviors>
-                                            <infr:DragInCanvasBehavior/>
-                                        </i:Interaction.Behaviors>
-                                    </Image>
+                                    <Grid>
+                                         <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}, IsAsync=True}"
+                                                Width="{Binding Path=Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                Height="{Binding Path=Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                Stretch="Fill"
+                                                Margin="0">
+                                         <i:Interaction.Behaviors>
+                                               <infr:DragInCanvasBehavior/>
+                                         </i:Interaction.Behaviors>
+                                         </Image>
+                                    </Grid>
                                 </Border>
 
 
