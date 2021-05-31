@@ -146,13 +146,12 @@ namespace NovelkaCreationTool.ViewModels
         public ICommand AddImageToSlideCommand { get; }
         void OnAddImageToSlideCommandEx(object p)
         {
-            int imageSize = PreviewHeight/2;
             SelectedSlide.Images.Add(new SlideImage
             {
                 Name = Path.GetFileName(SelectedImage),
                 ImageName = SelectedImage,
-                Width = imageSize,
-                Height = imageSize,
+                Width = 300,
+                Height = 300,
                 X = 0,
                 Y = 0,
                 Z = SelectedSlide.Images.Count
