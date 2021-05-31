@@ -287,16 +287,16 @@
                                                 <infr:DragInCanvasBehavior/>
                                             </i:Interaction.Behaviors>
 
-                                            <Thumb Grid.Column="0" Grid.Row="0"/>
-                                        <Thumb Grid.Column="2" Grid.Row="0"/>
-                                        <Thumb Grid.Column="0" Grid.Row="2"/>
-                                        <Thumb Grid.Column="2" Grid.Row="2"/>
+                                            <Thumb Grid.Column="0" Grid.Row="0" Cursor="SizeNWSE"/>
+                                            <Thumb Grid.Column="2" Grid.Row="0" Cursor="SizeNESW"/>
+                                            <Thumb Grid.Column="0" Grid.Row="2" Cursor="SizeNESW"/>
+                                            <Thumb Grid.Column="2" Grid.Row="2" Cursor="SizeNWSE"/>
 
-                                        <Thumb Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Height="10"/>
-                                        <Thumb Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Height="10"/>
+                                            <Thumb Grid.Column="0" Grid.Row="1" Cursor="SizeWE" VerticalAlignment="Center" Height="10"/>
+                                            <Thumb Grid.Column="2" Grid.Row="1" Cursor="SizeWE" VerticalAlignment="Center" Height="10"/>
 
-                                        <Thumb Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Width="10"/>
-                                        <Thumb Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Width="10"/>
+                                            <Thumb Grid.Column="1" Grid.Row="0" Cursor="SizeNS" HorizontalAlignment="Center" Width="10"/>
+                                            <Thumb Grid.Column="1" Grid.Row="2" Cursor="SizeNS" HorizontalAlignment="Center" Width="10"/>
                                         </Grid>
                                         <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}, IsAsync=True}"
                                                 Width="{Binding Path=Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
