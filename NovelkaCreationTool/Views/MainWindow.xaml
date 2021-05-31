@@ -20,6 +20,7 @@
         <vm:MainViewModel x:Key="MainViewModel"/>
         <converter:PathToImageLoaderConverter x:Key="PathToImageLoaderConverter"/>
         <converter:FullFileNameToShortNameConverter x:Key="FullFileNameToShortConverter"/>
+      
     </Window.Resources>
 
     <Grid Name="MainGrid">
@@ -42,6 +43,8 @@
                             <TextBox Text="{Binding Path=PreviewHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </UniformGrid>
                     </GroupBox>
+
+                    
                     
                 </StackPanel>
             </TabItem>
@@ -254,14 +257,56 @@
                                         </Style>
                                     </Border.Style>
                                     <Grid>
-                                         <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}, IsAsync=True}"
+                                       
+                                        
+                                        <Grid Background="Transparent" Focusable="False" >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="10"/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="10"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="10"/>
+                                                <RowDefinition/>
+                                                <RowDefinition Height="10"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.Resources>
+                                                <Style TargetType="Thumb">
+                                                    <Setter Property="Background" Value="Red"/>
+                                                    <Setter Property="BorderThickness" Value="0"/>
+                                                </Style>
+                                            <Style TargetType="Grid">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="False">
+                                                            <Setter Property="Opacity" Value="0"/>
+                                                        </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                            </Grid.Resources>
+                                            <i:Interaction.Behaviors>
+                                                <infr:DragInCanvasBehavior/>
+                                            </i:Interaction.Behaviors>
+
+                                            <Thumb Grid.Column="0" Grid.Row="0"/>
+                                        <Thumb Grid.Column="2" Grid.Row="0"/>
+                                        <Thumb Grid.Column="0" Grid.Row="2"/>
+                                        <Thumb Grid.Column="2" Grid.Row="2"/>
+
+                                        <Thumb Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Height="10"/>
+                                        <Thumb Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Height="10"/>
+
+                                        <Thumb Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Width="10"/>
+                                        <Thumb Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Width="10"/>
+                                        </Grid>
+                                        <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}, IsAsync=True}"
                                                 Width="{Binding Path=Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                 Height="{Binding Path=Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                 Stretch="Fill"
-                                                Margin="0">
-                                         <i:Interaction.Behaviors>
-                                               <infr:DragInCanvasBehavior/>
-                                         </i:Interaction.Behaviors>
+                                                Margin="0"
+                                                Grid.RowSpan="3"
+                                                Grid.ColumnSpan="3"
+                                                Panel.ZIndex="-1">
+                                         
                                          </Image>
                                     </Grid>
                                 </Border>
