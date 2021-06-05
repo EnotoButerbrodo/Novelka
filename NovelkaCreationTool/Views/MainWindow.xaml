@@ -37,7 +37,7 @@
                     <GroupBox Header="Файл" Width="200">
                         <WrapPanel>
                             <Button Content="Сохранить" Command="{Binding SaveCommand}"/>
-                            <Button Content="Открыть"/>
+                            <Button Content="Открыть" Command="{Binding OpenProjectCommand}"/>
                         </WrapPanel>
                     </GroupBox>
                     <GroupBox Header="Размер слайда">

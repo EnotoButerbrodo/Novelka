@@ -38,7 +38,11 @@ namespace NovelkaCreationTool.ViewModels
                 }
                 return currentProject;
             }
-            set => Set(ref currentProject, value);
+            set
+            {
+                currentProject = value;
+                OnPropertyChanged(nameof(CurrentProject));
+            }
         }
         public ObservableCollection<Slide> Slides
         {
@@ -272,15 +276,29 @@ namespace NovelkaCreationTool.ViewModels
             {
                 using (FileStream fs = new(sfd.FileName, FileMode.OpenOrCreate))
                 {
+                    CurrentProject.Name = sfd.FileName;
                     formater.Serialize(fs, CurrentProject);
                 }
             }
-            
-            //using(FileStream fs = new("test.dat", FileMode.OpenOrCreate))
-            //{
-            //    Project readed = (Project)formater.Deserialize(fs);
-            //}
+        }
 
+        public ICommand OpenProjectCommand { get; }
+        void OnOpenProjectCommandEx(object p)
+        {
+            OpenFileDialog ofd = new()
+            {
+                Filter = "Проект Novelka|*.nct"
+            };
+            if (ofd.ShowDialog() == true)
+            {
+                using(FileStream fs = new(ofd.FileName, FileMode.Open))
+                {
+                    BinaryFormatter formatter = new();
+                    CurrentProject = (Project)formatter.Deserialize(fs);
+                    OnPropertyChanged(nameof(Slides));
+                    
+                }
+            }
         }
         
         #endregion
@@ -307,6 +325,7 @@ namespace NovelkaCreationTool.ViewModels
             IncreaseImageZCommand = new RelayCommand(OnIncreaseImageZCommandEx, CanIncreaseImageZCommandEx);
             DecreaseImageZCommand = new RelayCommand(OnDecreaseImageZCommandEx, CanDecreaseImageZCommandEx);
             SaveCommand = new RelayCommand(OnSaveCommandEx, (obj) => true);
+            OpenProjectCommand = new RelayCommand(OnOpenProjectCommandEx, (obj) => true);
             #endregion
             PreviewHeight = 480;
             PreviewWidth = 720;
