@@ -14,15 +14,18 @@ using System.Windows.Controls;
 using GongSolutions.Wpf.DragDrop;
 using System.Windows.Data;
 using System;
+using System.Runtime.Serialization;
 
 namespace NovelkaCreationTool.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        DirectoryInfo FolderPath = new DirectoryInfo("temp");
+
         public ObservableCollection<Slide> Slides { get; set; } = new ObservableCollection<Slide>();
         public ObservableCollection<string> Images { get; set; } = new ObservableCollection<string>();
-        public ObservableCollection<SlideImage> SlideImages { get; set; } = new ObservableCollection<SlideImage>();
+        
+
+        #region Variables
         Slide selectedSlide;
         SlideImage selectedSlideImage;
         string selectedImage;
@@ -77,7 +80,7 @@ namespace NovelkaCreationTool.ViewModels
             get => previewHeight;
             set => Set(ref previewHeight, value);
         }
-
+        #endregion
         #region Commands
 
         #region AddSlideCommand
@@ -229,6 +232,23 @@ namespace NovelkaCreationTool.ViewModels
         }
 
         #endregion
+        public ICommand SaveCommand { get; }
+        void OnSaveCommandEx(object p)
+        {
+            MemoryStream sessionData = new MemoryStream();
+            DataContractSerializer serializer = new (typeof(ObservableCollection<Slide>));
+            serializer.WriteObject(sessionData, Slides);
+
+
+            //StorageFile file = await ApplicationData.Current.LocalFolder
+            //                         .CreateFileAsync(sFileName);
+            //using (Stream fileStream = await file.OpenStreamForWriteAsync())
+            //{
+            //    sessionData.Seek(0, SeekOrigin.Begin);
+            //    await sessionData.CopyToAsync(fileStream);
+            //    await fileStream.FlushAsync();
+            //}
+        }
         
         #endregion
 
@@ -253,7 +273,7 @@ namespace NovelkaCreationTool.ViewModels
             LoadImagesListAsyncCommand = new AsyncLambdaCommand(OnLoadImagesListAsyncCommandExecuted, CanLoadImagesListAsyncCommandExecute);
             IncreaseImageZCommand = new RelayCommand(OnIncreaseImageZCommandEx, CanIncreaseImageZCommandEx);
             DecreaseImageZCommand = new RelayCommand(OnDecreaseImageZCommandEx, CanDecreaseImageZCommandEx);
-    
+            SaveCommand = new RelayCommand(OnSaveCommandEx, (obj) => true);
             #endregion
             PreviewHeight = 480;
             PreviewWidth = 720;

@@ -10,8 +10,10 @@
         xmlns:infr="clr-namespace:NovelkaCreationTool.Infrastructure"
         xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
         mc:Ignorable="d"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         Title="NovelkaCreationTool" Height="450" Width="800"
         Background="LightGray"
+        
         DataContext="{StaticResource MainViewModel}"
         x:Name="MainMainWindow"
         >
@@ -20,21 +22,24 @@
         <vm:MainViewModel x:Key="MainViewModel"/>
         <converter:PathToImageLoaderConverter x:Key="PathToImageLoaderConverter"/>
         <converter:FullFileNameToShortNameConverter x:Key="FullFileNameToShortConverter"/>
-      
     </Window.Resources>
-
     <Grid Name="MainGrid">
-        <!--Definition-->
         <Grid.RowDefinitions>
             <RowDefinition Name="TabMenuRow" Height="125"/>
             <RowDefinition Name="SlidesRow" Height="*"/>
             <RowDefinition Name="StatusRow"  Height="20"/>
         </Grid.RowDefinitions>
-        
+
         <!--Menu-->
         <TabControl Grid.Row="0" >
             <TabItem Name="ProjectSettingTabItem" Header="Проект">
                 <StackPanel Orientation="Horizontal">
+                    <GroupBox Header="Файл" Width="200">
+                        <WrapPanel>
+                            <Button Content="Сохранить" Command="{Binding SaveCommand}"/>
+                            <Button Content="Открыть"/>
+                        </WrapPanel>
+                    </GroupBox>
                     <GroupBox Header="Размер слайда">
                         <UniformGrid Columns="2">
                             <Label Content="Ширина"/>
@@ -44,8 +49,8 @@
                         </UniformGrid>
                     </GroupBox>
 
-                    
-                    
+
+
                 </StackPanel>
             </TabItem>
             <TabItem Name="SlidesTabItem" Header="Слайды">
@@ -74,7 +79,7 @@
                         <Button Command="{Binding AddImageToSlideCommand}">
                             Добавить на слайд
                         </Button>
-                       
+
 
                     </WrapPanel>
                     <ListBox Name="ImagesList" Grid.Column="0"
@@ -178,7 +183,7 @@
             <GridSplitter Grid.Column="1" 
                           HorizontalAlignment="Left"
                           Width="3"/>
-            
+
             <!--SlidesList-->
             <ListBox Name="SlidesListBox"
                      ItemsSource="{Binding Path=Slides, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, IsAsync=True}"
@@ -204,7 +209,7 @@
                         Width="25" Height="25" />
                 <Button Command="{Binding DeleteSlideCommand}" Content="-" Width="25" Height="25"/>
             </StackPanel>
-            
+
             <!--SlidePreview-->
             <Viewbox Name="SlidePreviewViewbox" Grid.Column="1" Stretch="Uniform">
                 <Grid Width="{Binding Path=PreviewWidth}" Height="{Binding Path=PreviewHeight}" Margin="20 5">
@@ -212,7 +217,7 @@
                         <infr:MouseBehaviour MouseX="{Binding MousePreviewX, Mode=OneWayToSource}"
                              MouseY="{Binding MousePreviewY, Mode=OneWayToSource}" />
                     </i:Interaction.Behaviors>
-                    
+
                     <!--SlideImages-->
                     <ListBox ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}"
                              SelectedItem="{Binding Path=SelectedSlideImage}"
@@ -224,7 +229,7 @@
                                         Margin="0"/>
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
-                        <ItemsControl.ItemContainerStyle>   
+                        <ItemsControl.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Canvas.Left" Value="{Binding Path=X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Setter Property="Canvas.Top" Value="{Binding Path=Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -257,8 +262,8 @@
                                         </Style>
                                     </Border.Style>
                                     <Grid>
-                                       
-                                        
+
+
                                         <Grid Background="Transparent" Focusable="False" >
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="10"/>
@@ -275,28 +280,72 @@
                                                     <Setter Property="Background" Value="Red"/>
                                                     <Setter Property="BorderThickness" Value="0"/>
                                                 </Style>
-                                            <Style TargetType="Grid">
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="False">
+                                                <Style TargetType="Grid">
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="False">
                                                             <Setter Property="Opacity" Value="0"/>
                                                         </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
+                                                    </Style.Triggers>
+                                                </Style>
                                             </Grid.Resources>
                                             <i:Interaction.Behaviors>
                                                 <infr:DragInCanvasBehavior/>
                                             </i:Interaction.Behaviors>
 
-                                            <Thumb Grid.Column="0" Grid.Row="0" Cursor="SizeNWSE"/>
-                                            <Thumb Grid.Column="2" Grid.Row="0" Cursor="SizeNESW"/>
-                                            <Thumb Grid.Column="0" Grid.Row="2" Cursor="SizeNESW"/>
-                                            <Thumb Grid.Column="2" Grid.Row="2" Cursor="SizeNWSE"/>
+                                            <Thumb Grid.Column="0" Grid.Row="0" Cursor="SizeNWSE">
+                                               
+                                            </Thumb>
+                                            <Thumb Grid.Column="2" Grid.Row="0" Cursor="SizeNESW">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="DragDelta">
+                                                        <i:InvokeCommandAction Command="{Binding}" CommandParameter="DownLeft"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Thumb>
+                                            <Thumb Grid.Column="0" Grid.Row="2" Cursor="SizeNESW">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="DragDelta">
+                                                        <i:InvokeCommandAction Command="{Binding}" CommandParameter="UpRight"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Thumb>
+                                            <Thumb Grid.Column="2" Grid.Row="2" Cursor="SizeNWSE">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="DragDelta">
+                                                        <i:InvokeCommandAction Command="{Binding}" CommandParameter="DownRight"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Thumb>
 
-                                            <Thumb Grid.Column="0" Grid.Row="1" Cursor="SizeWE" VerticalAlignment="Center" Height="10"/>
-                                            <Thumb Grid.Column="2" Grid.Row="1" Cursor="SizeWE" VerticalAlignment="Center" Height="10"/>
+                                            <Thumb Grid.Column="0" Grid.Row="1" Cursor="SizeWE" VerticalAlignment="Center" Height="10">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="DragDelta">
+                                                        <i:InvokeCommandAction Command="{Binding}" CommandParameter="Left"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Thumb>
+                                            <Thumb Grid.Column="2" Grid.Row="1" Cursor="SizeWE" VerticalAlignment="Center" Height="10">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="DragDelta">
+                                                        <i:InvokeCommandAction Command="{Binding}" CommandParameter="Right"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Thumb>
 
-                                            <Thumb Grid.Column="1" Grid.Row="0" Cursor="SizeNS" HorizontalAlignment="Center" Width="10"/>
-                                            <Thumb Grid.Column="1" Grid.Row="2" Cursor="SizeNS" HorizontalAlignment="Center" Width="10"/>
+                                            <Thumb Grid.Column="1" Grid.Row="0" Cursor="SizeNS" HorizontalAlignment="Center" Width="10">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="DragDelta">
+                                                        <i:InvokeCommandAction Command="{Binding}" CommandParameter="Up"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Thumb>
+                                            <Thumb Grid.Column="1" Grid.Row="2" Cursor="SizeNS" HorizontalAlignment="Center" Width="10">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="DragDelta">
+                                                        <i:InvokeCommandAction Command="{Binding}" CommandParameter="Down"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Thumb>
                                         </Grid>
                                         <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}, IsAsync=True}"
                                                 Width="{Binding Path=Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
@@ -306,8 +355,8 @@
                                                 Grid.RowSpan="3"
                                                 Grid.ColumnSpan="3"
                                                 Panel.ZIndex="-1">
-                                         
-                                         </Image>
+
+                                        </Image>
                                     </Grid>
                                 </Border>
 
@@ -316,7 +365,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ListBox>
-                    
+
                     <!--SlideTextBox-->
                     <Grid Name="TextBoxGrid" Panel.ZIndex="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="50 5">
                         <Grid.RowDefinitions>
@@ -337,12 +386,12 @@
                         <Image Grid.RowSpan="2"/>
 
                     </Grid>
-                    
+
                 </Grid>
             </Viewbox>
 
         </Grid>
-        
+
         <!--StatusBar-->
         <StatusBar Grid.Row="2">
             <StatusBarItem Name="SlidesCountBarItem">

@@ -19,6 +19,7 @@ namespace NovelkaCreationTool.Infrastructure.Converters
 
             string path = value as string;
             if (String.IsNullOrEmpty(path)) return null;
+
             using (FileStream fs = File.OpenRead(path))
             {
                 BitmapImage image = new BitmapImage();
@@ -28,7 +29,11 @@ namespace NovelkaCreationTool.Infrastructure.Converters
                 image.StreamSource = fs;
                 image.EndInit();
                 image.Freeze();
-                
+                //if (parameter is MainViewModel)
+                //{
+                //    (parameter as MainViewModel).SelectedSlide.Images[^1].Height = (int)(double)image.Height;
+                //    (parameter as MainViewModel).SelectedSlide.Images[^1].Width = (int)(double)image.Width;
+                //}
                 return image;
             }
         }
