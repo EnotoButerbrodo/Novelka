@@ -403,12 +403,7 @@
                 </TextBlock>
             </StatusBarItem>
             <StatusBarItem>
-                <TextBlock>
-                    <Run Text="MouseX: "/>
-                    <Run Text="{Binding MouseX}"/>
-                    <Run Text="MouseY: "/>
-                    <Run Text="{Binding MouseY}"/>
-                </TextBlock>
+                <TextBlock Text="{Binding CurrentProject.Name, StringFormat=Проект: {0}}"/>
             </StatusBarItem>
             <StatusBarItem>
                 <TextBlock>

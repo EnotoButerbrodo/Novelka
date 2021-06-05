@@ -9,48 +9,48 @@ using NovelkaCreationTool.ViewModels.Base;
 
 namespace NovelkaCreationTool.Models
 {
-    [DataContract]
+    [Serializable]
     public class SlideImage : ViewModelBase
     {
         int x, y, z, width, height;
         string name, imageName;
-        [DataMember]
+
         public int X
         {
             get => x;
             set => Set(ref x, value);
         }
-        [DataMember]
+
         public int Y
         {
             get => y;
             set => Set(ref y, value);
         }
-        [DataMember]
+
         public int Z
         {
             get => z;
             set => Set(ref z, value);
         }
-        [DataMember]
+
         public int Width
         {
             get => width;
             set => Set(ref width, value);
         }
-        [DataMember]
+
         public int Height
         {
             get => height;
             set => Set(ref height, value);
         }
-        [DataMember]
+  
         public string Name
         {
             get => name;
             set => Set(ref name, value);
         }
-        [DataMember]
+
         public string ImageName
         {
             get => imageName;

@@ -6,9 +6,11 @@ using System.Windows.Media.Imaging;
 
 namespace NovelkaCreationTool.Models
 {
+    [Serializable]
     public class Slide
     {
         public int Id { get; set; }
+        [field:NonSerialized]
         public BitmapImage Image { get; set; }
         SlideData Data { get; set; } = new SlideData();
         public string Speaker
@@ -34,7 +36,7 @@ namespace NovelkaCreationTool.Models
         
 
     }
-
+    [Serializable]
     public class SlideData
     {
         public string Speaker { get; set; } = "";

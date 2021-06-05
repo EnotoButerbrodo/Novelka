@@ -15,14 +15,42 @@ using GongSolutions.Wpf.DragDrop;
 using System.Windows.Data;
 using System;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using Microsoft.Win32;
+
+#pragma warning disable SYSLIB0011 // Тип или член устарел
 
 namespace NovelkaCreationTool.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-
-        public ObservableCollection<Slide> Slides { get; set; } = new ObservableCollection<Slide>();
-        public ObservableCollection<string> Images { get; set; } = new ObservableCollection<string>();
+        Project currentProject;
+        public Project CurrentProject
+        {
+            get
+            {
+                if(currentProject == null)
+                {
+                    currentProject = new Project
+                    {
+                        Name = "Unnamed"
+                    };
+                }
+                return currentProject;
+            }
+            set => Set(ref currentProject, value);
+        }
+        public ObservableCollection<Slide> Slides
+        {
+            get => CurrentProject.Slides;
+            set => Set(ref CurrentProject.Slides, value);
+        }
+        public ObservableCollection<string> Images
+        {
+            get => CurrentProject.Images;
+            set => Set(ref CurrentProject.Images, value);
+        }
+        public DirectoryInfo FolderPath = new("temp");
         
 
         #region Variables
@@ -235,19 +263,24 @@ namespace NovelkaCreationTool.ViewModels
         public ICommand SaveCommand { get; }
         void OnSaveCommandEx(object p)
         {
-            MemoryStream sessionData = new MemoryStream();
-            DataContractSerializer serializer = new (typeof(ObservableCollection<Slide>));
-            serializer.WriteObject(sessionData, Slides);
-
-
-            //StorageFile file = await ApplicationData.Current.LocalFolder
-            //                         .CreateFileAsync(sFileName);
-            //using (Stream fileStream = await file.OpenStreamForWriteAsync())
+            BinaryFormatter formater = new();
+            SaveFileDialog sfd = new()
+            {
+                DefaultExt = ".nct"
+            };
+            if (sfd.ShowDialog() == true)
+            {
+                using (FileStream fs = new(sfd.FileName, FileMode.OpenOrCreate))
+                {
+                    formater.Serialize(fs, CurrentProject);
+                }
+            }
+            
+            //using(FileStream fs = new("test.dat", FileMode.OpenOrCreate))
             //{
-            //    sessionData.Seek(0, SeekOrigin.Begin);
-            //    await sessionData.CopyToAsync(fileStream);
-            //    await fileStream.FlushAsync();
+            //    Project readed = (Project)formater.Deserialize(fs);
             //}
+
         }
         
         #endregion
