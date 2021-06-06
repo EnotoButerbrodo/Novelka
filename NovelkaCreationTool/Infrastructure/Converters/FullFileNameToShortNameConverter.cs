@@ -17,7 +17,7 @@ namespace NovelkaCreationTool.Infrastructure.Converters
             if (String.IsNullOrEmpty(path)) return "Unnamed";
             return Task.Run(() =>
             {
-                return Path.GetFileName(path);
+                return Path.GetFileNameWithoutExtension(path);
 
             }).Result;
         }
