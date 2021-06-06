@@ -20,9 +20,13 @@ namespace NovelkaCreationTool.Models
             set => Set(ref name, value);
         }
 
-        public ObservableCollection<Slide> Slides = new();
+        public ObservableCollection<Slide> Slides { get; set; }
         public ObservableCollection<string> Images = new();
         public ProjectSettings Settings { get; set; }
+        public Project()
+        {
+            Slides = new();
+        }
     }
     [Serializable]
     public class ProjectSettings:ViewModelBase

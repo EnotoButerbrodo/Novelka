@@ -50,11 +50,11 @@ namespace NovelkaCreationTool.ViewModels
                 OnPropertyChanged(nameof(CurrentProject));
             }
         }
-        public ObservableCollection<Slide> Slides
-        {
-            get => CurrentProject.Slides;
-            set => Set(ref CurrentProject.Slides, value);
-        }
+        //public ObservableCollection<Slide> Slides
+        //{
+        //    get => ref CurrentProject.Slides;
+        //    set => ref CurrentProject.Slides = value;
+        //}
         public ObservableCollection<string> Images
         {
             get => CurrentProject.Images;
@@ -116,9 +116,9 @@ namespace NovelkaCreationTool.ViewModels
         {
             var slide = new Slide
             {
-                Id = Slides.Count + 1
+                Id = CurrentProject.Slides.Count + 1
             };
-            Slides.Add(slide);
+            CurrentProject.Slides.Add(slide);
             SelectedSlide = slide;
 
         }
@@ -134,14 +134,14 @@ namespace NovelkaCreationTool.ViewModels
 
         private void OnDeleteSlideCommandExecuted(object p)
         {
-            Slides.Remove(SelectedSlide);
-            if (Slides.Count > 0)
+            CurrentProject.Slides.Remove(SelectedSlide);
+            if (CurrentProject.Slides.Count > 0)
             {
-                for (int i = 0; i < Slides.Count; i++)
+                for (int i = 0; i < CurrentProject.Slides.Count; i++)
                 {
-                    Slides[i].Id = i + 1;
+                    CurrentProject.Slides[i].Id = i + 1;
                 }
-                SelectedSlide = Slides.Last();
+                SelectedSlide = CurrentProject.Slides.Last();
             }
         }
         private bool CanDeleteSlideCommandExecute(object p)
@@ -288,9 +288,7 @@ namespace NovelkaCreationTool.ViewModels
                 {
                     BinaryFormatter formatter = new();
                     CurrentProject = (Project)formatter.Deserialize(fs);
-                    OnPropertyChanged(nameof(Slides));
-                    //OnPropertyChanged(nameof(PreviewHeight));
-                    //OnPropertyChanged(nameof(PreviewWidth));
+                    //OnPropertyChanged(nameof(CurrentProject.Slides));
 
                 }
             }
@@ -322,50 +320,51 @@ namespace NovelkaCreationTool.ViewModels
             SaveCommand = new RelayCommand(OnSaveCommandEx, (obj) => true);
             OpenProjectCommand = new RelayCommand(OnOpenProjectCommandEx, (obj) => true);
             #endregion
-            Slides.Add(new Slide
+            
+            CurrentProject.Slides.Add(new Slide
             {
                 Id = 1
             });
-            Slides[0].Images.Add(new SlideImage
+            CurrentProject.Slides[0].Images.Add(new SlideImage
             {
                 Name = "Image 1",
                 ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
                 X = 200,
                 Y = 200,
-                Z = Slides[0].Images.Count,
+                Z = CurrentProject.Slides[0].Images.Count,
                 Height = 200,
                 Width = 200
 
             });
-            Slides[0].Images.Add(new SlideImage
+            CurrentProject.Slides[0].Images.Add(new SlideImage
             {
                 Name = "Image 2",
                 ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
                 X = 300,
                 Y = 0,
-                Z = Slides[0].Images.Count,
+                Z = CurrentProject.Slides[0].Images.Count,
                 Height = 100,
                 Width = 100
 
             });
-            Slides[0].Images.Add(new SlideImage
+            CurrentProject.Slides[0].Images.Add(new SlideImage
             {
                 Name = "Image 4",
                 ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
                 X = 200,
                 Y = 200,
-                Z = Slides[0].Images.Count,
+                Z = CurrentProject.Slides[0].Images.Count,
                 Height = 200,
                 Width = 200
 
             });
-            Slides[0].Images.Add(new SlideImage
+            CurrentProject.Slides[0].Images.Add(new SlideImage
             {
                 Name = "Image 3",
                 ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
                 X = 300,
                 Y = 0,
-                Z = Slides[0].Images.Count,
+                Z = CurrentProject.Slides[0].Images.Count,
                 Height = 100,
                 Width = 100
 

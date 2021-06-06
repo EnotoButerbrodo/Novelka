@@ -186,7 +186,7 @@
 
             <!--SlidesList-->
             <ListBox Name="SlidesListBox"
-                     ItemsSource="{Binding Path=Slides, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, IsAsync=True}"
+                     ItemsSource="{Binding Path=CurrentProject.Slides, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, IsAsync=True}"
                      SelectedItem="{Binding SelectedSlide, IsAsync=True}"
                      Background="LightGray"
                      dd:DragDrop.IsDragSource="True"
@@ -399,7 +399,7 @@
                     <Run Text="Слайд"/>
                     <Run Text="{Binding SelectedSlide.Id, FallbackValue=0}"/>
                     <Run Text=" из "/>
-                    <Run Text="{Binding Slides.Count, Mode=OneWay}"/>
+                    <Run Text="{Binding CurrentProject.Slides.Count, Mode=OneWay}"/>
                 </TextBlock>
             </StatusBarItem>
             <StatusBarItem>
