@@ -43,9 +43,9 @@
                     <GroupBox Header="Размер слайда">
                         <UniformGrid Columns="2">
                             <Label Content="Ширина"/>
-                            <TextBox Text="{Binding Path=PreviewWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Text="{Binding Path=CurrentProject.Settings.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             <Label Content="Высота"/>
-                            <TextBox Text="{Binding Path=PreviewHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Text="{Binding Path=CurrentProject.Settings.Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </UniformGrid>
                     </GroupBox>
 
@@ -158,8 +158,8 @@
                         </Label>
                         <TextBox
                                  Text="{Binding Path=SelectedSlideImage.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Slider Maximum="{Binding PreviewHeight}" Value="{Binding SelectedSlideImage.Height}"/>
-                        <Slider Maximum="{Binding PreviewWidth}" Value="{Binding SelectedSlideImage.Width}"/>
+                        <Slider Maximum="{Binding CurrentProject.Settings.Width}" Value="{Binding SelectedSlideImage.Height}"/>
+                        <Slider Maximum="{Binding CurrentProject.Settings.Height}" Value="{Binding SelectedSlideImage.Width}"/>
                     </UniformGrid>
                     <WrapPanel Grid.Column="2">
                         <Button Content="Установить как задний фон"
@@ -212,7 +212,7 @@
 
             <!--SlidePreview-->
             <Viewbox Name="SlidePreviewViewbox" Grid.Column="1" Stretch="Uniform">
-                <Grid Width="{Binding Path=PreviewWidth}" Height="{Binding Path=PreviewHeight}" Margin="20 5">
+                <Grid Width="{Binding Path=CurrentProject.Settings.Width}" Height="{Binding Path=CurrentProject.Settings.Height}" Margin="20 5">
                     <i:Interaction.Behaviors>
                         <infr:MouseBehaviour MouseX="{Binding MousePreviewX, Mode=OneWayToSource}"
                              MouseY="{Binding MousePreviewY, Mode=OneWayToSource}" />

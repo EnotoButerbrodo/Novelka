@@ -22,5 +22,22 @@ namespace NovelkaCreationTool.Models
 
         public ObservableCollection<Slide> Slides = new();
         public ObservableCollection<string> Images = new();
+        public ProjectSettings Settings { get; set; }
+    }
+    [Serializable]
+    public class ProjectSettings:ViewModelBase
+    {
+        public int Version;
+        int width, height;
+        public int Width
+        {
+            get => width;
+            set => Set(ref width, value);
+        }
+        public int Height
+        {
+            get => height;
+            set => Set(ref height, value);
+        }
     }
 }

@@ -25,16 +25,22 @@ namespace NovelkaCreationTool.ViewModels
     public class MainViewModel : ViewModelBase
     {
         Project currentProject;
+        readonly Project defaultProject = new()
+        {
+            Name = "Unnamed",
+            Settings = new()
+            {
+                Width = 720,
+                Height = 480
+            }
+        };
         public Project CurrentProject
         {
             get
             {
                 if(currentProject == null)
                 {
-                    currentProject = new Project
-                    {
-                        Name = "Unnamed"
-                    };
+                    currentProject = defaultProject;
                 }
                 return currentProject;
             }
@@ -61,8 +67,6 @@ namespace NovelkaCreationTool.ViewModels
         Slide selectedSlide;
         SlideImage selectedSlideImage;
         string selectedImage;
-        int previewWidth;
-        int previewHeight;
 
         public Slide SelectedSlide
         {
@@ -80,18 +84,7 @@ namespace NovelkaCreationTool.ViewModels
             set => Set(ref selectedImage, value);
         }
 
-        double mouseX, mouseY;
         double mousePreviewX, mousePreviewY;
-        public double MouseX
-        {
-            get => mouseX;
-            set => Set(ref mouseX, value);
-        }
-        public double MouseY
-        {
-            get => mouseY;
-            set => Set(ref mouseY, value);
-        }
         public double MousePreviewX
         {
             get => mousePreviewX;
@@ -102,16 +95,16 @@ namespace NovelkaCreationTool.ViewModels
             get => mousePreviewY;
             set => Set(ref mousePreviewY, value);
         }
-        public int PreviewWidth
-        {
-            get => previewWidth;
-            set => Set(ref previewWidth, value);
-        }
-        public int PreviewHeight
-        {
-            get => previewHeight;
-            set => Set(ref previewHeight, value);
-        }
+        //public int PreviewWidth
+        //{
+        //    get => currentProject.Settings.Width;
+        //    set => Set(ref currentProject.Settings.Width, value);
+        //}
+        //public int PreviewHeight
+        //{
+        //    get => currentProject.Settings.Height;
+        //    set => Set(ref currentProject.Settings.Height, value);
+        //}
         #endregion
         #region Commands
 
@@ -201,10 +194,10 @@ namespace NovelkaCreationTool.ViewModels
         public ICommand SetAsBackgroundImageCommand { get; }
         void OnSetAsBackgroundImageCommandEx(object p)
         {
-            SelectedSlideImage.Width = PreviewWidth;
-            SelectedSlideImage.Height = previewHeight;
-            SelectedSlideImage.X = 0;
-            SelectedSlideImage.Y = 0;
+            SelectedSlideImage.Width = CurrentProject.Settings.Width;
+            SelectedSlideImage.Height = CurrentProject.Settings.Height;
+            SelectedSlideImage.X = -1;
+            SelectedSlideImage.Y = -1;
             SwapImagesZPosition(SelectedSlide.Images.IndexOf(SelectedSlideImage), 0);
         }
         bool CanSetAsBackgroundImageCommandEx(object p)
@@ -296,7 +289,9 @@ namespace NovelkaCreationTool.ViewModels
                     BinaryFormatter formatter = new();
                     CurrentProject = (Project)formatter.Deserialize(fs);
                     OnPropertyChanged(nameof(Slides));
-                    
+                    //OnPropertyChanged(nameof(PreviewHeight));
+                    //OnPropertyChanged(nameof(PreviewWidth));
+
                 }
             }
         }
@@ -327,8 +322,6 @@ namespace NovelkaCreationTool.ViewModels
             SaveCommand = new RelayCommand(OnSaveCommandEx, (obj) => true);
             OpenProjectCommand = new RelayCommand(OnOpenProjectCommandEx, (obj) => true);
             #endregion
-            PreviewHeight = 480;
-            PreviewWidth = 720;
             Slides.Add(new Slide
             {
                 Id = 1
