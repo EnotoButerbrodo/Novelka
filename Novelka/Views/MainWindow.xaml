@@ -4,13 +4,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Novelka"
+        xmlns:vm="clr-namespace:Novelka.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        DataContext="{StaticResource MainViewModel}">
+    <Window.Resources>
+        <vm:MainViewModel x:Key="MainViewModel"/>
+    </Window.Resources>
     <Grid>
-        <Viewbox>
-            <Viewbox Name="SlidePreviewViewbox" Grid.Column="1" Stretch="Uniform">
-                <Grid Width="{Binding Path=CurrentProject.Settings.Width}" Height="{Binding Path=CurrentProject.Settings.Height}" Margin="20 5">
-                    <!--SlideImages-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="399*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Viewbox Name="SlidePreviewViewbox" Stretch="Uniform" Grid.ColumnSpan="2">
+
+            <!--<Grid Width="{Binding Path=CurrentProject.Settings.Width}" Height="{Binding Path=CurrentProject.Settings.Height}" Margin="20 5">
+                    -->
+            <!--SlideImages-->
+            <!--
+                    
+                    
                     <ListBox ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}"
                              SelectedItem="{Binding Path=SelectedSlideImage}"
                              BorderThickness="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" RenderTransformOrigin="0,0"
@@ -99,8 +112,13 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ListBox>
-
-                    <!--SlideTextBox-->
+                    
+                    -->
+            <!--SlideTextBox-->
+            <!--
+                    
+                    
+                    
                     <Grid Name="TextBoxGrid" Panel.ZIndex="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="50 5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
@@ -120,9 +138,9 @@
                         <Image Grid.RowSpan="2"/>
 
                     </Grid>
+                    
 
-                </Grid>
-            </Viewbox>
+                </Grid>-->
         </Viewbox>
     </Grid>
 </Window>

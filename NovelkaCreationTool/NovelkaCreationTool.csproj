@@ -28,10 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NovelkaCreator\NovelkaCreator.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Resources\Default\SlideDefaultImage.png" />
   </ItemGroup>
 
