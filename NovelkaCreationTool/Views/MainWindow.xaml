@@ -38,6 +38,7 @@
                         <WrapPanel>
                             <Button Content="Сохранить" Command="{Binding SaveCommand}"/>
                             <Button Content="Открыть" Command="{Binding OpenProjectCommand}"/>
+                            <Button Content="Экспорт" Command="{Binding}"/>
                         </WrapPanel>
                     </GroupBox>
                     <GroupBox Header="Размер слайда">

@@ -20,6 +20,7 @@ namespace NovelkaCreationTool.Models
             set => Set(ref name, value);
         }
 
+        public HashSet<string> UsingImages = new();
         public ObservableCollection<Slide> Slides { get; set; }
         public ObservableCollection<string> Images = new();
         public ProjectSettings Settings { get; set; }

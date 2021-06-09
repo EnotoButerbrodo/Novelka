@@ -168,10 +168,13 @@ namespace NovelkaCreationTool.ViewModels
             {
                 Name = Path.GetFileName(SelectedImage),
                 ImageName = SelectedImage,
+                Width = 300,
+                Height = 300,
                 X = 0,
                 Y = 0,
                 Z = SelectedSlide.Images.Count
             });
+            CurrentProject.UsingImages.Add(SelectedImage);
         }
         bool CanAddImageToSlideCommandEx(object p)
         {
@@ -245,6 +248,7 @@ namespace NovelkaCreationTool.ViewModels
         }
 
         #endregion
+        #region SaveCommand
         public ICommand SaveCommand { get; }
         void OnSaveCommandEx(object p)
         {
@@ -253,6 +257,7 @@ namespace NovelkaCreationTool.ViewModels
             {
                 DefaultExt = ".nct"
             };
+
             if (sfd.ShowDialog() == true)
             {
                 using (FileStream fs = new(sfd.FileName, FileMode.OpenOrCreate))
@@ -262,7 +267,8 @@ namespace NovelkaCreationTool.ViewModels
                 }
             }
         }
-
+        #endregion
+        #region OpenProjectCommand
         public ICommand OpenProjectCommand { get; }
         void OnOpenProjectCommandEx(object p)
         {
@@ -281,7 +287,10 @@ namespace NovelkaCreationTool.ViewModels
                 }
             }
         }
-        
+        #endregion
+        #region ExsportCommand
+
+        #endregion
         #endregion
 
 
@@ -308,15 +317,17 @@ namespace NovelkaCreationTool.ViewModels
             SaveCommand = new RelayCommand(OnSaveCommandEx, (obj) => true);
             OpenProjectCommand = new RelayCommand(OnOpenProjectCommandEx, (obj) => true);
             #endregion
-            
+            string imageName;
             CurrentProject.Slides.Add(new Slide
             {
                 Id = 1
             });
+            imageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg";
+            CurrentProject.UsingImages.Add(imageName);
             CurrentProject.Slides[0].Images.Add(new SlideImage
             {
                 Name = "Image 1",
-                ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
+                ImageName = imageName,
                 X = 200,
                 Y = 200,
                 Z = CurrentProject.Slides[0].Images.Count,
@@ -324,10 +335,12 @@ namespace NovelkaCreationTool.ViewModels
                 Width = 200
 
             });
+            imageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg";
+            CurrentProject.UsingImages.Add(imageName);
             CurrentProject.Slides[0].Images.Add(new SlideImage
             {
                 Name = "Image 2",
-                ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
+                ImageName = imageName,
                 X = 300,
                 Y = 0,
                 Z = CurrentProject.Slides[0].Images.Count,
@@ -335,28 +348,7 @@ namespace NovelkaCreationTool.ViewModels
                 Width = 100
 
             });
-            CurrentProject.Slides[0].Images.Add(new SlideImage
-            {
-                Name = "Image 4",
-                ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
-                X = 200,
-                Y = 200,
-                Z = CurrentProject.Slides[0].Images.Count,
-                Height = 200,
-                Width = 200
-
-            });
-            CurrentProject.Slides[0].Images.Add(new SlideImage
-            {
-                Name = "Image 3",
-                ImageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg",
-                X = 300,
-                Y = 0,
-                Z = CurrentProject.Slides[0].Images.Count,
-                Height = 100,
-                Width = 100
-
-            });
+            
 
         }
     }
