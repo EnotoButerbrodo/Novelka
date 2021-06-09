@@ -95,16 +95,6 @@ namespace NovelkaCreationTool.ViewModels
             get => mousePreviewY;
             set => Set(ref mousePreviewY, value);
         }
-        //public int PreviewWidth
-        //{
-        //    get => currentProject.Settings.Width;
-        //    set => Set(ref currentProject.Settings.Width, value);
-        //}
-        //public int PreviewHeight
-        //{
-        //    get => currentProject.Settings.Height;
-        //    set => Set(ref currentProject.Settings.Height, value);
-        //}
         #endregion
         #region Commands
 
@@ -178,8 +168,6 @@ namespace NovelkaCreationTool.ViewModels
             {
                 Name = Path.GetFileName(SelectedImage),
                 ImageName = SelectedImage,
-                Width = 300,
-                Height = 300,
                 X = 0,
                 Y = 0,
                 Z = SelectedSlide.Images.Count

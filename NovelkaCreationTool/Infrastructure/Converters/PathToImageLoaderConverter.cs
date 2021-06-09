@@ -23,17 +23,11 @@ namespace NovelkaCreationTool.Infrastructure.Converters
             using (FileStream fs = File.OpenRead(path))
             {
                 BitmapImage image = new BitmapImage();
-                image = new BitmapImage();
                 image.BeginInit();
                 image.CacheOption = BitmapCacheOption.OnLoad;
                 image.StreamSource = fs;
                 image.EndInit();
                 image.Freeze();
-                //if (parameter is MainViewModel)
-                //{
-                //    (parameter as MainViewModel).SelectedSlide.Images[^1].Height = (int)(double)image.Height;
-                //    (parameter as MainViewModel).SelectedSlide.Images[^1].Width = (int)(double)image.Width;
-                //}
                 return image;
             }
         }
