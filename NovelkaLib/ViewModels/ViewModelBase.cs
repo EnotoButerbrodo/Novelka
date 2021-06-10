@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace NovelkaCreationTool.ViewModels
+namespace NovelkaLib.ViewModels
 {
     [Serializable]
     public class ViewModelBase : INotifyPropertyChanged

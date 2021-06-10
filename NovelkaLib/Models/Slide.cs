@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Windows.Media.Imaging;
 
-namespace NovelkaCreationTool.Models
+namespace NovelkaLib.Models
 {
     [Serializable]
     public class Slide
@@ -33,8 +31,6 @@ namespace NovelkaCreationTool.Models
             get => Data.Images;
             set => Data.Images = value;
         }
-        
-
     }
     [Serializable]
     public class SlideData

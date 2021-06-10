@@ -28,6 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NovelkaLib\NovelkaLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Resources\Default\SlideDefaultImage.png" />
   </ItemGroup>
 
@@ -36,6 +40,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <CustomToolNamespace>NovelkaCreationTool.ViewModels</CustomToolNamespace>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>
