@@ -135,42 +135,37 @@
                         </ListBox.ItemContainerStyle>
                     </ListBox>
 
-                    <UniformGrid Grid.Column="1" Columns="4" Rows="4">
-                        <Label>
-                            Ширина
-                        </Label>
-                        <TextBox
-                                 Text="{Binding Path=SelectedSlideImage.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label>
-                            Высота
-                        </Label>
-                        <TextBox 
-                                 Text="{Binding Path=SelectedSlideImage.Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label>
-                            X
-                        </Label>
-                        <TextBox
-                                 Text="{Binding Path=SelectedSlideImage.X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label>
-                            Y
-                        </Label>
-                        <TextBox
-                                 Text="{Binding Path=SelectedSlideImage.Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label>
-                            Name
-                        </Label>
-                        <TextBox
-                                 Text="{Binding Path=SelectedSlideImage.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Slider Maximum="{Binding CurrentProject.Settings.Width}" Value="{Binding SelectedSlideImage.Height}"/>
-                        <Slider Maximum="{Binding CurrentProject.Settings.Height}" Value="{Binding SelectedSlideImage.Width}"/>
+                    <UniformGrid Grid.Column="2" Columns="4" Rows="2">
+                        <GroupBox Header="Ширина">
+                            <StackPanel>
+                                <TextBox Text="{Binding Path=SelectedSlideImage.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Slider Maximum="{Binding CurrentProject.Settings.Width}" Value="{Binding SelectedSlideImage.Width}"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="Высота">
+                            <StackPanel>
+                                <TextBox Text="{Binding Path=SelectedSlideImage.Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Slider Maximum="{Binding CurrentProject.Settings.Height}" Value="{Binding SelectedSlideImage.Height}"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="X">
+                            <TextBox Text="{Binding Path=SelectedSlideImage.X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </GroupBox>
+                        <GroupBox Header="Y">
+                            <TextBox Text="{Binding Path=SelectedSlideImage.Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </GroupBox>
                     </UniformGrid>
-                    <WrapPanel Grid.Column="2">
-                        <Button Content="Установить как задний фон"
-                                Command="{Binding SetAsBackgroundImageCommand}"/>
-                        <Button Content="Переместить назад" Command="{Binding Path=DecreaseImageZCommand}"/>
-                        <Button Content="Переместить вперед" Command="{Binding Path=IncreaseImageZCommand}"/>
-                        <Button Content="Переместить" Command="{Binding}"/>
-                    </WrapPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <GroupBox Header="Положение">
+                            <StackPanel>
+                                <Button Content="Установить как задний фон"
+                                        Command="{Binding SetAsBackgroundImageCommand}"/>
+                                <Button Content="Переместить назад" Command="{Binding Path=DecreaseImageZCommand}"/>
+                                <Button Content="Переместить вперед" Command="{Binding Path=IncreaseImageZCommand}"/>
+                                <Button Content="Удалить" Command="{Binding DeleteSlideImageCommand}"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
                 </Grid>
 
             </TabItem>

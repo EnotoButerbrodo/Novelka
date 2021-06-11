@@ -191,6 +191,20 @@ namespace NovelkaCreationTool.ViewModels
             return (SelectedImage != null && SelectedSlide != null);
         }
         #endregion
+        #region DeleteSlideImageCommand
+        public ICommand DeleteSlideImageCommand { get; }
+
+        void OnDeleteSlideImageCommandEx(object p)
+        {
+            SelectedSlide.Images.Remove(SelectedSlideImage);
+        }
+
+        bool CanDeleteSlideImageCommandEx(object p)
+        {
+            if (SelectedSlideImage == null || SelectedSlide == null) return false;
+            return true;
+        }
+        #endregion
         #region SetAsBackgroundImageCommand
         public ICommand SetAsBackgroundImageCommand { get; }
         void OnSetAsBackgroundImageCommandEx(object p)
@@ -235,7 +249,7 @@ namespace NovelkaCreationTool.ViewModels
         }
         bool CanIncreaseImageZCommandEx(object p)
         {
-            if (SelectedSlide != null)
+            if (SelectedSlide != null && SelectedSlideImage != null)
                 if (SelectedSlide.Images.IndexOf(SelectedSlideImage) < SelectedSlide.Images.Count - 1)
                     return true;
             return false;
@@ -343,7 +357,7 @@ namespace NovelkaCreationTool.ViewModels
             DecreaseImageZCommand = new RelayCommand(OnDecreaseImageZCommandEx, CanDecreaseImageZCommandEx);
             SaveCommand = new RelayCommand(OnSaveCommandEx, (obj) => true);
             OpenProjectCommand = new RelayCommand(OnOpenProjectCommandEx, (obj) => true);
-
+            DeleteSlideImageCommand = new RelayCommand(OnDeleteSlideImageCommandEx, CanDeleteSlideImageCommandEx);
            
             #endregion
         }
