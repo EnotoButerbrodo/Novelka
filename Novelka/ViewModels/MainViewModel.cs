@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows;
 using Newtonsoft.Json;
 using Novelka.Models;
 using NovelkaLib.Models;
@@ -43,9 +44,16 @@ namespace Novelka.ViewModels
         }
         void LoadProject()
         {
-            BinaryFormatter formatter = new();
-            using FileStream fs = File.OpenRead(config.StartupProjectPath);
-            CurrentProject = (Project)formatter.Deserialize(fs);
+            try
+            {
+                using StreamReader fs = new(config.StartupProjectPath);
+                string json = fs.ReadToEnd();
+                CurrentProject = JsonConvert.DeserializeObject<Project>(json);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не удалось загрузить проект");
+            }
 
         }
 
