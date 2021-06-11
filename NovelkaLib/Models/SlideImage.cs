@@ -6,19 +6,20 @@ namespace NovelkaLib.Models
     [Serializable]
     public class SlideImage : ViewModelBase
     {
-        int x, y, z, width, height;
+        double x, y, z;
+        int width, height;
         string name, imageName;
-        public int X
+        public double X
         {
             get => x;
             set => Set(ref x, value);
         }
-        public int Y
+        public double Y
         {
             get => y;
             set => Set(ref y, value);
         }
-        public int Z
+        public double Z
         {
             get => z;
             set => Set(ref z, value);

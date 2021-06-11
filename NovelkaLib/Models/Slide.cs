@@ -32,6 +32,6 @@ namespace NovelkaLib.Models
     {
         public string Speaker { get; set; } = "";
         public string Text { get; set; } = "";
-        public ObservableCollection<SlideImage> Images = new ObservableCollection<SlideImage>();
+        public ObservableCollection<SlideImage> Images = new();
     }
 }
