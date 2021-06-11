@@ -21,11 +21,6 @@ namespace NovelkaLib.Models
             get => Data.Text;
             set => Data.Text = value;
         }
-        public string BackgroundImageName
-        {
-            get => Data.BackgroundImageName;
-            set => Data.BackgroundImageName = value;
-        }
         public ObservableCollection<SlideImage> Images
         {
             get => Data.Images;
@@ -37,7 +32,6 @@ namespace NovelkaLib.Models
     {
         public string Speaker { get; set; } = "";
         public string Text { get; set; } = "";
-        public string BackgroundImageName { get; set; } = "";
         public ObservableCollection<SlideImage> Images = new ObservableCollection<SlideImage>();
     }
 }

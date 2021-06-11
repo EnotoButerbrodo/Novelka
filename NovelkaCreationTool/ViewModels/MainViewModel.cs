@@ -1,22 +1,16 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Media.Imaging;
-using NovelkaCreationTool.Models;
-using NovelkaCreationTool.ViewModels.Base;
-using System.Windows.Input;
-using NovelkaCreationTool.Commands;
-using System.Linq;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
-using NovelkaCreationTool.Views;
-using System.Windows;
-using NovelkaCreationTool.Infrastructure.Commands;
-using System.Collections;
-using System.Windows.Controls;
-using GongSolutions.Wpf.DragDrop;
-using System.Windows.Data;
-using System;
-using System.Runtime.Serialization;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows;
+using System.Windows.Input;
 using Microsoft.Win32;
+using Newtonsoft.Json;
+using NovelkaCreationTool.Commands;
+using NovelkaCreationTool.Infrastructure.Commands;
+using NovelkaLib.Models;
+using NovelkaLib.ViewModels;
 
 #pragma warning disable SYSLIB0011 // Тип или член устарел
 
@@ -50,11 +44,6 @@ namespace NovelkaCreationTool.ViewModels
                 OnPropertyChanged(nameof(CurrentProject));
             }
         }
-        //public ObservableCollection<Slide> Slides
-        //{
-        //    get => ref CurrentProject.Slides;
-        //    set => ref CurrentProject.Slides = value;
-        //}
         public ObservableCollection<string> Images
         {
             get => CurrentProject.Images;
@@ -260,11 +249,11 @@ namespace NovelkaCreationTool.ViewModels
 
             if (sfd.ShowDialog() == true)
             {
-                using (FileStream fs = new(sfd.FileName, FileMode.OpenOrCreate))
-                {
-                    CurrentProject.Name = sfd.FileName;
-                    formater.Serialize(fs, CurrentProject);
-                }
+
+                 CurrentProject.Name = sfd.FileName;
+                 using StreamWriter file = new(sfd.FileName);
+                 string json = JsonConvert.SerializeObject(CurrentProject);
+                 file.Write(json);
             }
         }
         #endregion
@@ -278,12 +267,15 @@ namespace NovelkaCreationTool.ViewModels
             };
             if (ofd.ShowDialog() == true)
             {
-                using(FileStream fs = new(ofd.FileName, FileMode.Open))
+                try
                 {
-                    BinaryFormatter formatter = new();
-                    CurrentProject = (Project)formatter.Deserialize(fs);
-                    //OnPropertyChanged(nameof(CurrentProject.Slides));
-
+                    using StreamReader fs = new(ofd.FileName);
+                    string json = fs.ReadToEnd();
+                    CurrentProject = JsonConvert.DeserializeObject<Project>(json);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Не удалось загрузить проект");
                 }
             }
         }
@@ -291,6 +283,7 @@ namespace NovelkaCreationTool.ViewModels
         #region ExsportCommand
 
         #endregion
+
         #endregion
 
 

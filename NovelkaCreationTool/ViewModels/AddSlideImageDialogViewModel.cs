@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NovelkaCreationTool.ViewModels.Base;
-using NovelkaCreationTool.Commands.Base;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows;
-using NovelkaCreationTool.Views;
 using NovelkaCreationTool.Commands;
+using NovelkaLib.ViewModels;
 
 namespace NovelkaCreationTool.ViewModels
 {

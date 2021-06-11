@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Novelka.Models;
-using NovelkaCreationTool.Models;
-using NovelkaCreationTool.ViewModels.Base;
-using Newtonsoft.Json;
 using System.Runtime.Serialization.Formatters.Binary;
+using Newtonsoft.Json;
+using Novelka.Models;
+using NovelkaLib.Models;
+using NovelkaLib.ViewModels;
 
 namespace Novelka.ViewModels
 {
