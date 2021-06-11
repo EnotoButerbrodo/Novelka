@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text.Json.Serialization;
+using System.Windows.Media.Imaging;
 using NovelkaLib.ViewModels;
 
 namespace NovelkaLib.Models
@@ -7,7 +9,7 @@ namespace NovelkaLib.Models
     public class SlideImage : ViewModelBase
     {
         double x, y, z;
-        int width, height;
+        double width, height;
         string name, imageName;
         public double X
         {
@@ -24,12 +26,12 @@ namespace NovelkaLib.Models
             get => z;
             set => Set(ref z, value);
         }
-        public int Width
+        public double Width
         {
             get => width;
             set => Set(ref width, value);
         }
-        public int Height
+        public double Height
         {
             get => height;
             set => Set(ref height, value);
