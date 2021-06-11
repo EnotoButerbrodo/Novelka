@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using NovelkaCreationTool.Commands;
 using NovelkaCreationTool.Infrastructure.Commands;
+using NovelkaLib;
+using NovelkaLib.Infrastructure;
 using NovelkaLib.Models;
 using NovelkaLib.ViewModels;
 
@@ -24,8 +30,8 @@ namespace NovelkaCreationTool.ViewModels
             Name = "Unnamed",
             Settings = new()
             {
-                Width = 720,
-                Height = 480
+                Width = 1920,
+                Height = 1080
             }
         };
         public Project CurrentProject
@@ -50,7 +56,8 @@ namespace NovelkaCreationTool.ViewModels
             set => Set(ref CurrentProject.Images, value);
         }
         public DirectoryInfo FolderPath = new("temp");
-        
+
+        public static Storage<BitmapImage> ImagesStorage = new();
 
         #region Variables
         Slide selectedSlide;
@@ -153,16 +160,30 @@ namespace NovelkaCreationTool.ViewModels
         public ICommand AddImageToSlideCommand { get; }
         void OnAddImageToSlideCommandEx(object p)
         {
-            SelectedSlide.Images.Add(new SlideImage
+            SlideImage newSlideImage = new()
             {
-                Name = Path.GetFileName(SelectedImage),
+                Name = Path.GetFileNameWithoutExtension(SelectedImage),
                 ImageName = SelectedImage,
-                Width = 300,
-                Height = 300,
-                X = 0,
+                X = 0, 
                 Y = 0,
                 Z = SelectedSlide.Images.Count
-            });
+            };
+            BitmapImage loadedImage;
+            if (!ImagesStorage.ContainsItem(newSlideImage.Name))
+            {
+                var imageTask = FileLoader.LoadBitmapImageAsync(newSlideImage.ImageName);
+                Task.WaitAll(imageTask);
+                loadedImage = imageTask.Result;
+                ImagesStorage.Add(newSlideImage.Name, loadedImage);
+            }
+            else
+                loadedImage = ImagesStorage.GetItem(newSlideImage.Name);
+
+            newSlideImage.Height = loadedImage.Height;
+            newSlideImage.Width = loadedImage.Width;
+
+
+            SelectedSlide.Images.Add(newSlideImage);
             CurrentProject.UsingImages.Add(SelectedImage);
         }
         bool CanAddImageToSlideCommandEx(object p)
@@ -273,9 +294,9 @@ namespace NovelkaCreationTool.ViewModels
                     string json = fs.ReadToEnd();
                     CurrentProject = JsonConvert.DeserializeObject<Project>(json);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    MessageBox.Show("Не удалось загрузить проект");
+                    MessageBox.Show($"Не удалось загрузить проект. {e.Message}");
                 }
             }
         }
@@ -284,8 +305,21 @@ namespace NovelkaCreationTool.ViewModels
 
         #endregion
 
-        #endregion
+        public static object GetImageFromPath(object value, object parameter)
+        {
+            string imagePath = value as string;
+            string imageName = Path.GetFileNameWithoutExtension(imagePath);
+            if (ImagesStorage.ContainsItem(imageName))
+                return ImagesStorage.GetItem(imageName);
 
+
+            var loadedImage = FileLoader.LoadBitmapImage(imagePath);
+            ImagesStorage.Add(imageName, loadedImage);
+            return loadedImage;
+
+        }
+
+        #endregion
 
         void SwapImagesZPosition(int firstIndex, int secondIndex)
         {
@@ -309,40 +343,9 @@ namespace NovelkaCreationTool.ViewModels
             DecreaseImageZCommand = new RelayCommand(OnDecreaseImageZCommandEx, CanDecreaseImageZCommandEx);
             SaveCommand = new RelayCommand(OnSaveCommandEx, (obj) => true);
             OpenProjectCommand = new RelayCommand(OnOpenProjectCommandEx, (obj) => true);
+
+           
             #endregion
-            string imageName;
-            CurrentProject.Slides.Add(new Slide
-            {
-                Id = 1
-            });
-            imageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg";
-            CurrentProject.UsingImages.Add(imageName);
-            CurrentProject.Slides[0].Images.Add(new SlideImage
-            {
-                Name = "Image 1",
-                ImageName = imageName,
-                X = 200,
-                Y = 200,
-                Z = CurrentProject.Slides[0].Images.Count,
-                Height = 200,
-                Width = 200
-
-            });
-            imageName = @"S:\Users\Игорь\source\repos\Kursovaya\NovelkaCreationTool\bin\Debug\net5.0-windows\temp\00769329426A88EBE20E6088C449F46C.jpg";
-            CurrentProject.UsingImages.Add(imageName);
-            CurrentProject.Slides[0].Images.Add(new SlideImage
-            {
-                Name = "Image 2",
-                ImageName = imageName,
-                X = 300,
-                Y = 0,
-                Z = CurrentProject.Slides[0].Images.Count,
-                Height = 100,
-                Width = 100
-
-            });
-            
-
         }
     }
 }

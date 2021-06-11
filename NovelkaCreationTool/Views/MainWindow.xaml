@@ -22,6 +22,8 @@
         <vm:MainViewModel x:Key="MainViewModel"/>
         <converter:PathToImageLoaderConverter x:Key="PathToImageLoaderConverter"/>
         <converter:FullFileNameToShortNameConverter x:Key="FullFileNameToShortConverter"/>
+        <converter:GetImageFromPathConverter x:Key="GetImage"/>
+
     </Window.Resources>
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
@@ -114,7 +116,7 @@
                             <DataTemplate>
                                 <StackPanel>
                                     <TextBlock Text="{Binding Path=Name}" HorizontalAlignment="Center" MaxWidth="100"/>
-                                    <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}}"
+                                    <Image Source="{Binding Path=ImageName, Converter={StaticResource GetImage}}"
                                            Width="100"
                                            Height="50"/>
                                 </StackPanel>
@@ -348,7 +350,7 @@
                                                 </i:Interaction.Triggers>
                                             </Thumb>
                                         </Grid>
-                                        <Image Source="{Binding Path=ImageName, Converter={StaticResource PathToImageLoaderConverter}, IsAsync=True}"
+                                        <Image Source="{Binding Path=ImageName, Converter={StaticResource GetImage}}"
                                                 Width="{Binding Path=Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                 Height="{Binding Path=Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                 Stretch="Fill"
