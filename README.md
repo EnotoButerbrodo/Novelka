@@ -1,3 +1,5 @@
+Tool for creating visual novel game's
+
 # Novelka
 Visual Novel's Game Creation Tool
 Цель данной программы - получить инструмент для легкого создания визуальных новелл.
