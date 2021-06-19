@@ -9,6 +9,7 @@
         xmlns:converter="clr-namespace:NovelkaCreationTool.Infrastructure.Converters"
         xmlns:infr="clr-namespace:NovelkaCreationTool.Infrastructure"
         xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+        xmlns:uc="clr-namespace:NovelkaControlLib;assembly=NovelkaControlLib"
         mc:Ignorable="d"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         Title="NovelkaCreationTool" Height="450" Width="800"
@@ -27,7 +28,7 @@
     </Window.Resources>
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Name="TabMenuRow" Height="125"/>
+            <RowDefinition Name="TabMenuRow" Height="135"/>
             <RowDefinition Name="SlidesRow" Height="*"/>
             <RowDefinition Name="StatusRow"  Height="20"/>
         </Grid.RowDefinitions>
@@ -51,6 +52,7 @@
                             <TextBox Text="{Binding Path=CurrentProject.Settings.Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </UniformGrid>
                     </GroupBox>
+                   
 
 
 
@@ -64,6 +66,7 @@
                     <Button Name="DeleteSlideButton" Command="{Binding DeleteSlideCommand}">
                         Удалить слайд
                     </Button>
+                    
                 </WrapPanel>
             </TabItem>
             <TabItem Name="BackgroundTabItem" Header="Картинки">
@@ -74,7 +77,7 @@
                 </i:Interaction.Triggers>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0.5*"/>
                         <ColumnDefinition Width="0.5*"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
@@ -168,6 +171,37 @@
                     </StackPanel>
                 </Grid>
 
+            </TabItem>
+            <TabItem Name="SlideTextBox" Header="Текстовый блок">
+                <StackPanel Orientation="Horizontal">
+                    <GroupBox Header="Размер говорящего">
+                        <StackPanel>
+                            <GroupBox Header="Высота">
+                                <TextBox Text="{Binding TextBox.SpeakerHeight, UpdateSourceTrigger=PropertyChanged}"/>
+                            </GroupBox>
+                            <GroupBox Header="Ширина">
+                                <TextBox Text="{Binding TextBox.SpeakerWidth, UpdateSourceTrigger=PropertyChanged}"/>
+                            </GroupBox>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Размер текста">
+                        <StackPanel>
+                            <GroupBox Header="Высота">
+                                <TextBox Text="{Binding TextBox.TextHeight, UpdateSourceTrigger=PropertyChanged}"/>
+                            </GroupBox>
+                            <GroupBox Header="Ширина">
+                                <TextBox Text="{Binding TextBox.TextWidth, UpdateSourceTrigger=PropertyChanged}"/>
+                            </GroupBox>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Шрифт" VerticalAlignment="Top">
+                        <StackPanel>
+                            <GroupBox Header="Размер">
+                                <TextBox Text="{Binding TextBox.FontSize}"/>
+                            </GroupBox>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
             </TabItem>
         </TabControl>
 
@@ -365,22 +399,25 @@
                     </ListBox>
 
                     <!--SlideTextBox-->
-                    <Grid Name="TextBoxGrid" Panel.ZIndex="10" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="50 5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="100"/>
-                        </Grid.RowDefinitions>
-                        <TextBox Text="{Binding Path=SelectedSlide.Speaker, Mode=TwoWay}"
-                            Name="SpeakerTextBox"
-                                    Width="200"
-                                    HorizontalAlignment="Left"
-                                    Grid.Row="0"
-                                    Padding="5"
-                                    Background="Transparent"/>
-                        <TextBox Text="{Binding Path=SelectedSlide.Text, Mode=TwoWay}" 
-                                Grid.Row="1"
+                    <Grid Name="TextBoxGrid" Panel.ZIndex="10" VerticalAlignment="Bottom" HorizontalAlignment="Center" 
+                          Margin="20">
+                        <DockPanel>
+                            <TextBox Text="{Binding Path=SelectedSlide.Speaker, Mode=TwoWay}"
+                                Name="SpeakerTextBox"
+                                        Width="{Binding TextBox.SpeakerWidth}"
+                                        Height="{Binding TextBox.SpeakerHeight}"
+                                        HorizontalAlignment="Left"
+                                        DockPanel.Dock="Top"
+                                        Padding="5"
+                                        FontSize="{Binding TextBox.FontSize}"
+                                        Background="Transparent"/>
+                            <TextBox Text="{Binding Path=SelectedSlide.Text, Mode=TwoWay}" 
                                  Padding="20"
-                                 Background="Transparent"/>
+                                 Background="Transparent"
+                                 FontSize="{Binding TextBox.FontSize}"
+                                 Height="{Binding TextBox.TextHeight}"
+                                 Width="{Binding TextBox.TextWidth}"/>
+                        </DockPanel>
                         <Image Grid.RowSpan="2"/>
 
                     </Grid>

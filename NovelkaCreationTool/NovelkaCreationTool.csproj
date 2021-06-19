@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NovelkaControlLib\NovelkaControlLib.csproj" />
     <ProjectReference Include="..\NovelkaLib\NovelkaLib.csproj" />
   </ItemGroup>
 
