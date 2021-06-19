@@ -32,6 +32,14 @@ namespace NovelkaCreationTool.ViewModels
             {
                 Width = 1920,
                 Height = 1080
+            },
+            TextBox = new()
+            {
+                SpeakerWidth = 300,
+                SpeakerHeight = 50,
+                TextHeight = 300,
+                TextWidth = 1800,
+                FontSize = 30
             }
         };
         public Project CurrentProject
@@ -56,25 +64,7 @@ namespace NovelkaCreationTool.ViewModels
             set => Set(ref CurrentProject.Images, value);
         }
         public DirectoryInfo FolderPath = new("temp");
-        SlideTextBox textBox;
-        readonly SlideTextBox defaultTextBox = new()
-        {
-           TextHeight = 250,
-           TextWidth = 1800,
-           SpeakerWidth = 200,
-           SpeakerHeight = 50,
-           FontSize = 20
-        };
-        public SlideTextBox TextBox
-        {
-            get
-            {
-                if (textBox == null)
-                    textBox = defaultTextBox;
-                return textBox;
-            }
-            set => Set(ref textBox, value);
-        }
+      
 
         public static Storage<BitmapImage> SlideObjectsStorage = new();
 

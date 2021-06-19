@@ -184,27 +184,27 @@
                     <GroupBox Header="Размер говорящего">
                         <StackPanel>
                             <GroupBox Header="Высота">
-                                <TextBox Text="{Binding TextBox.SpeakerHeight, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Text="{Binding CurrentProject.TextBox.SpeakerHeight, UpdateSourceTrigger=PropertyChanged}"/>
                             </GroupBox>
                             <GroupBox Header="Ширина">
-                                <TextBox Text="{Binding TextBox.SpeakerWidth, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Text="{Binding CurrentProject.TextBox.SpeakerWidth, UpdateSourceTrigger=PropertyChanged}"/>
                             </GroupBox>
                         </StackPanel>
                     </GroupBox>
                     <GroupBox Header="Размер текста">
                         <StackPanel>
                             <GroupBox Header="Высота">
-                                <TextBox Text="{Binding TextBox.TextHeight, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Text="{Binding CurrentProject.TextBox.TextHeight, UpdateSourceTrigger=PropertyChanged}"/>
                             </GroupBox>
                             <GroupBox Header="Ширина">
-                                <TextBox Text="{Binding TextBox.TextWidth, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Text="{Binding CurrentProject.TextBox.TextWidth, UpdateSourceTrigger=PropertyChanged}"/>
                             </GroupBox>
                         </StackPanel>
                     </GroupBox>
                     <GroupBox Header="Шрифт" VerticalAlignment="Top">
                         <StackPanel>
                             <GroupBox Header="Размер">
-                                <TextBox Text="{Binding TextBox.FontSize}"/>
+                                <TextBox Text="{Binding CurrentProject.TextBox.FontSize}"/>
                             </GroupBox>
                         </StackPanel>
                     </GroupBox>
@@ -412,19 +412,19 @@
                         <DockPanel>
                             <TextBox Text="{Binding Path=SelectedSlide.Speaker, Mode=TwoWay}"
                                 Name="SpeakerTextBox"
-                                        Width="{Binding TextBox.SpeakerWidth}"
-                                        Height="{Binding TextBox.SpeakerHeight}"
+                                        Width="{Binding CurrentProject.TextBox.SpeakerWidth, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                                        Height="{Binding CurrentProject.TextBox.SpeakerHeight, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                                         HorizontalAlignment="Left"
                                         DockPanel.Dock="Top"
                                         Padding="5"
-                                        FontSize="{Binding TextBox.FontSize}"
+                                        FontSize="{Binding CurrentProject.TextBox.FontSize}"
                                         Background="Transparent"/>
                             <TextBox Text="{Binding Path=SelectedSlide.Text, Mode=TwoWay}" 
                                  Padding="20"
                                  Background="Transparent"
-                                 FontSize="{Binding TextBox.FontSize}"
-                                 Height="{Binding TextBox.TextHeight}"
-                                 Width="{Binding TextBox.TextWidth}"/>
+                                 FontSize="{Binding CurrentProject.TextBox.FontSize}"
+                                 Height="{Binding CurrentProject.TextBox.TextHeight, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                                 Width="{Binding CurrentProject.TextBox.TextWidth, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
                         </DockPanel>
                         <Image Grid.RowSpan="2"/>
 

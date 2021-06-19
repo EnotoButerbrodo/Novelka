@@ -19,6 +19,7 @@ namespace NovelkaLib.Models
         public ObservableCollection<Slide> Slides { get; set; }
         public ObservableCollection<string> Images = new();
         public ProjectSettings Settings { get; set; }
+        public SlideTextBox TextBox { get; set; }
         public Project()
         {
             Slides = new();
