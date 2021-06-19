@@ -45,12 +45,14 @@
                         </WrapPanel>
                     </GroupBox>
                     <GroupBox Header="Размер слайда">
-                        <UniformGrid Columns="2">
-                            <Label Content="Ширина"/>
-                            <TextBox Text="{Binding Path=CurrentProject.Settings.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <Label Content="Высота"/>
-                            <TextBox Text="{Binding Path=CurrentProject.Settings.Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </UniformGrid>
+                        <StackPanel>
+                            <GroupBox Header="Ширина">
+                                <TextBox Text="{Binding Path=CurrentProject.Settings.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </GroupBox>
+                            <GroupBox Header="Высота">
+                                <TextBox Text="{Binding Path=CurrentProject.Settings.Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </GroupBox>
+                        </StackPanel>
                     </GroupBox>
                    
 
@@ -239,6 +241,7 @@
                         Orientation="Horizontal">
                 <Button Command="{Binding AddSlideCommand}" Content="+"
                         Width="25" Height="25" />
+                <Button Command="{Binding CopySlideCommand}" Content="С" Width="25" Height="25"/>
                 <Button Command="{Binding DeleteSlideCommand}" Content="-" Width="25" Height="25"/>
             </StackPanel>
 

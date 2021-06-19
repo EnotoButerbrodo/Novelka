@@ -1,7 +1,9 @@
-﻿using NovelkaLib.ViewModels;
+﻿using System;
+using NovelkaLib.ViewModels;
 
 namespace NovelkaLib.Models
 {
+    [Serializable]
     public class SlideTextBox : ViewModelBase
     {
         double speakerWidth, speakerHeight,

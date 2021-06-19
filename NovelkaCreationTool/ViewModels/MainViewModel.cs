@@ -337,6 +337,19 @@ namespace NovelkaCreationTool.ViewModels
         #region ExsportCommand
 
         #endregion
+        #region CopySlideCommand
+        public ICommand CopySlideCommand { get; }
+        void OnCopySlideCommandEx(object p)
+        {
+            var copyedSlide = CopySlide(SelectedSlide);
+            CurrentProject.Slides.Add(copyedSlide);
+            SelectedSlide = copyedSlide;
+        }
+        bool CanCopySlideCommandEx(object p)
+        {
+            return (SelectedSlide != null);
+        }
+        #endregion
 
         public static object GetImageFromPath(object value, object parameter)
         {
@@ -361,6 +374,12 @@ namespace NovelkaCreationTool.ViewModels
             SelectedSlide.Images.Move(firstIndex, secondIndex);
         }
 
+        Slide CopySlide(Slide slide)
+        {
+            string json = JsonConvert.SerializeObject(slide);
+            return JsonConvert.DeserializeObject<Slide>(json);
+        }
+
 
         public MainViewModel()
         {
@@ -377,7 +396,7 @@ namespace NovelkaCreationTool.ViewModels
             SaveCommand = new RelayCommand(OnSaveCommandEx, (obj) => true);
             OpenProjectCommand = new RelayCommand(OnOpenProjectCommandEx, (obj) => true);
             DeleteSlideImageCommand = new RelayCommand(OnDeleteSlideImageCommandEx, CanDeleteSlideImageCommandEx);
-           
+            CopySlideCommand = new RelayCommand(OnCopySlideCommandEx, CanCopySlideCommandEx);
             #endregion
         }
     }
