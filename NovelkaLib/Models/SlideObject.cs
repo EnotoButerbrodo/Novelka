@@ -6,7 +6,7 @@ using NovelkaLib.ViewModels;
 namespace NovelkaLib.Models
 {
     [Serializable]
-    public class SlideImage : ViewModelBase
+    public class SlideObject : ViewModelBase
     {
         double x, y, z;
         double width, height;

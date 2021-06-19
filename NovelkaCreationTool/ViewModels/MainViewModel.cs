@@ -76,11 +76,11 @@ namespace NovelkaCreationTool.ViewModels
             set => Set(ref textBox, value);
         }
 
-        public static Storage<BitmapImage> ImagesStorage = new();
+        public static Storage<BitmapImage> SlideObjectsStorage = new();
 
         #region Variables
         Slide selectedSlide;
-        SlideImage selectedSlideImage;
+        SlideObject selectedSlideObject;
         string selectedImage;
 
         public Slide SelectedSlide
@@ -88,10 +88,10 @@ namespace NovelkaCreationTool.ViewModels
             get => selectedSlide;
             set => Set(ref selectedSlide, value);
         }
-        public SlideImage SelectedSlideImage
+        public SlideObject SelectedSlideObject
         {
-            get => selectedSlideImage;
-            set => Set(ref selectedSlideImage, value);
+            get => selectedSlideObject;
+            set => Set(ref selectedSlideObject, value);
         }
         public string SelectedImage
         {
@@ -175,28 +175,28 @@ namespace NovelkaCreationTool.ViewModels
         }
 
         #endregion
-        #region AddImageToSlideCommand
-        public ICommand AddImageToSlideCommand { get; }
-        void OnAddImageToSlideCommandEx(object p)
+        #region AddImageToSlideAtNewObjectCommand
+        public ICommand AddImageToSlideAtNewObjectCommand { get; }
+        void OnAddImageToSlideAtNewObjectCommandEx(object p)
         {
-            SlideImage newSlideImage = new()
+            SlideObject newSlideImage = new()
             {
-                Name = Path.GetFileNameWithoutExtension(SelectedImage),
-                ImageName = SelectedImage,
+                Name = $"Object{SelectedSlide.Images.Count}",
+                ImageName = selectedImage,
                 X = 0, 
                 Y = 0,
                 Z = SelectedSlide.Images.Count
             };
             BitmapImage loadedImage;
-            if (!ImagesStorage.ContainsItem(newSlideImage.Name))
+            if (!SlideObjectsStorage.ContainsItem(newSlideImage.Name))
             {
                 var imageTask = FileLoader.LoadBitmapImageAsync(newSlideImage.ImageName);
                 Task.WaitAll(imageTask);
                 loadedImage = imageTask.Result;
-                ImagesStorage.Add(newSlideImage.Name, loadedImage);
+                SlideObjectsStorage.Add(newSlideImage.Name, loadedImage);
             }
             else
-                loadedImage = ImagesStorage.GetItem(newSlideImage.Name);
+                loadedImage = SlideObjectsStorage.GetItem(newSlideImage.Name);
 
             newSlideImage.Height = loadedImage.Height;
             newSlideImage.Width = loadedImage.Width;
@@ -205,9 +205,20 @@ namespace NovelkaCreationTool.ViewModels
             SelectedSlide.Images.Add(newSlideImage);
             CurrentProject.UsingImages.Add(SelectedImage);
         }
-        bool CanAddImageToSlideCommandEx(object p)
+        bool CanAddImageToSlideAtNewObjectCommandEx(object p)
         {
             return (SelectedImage != null && SelectedSlide != null);
+        }
+        #endregion
+        #region AddImageToCurrentSlideObjectCommand
+        public ICommand AddImageToCurrentSlideObjectCommand { get; }
+        void OnAddImageToCurrentSlideObjectCommandEx(object p)
+        {
+            SelectedSlideObject.ImageName = SelectedImage;
+        }
+        bool CanAddImageToCurrentSlideObjectCommandEx(object p)
+        {
+            return (SelectedImage != null && SelectedSlideObject != null);
         }
         #endregion
         #region DeleteSlideImageCommand
@@ -215,12 +226,12 @@ namespace NovelkaCreationTool.ViewModels
 
         void OnDeleteSlideImageCommandEx(object p)
         {
-            SelectedSlide.Images.Remove(SelectedSlideImage);
+            SelectedSlide.Images.Remove(SelectedSlideObject);
         }
 
         bool CanDeleteSlideImageCommandEx(object p)
         {
-            if (SelectedSlideImage == null || SelectedSlide == null) return false;
+            if (SelectedSlideObject == null || SelectedSlide == null) return false;
             return true;
         }
         #endregion
@@ -228,15 +239,16 @@ namespace NovelkaCreationTool.ViewModels
         public ICommand SetAsBackgroundImageCommand { get; }
         void OnSetAsBackgroundImageCommandEx(object p)
         {
-            SelectedSlideImage.Width = CurrentProject.Settings.Width;
-            SelectedSlideImage.Height = CurrentProject.Settings.Height;
-            SelectedSlideImage.X = -1;
-            SelectedSlideImage.Y = -1;
-            SwapImagesZPosition(SelectedSlide.Images.IndexOf(SelectedSlideImage), 0);
+            SelectedSlideObject.Width = CurrentProject.Settings.Width;
+            SelectedSlideObject.Height = CurrentProject.Settings.Height;
+            SelectedSlideObject.X = -1;
+            SelectedSlideObject.Y = -1;
+            SelectedSlideObject.Name = "Background";
+            SwapImagesZPosition(SelectedSlide.Images.IndexOf(SelectedSlideObject), 0);
         }
         bool CanSetAsBackgroundImageCommandEx(object p)
         {
-            return (SelectedSlideImage != null && SelectedSlide != null);
+            return (SelectedSlideObject != null && SelectedSlide != null);
         }
         #endregion
         #region LoadImagesListAsyncCommand
@@ -262,14 +274,14 @@ namespace NovelkaCreationTool.ViewModels
         public ICommand IncreaseImageZCommand { get; }
         void OnIncreaseImageZCommandEx(object p)
         {
-            int index = SelectedSlide.Images.IndexOf(SelectedSlideImage);
+            int index = SelectedSlide.Images.IndexOf(SelectedSlideObject);
             int newIndex = index + 1;
             SwapImagesZPosition(index, newIndex);
         }
         bool CanIncreaseImageZCommandEx(object p)
         {
-            if (SelectedSlide != null && SelectedSlideImage != null)
-                if (SelectedSlide.Images.IndexOf(SelectedSlideImage) < SelectedSlide.Images.Count - 1)
+            if (SelectedSlide != null && SelectedSlideObject != null)
+                if (SelectedSlide.Images.IndexOf(SelectedSlideObject) < SelectedSlide.Images.Count - 1)
                     return true;
             return false;
         }
@@ -278,14 +290,14 @@ namespace NovelkaCreationTool.ViewModels
         public ICommand DecreaseImageZCommand { get; }
         void OnDecreaseImageZCommandEx(object p)
         {
-            int index = SelectedSlide.Images.IndexOf(SelectedSlideImage);
+            int index = SelectedSlide.Images.IndexOf(SelectedSlideObject);
             int newIndex = index - 1;
             SwapImagesZPosition(index, newIndex);
         }
         bool CanDecreaseImageZCommandEx(object p)
         {
             if (SelectedSlide != null)
-                if (SelectedSlide.Images.IndexOf(SelectedSlideImage) > 0)
+                if (SelectedSlide.Images.IndexOf(SelectedSlideObject) > 0)
                     return true;
             return false;
         }
@@ -341,7 +353,7 @@ namespace NovelkaCreationTool.ViewModels
         public ICommand CopySlideCommand { get; }
         void OnCopySlideCommandEx(object p)
         {
-            var copyedSlide = CopySlide(SelectedSlide);
+            var copyedSlide = CopyObject<Slide>(SelectedSlide);
             CurrentProject.Slides.Add(copyedSlide);
             SelectedSlide = copyedSlide;
         }
@@ -355,15 +367,16 @@ namespace NovelkaCreationTool.ViewModels
         {
             string imagePath = value as string;
             string imageName = Path.GetFileNameWithoutExtension(imagePath);
-            if (ImagesStorage.ContainsItem(imageName))
-                return ImagesStorage.GetItem(imageName);
+            if (SlideObjectsStorage.ContainsItem(imageName))
+                return SlideObjectsStorage.GetItem(imageName);
 
 
             var loadedImage = FileLoader.LoadBitmapImage(imagePath);
-            ImagesStorage.Add(imageName, loadedImage);
+            SlideObjectsStorage.Add(imageName, loadedImage);
             return loadedImage;
 
         }
+        
 
         #endregion
 
@@ -374,10 +387,10 @@ namespace NovelkaCreationTool.ViewModels
             SelectedSlide.Images.Move(firstIndex, secondIndex);
         }
 
-        Slide CopySlide(Slide slide)
+        static T CopyObject<T>(T copyedObject)
         {
-            string json = JsonConvert.SerializeObject(slide);
-            return JsonConvert.DeserializeObject<Slide>(json);
+            string json = JsonConvert.SerializeObject(copyedObject);
+            return JsonConvert.DeserializeObject<T>(json);
         }
 
 
@@ -388,7 +401,7 @@ namespace NovelkaCreationTool.ViewModels
             AddSlideCommand = new RelayCommand(OnAddSlideCommandExecuted, CanAddSlideCommandExecute);
             DeleteSlideCommand = new RelayCommand(OnDeleteSlideCommandExecuted, CanDeleteSlideCommandExecute);
             LoadBackgroundsListCommand = new RelayCommand(OnLoadBackgroundsListExecuted, CanLoadBackgroundsListExecute);
-            AddImageToSlideCommand = new RelayCommand(OnAddImageToSlideCommandEx, CanAddImageToSlideCommandEx);
+            AddImageToSlideAtNewObjectCommand = new RelayCommand(OnAddImageToSlideAtNewObjectCommandEx, CanAddImageToSlideAtNewObjectCommandEx);
             SetAsBackgroundImageCommand = new RelayCommand(OnSetAsBackgroundImageCommandEx, CanSetAsBackgroundImageCommandEx);
             LoadImagesListAsyncCommand = new AsyncLambdaCommand(OnLoadImagesListAsyncCommandExecuted, CanLoadImagesListAsyncCommandExecute);
             IncreaseImageZCommand = new RelayCommand(OnIncreaseImageZCommandEx, CanIncreaseImageZCommandEx);
@@ -397,6 +410,7 @@ namespace NovelkaCreationTool.ViewModels
             OpenProjectCommand = new RelayCommand(OnOpenProjectCommandEx, (obj) => true);
             DeleteSlideImageCommand = new RelayCommand(OnDeleteSlideImageCommandEx, CanDeleteSlideImageCommandEx);
             CopySlideCommand = new RelayCommand(OnCopySlideCommandEx, CanCopySlideCommandEx);
+            AddImageToCurrentSlideObjectCommand = new RelayCommand(OnAddImageToCurrentSlideObjectCommandEx, CanAddImageToCurrentSlideObjectCommandEx);
             #endregion
         }
     }

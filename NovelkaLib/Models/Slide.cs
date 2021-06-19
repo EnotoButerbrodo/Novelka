@@ -22,7 +22,7 @@ namespace NovelkaLib.Models
             get => Data.Text;
             set => Data.Text = value;
         }
-        public ObservableCollection<SlideImage> Images
+        public ObservableCollection<SlideObject> Images
         {
             get => Data.Images;
             set => Data.Images = value;
@@ -33,6 +33,6 @@ namespace NovelkaLib.Models
     {
         public string Speaker { get; set; } = "";
         public string Text { get; set; } = "";
-        public ObservableCollection<SlideImage> Images = new();
+        public ObservableCollection<SlideObject> Images = new();
     }
 }

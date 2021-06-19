@@ -71,6 +71,7 @@
                     
                 </WrapPanel>
             </TabItem>
+           
             <TabItem Name="BackgroundTabItem" Header="Картинки">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Loaded">
@@ -84,9 +85,10 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <WrapPanel Grid.Column="2" Margin="5">
-                        <Button Command="{Binding AddImageToSlideCommand}">
-                            Добавить на слайд
-                        </Button>
+                        <Button Content="Добавить в новый объект" 
+                            Command="{Binding AddImageToSlideAtNewObjectCommand}"/>
+                        <Button Content="Добавить в текущий объект"
+                                Command="{Binding AddImageToCurrentSlideObjectCommand}"/>
 
 
                     </WrapPanel>
@@ -103,7 +105,7 @@
                            Source="{Binding SelectedImage, Converter={StaticResource PathToImageLoaderConverter}, IsAsync=True}"/>
                 </Grid>
             </TabItem>
-            <TabItem Name="SlideImagesTabItem" Header="Картинки слайда">
+            <TabItem Name="SlideImagesTabItem" Header="Объекты слайда">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -111,7 +113,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <ListBox Name="SlideImagesListBox" ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True, UpdateSourceTrigger=PropertyChanged}"
-                             SelectedItem="{Binding Path=SelectedSlideImage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                             SelectedItem="{Binding Path=SelectedSlideObject, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel MaxWidth="{Binding ElementName=SlideImagesListBox, Path=ActualWidth}"/>
@@ -143,27 +145,30 @@
                     <UniformGrid Grid.Column="2" Columns="4" Rows="2">
                         <GroupBox Header="Ширина">
                             <StackPanel>
-                                <TextBox Text="{Binding Path=SelectedSlideImage.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Slider Maximum="{Binding CurrentProject.Settings.Width}" Value="{Binding SelectedSlideImage.Width}"/>
+                                <TextBox Text="{Binding Path=SelectedSlideObject.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Slider Maximum="{Binding CurrentProject.Settings.Width}" Value="{Binding SelectedSlideObject.Width}"/>
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="Высота">
                             <StackPanel>
-                                <TextBox Text="{Binding Path=SelectedSlideImage.Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Slider Maximum="{Binding CurrentProject.Settings.Height}" Value="{Binding SelectedSlideImage.Height}"/>
+                                <TextBox Text="{Binding Path=SelectedSlideObject.Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Slider Maximum="{Binding CurrentProject.Settings.Height}" Value="{Binding SelectedSlideObject.Height}"/>
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="X">
-                            <TextBox Text="{Binding Path=SelectedSlideImage.X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Text="{Binding Path=SelectedSlideObject.X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </GroupBox>
                         <GroupBox Header="Y">
-                            <TextBox Text="{Binding Path=SelectedSlideImage.Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox Text="{Binding Path=SelectedSlideObject.Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </GroupBox>
+                        <GroupBox Header="Имя">
+                            <TextBox Text="{Binding SelectedSlideObject.Name}"/>
                         </GroupBox>
                     </UniformGrid>
                     <StackPanel Grid.Column="1" Orientation="Horizontal">
                         <GroupBox Header="Положение">
                             <StackPanel>
-                                <Button Content="Установить как задний фон"
+                                <Button Content="Установить как фон"
                                         Command="{Binding SetAsBackgroundImageCommand}"/>
                                 <Button Content="Переместить назад" Command="{Binding Path=DecreaseImageZCommand}"/>
                                 <Button Content="Переместить вперед" Command="{Binding Path=IncreaseImageZCommand}"/>
@@ -241,7 +246,7 @@
                         Orientation="Horizontal">
                 <Button Command="{Binding AddSlideCommand}" Content="+"
                         Width="25" Height="25" />
-                <Button Command="{Binding CopySlideCommand}" Content="С" Width="25" Height="25"/>
+                <Button Command="{Binding CopySlideCommand, IsAsync=True}" Content="С" Width="25" Height="25"/>
                 <Button Command="{Binding DeleteSlideCommand}" Content="-" Width="25" Height="25"/>
             </StackPanel>
 
@@ -255,7 +260,7 @@
 
                     <!--SlideImages-->
                     <ListBox ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}"
-                             SelectedItem="{Binding Path=SelectedSlideImage}"
+                             SelectedItem="{Binding Path=SelectedSlideObject}"
                              BorderThickness="0,0,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" RenderTransformOrigin="0,0"
                              Background="Transparent" >
                         <ListBox.ItemsPanel>
