@@ -20,7 +20,6 @@ namespace Novelka.ViewModels
         */
         Project currentProject;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Проверка совместимости платформы", Justification = "<Ожидание>")]
         public Project CurrentProject
         {
             get => currentProject;

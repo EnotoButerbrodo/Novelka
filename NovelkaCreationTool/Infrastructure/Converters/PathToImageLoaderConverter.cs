@@ -16,7 +16,6 @@ namespace NovelkaCreationTool.Infrastructure.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
             string path = value as string;
             if (String.IsNullOrEmpty(path)) return null;
 
