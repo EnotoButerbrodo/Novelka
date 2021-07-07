@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using Newtonsoft.Json;
@@ -89,16 +90,15 @@ namespace NovelkaCreationTool.ViewModels
             set => Set(ref selectedImage, value);
         }
 
-        double mousePreviewX, mousePreviewY;
-        public double MousePreviewX
+        UIElement previewViewbox;
+        public UIElement PreviewViewbox
         {
-            get => mousePreviewX;
-            set => Set(ref mousePreviewX, value);
-        }
-        public double MousePreviewY
-        {
-            get => mousePreviewY;
-            set => Set(ref mousePreviewY, value);
+            get => previewViewbox;
+            set
+            {
+                if(value != null)
+                Set(ref previewViewbox, value);
+            }
         }
         #endregion
         #region Commands
@@ -366,7 +366,29 @@ namespace NovelkaCreationTool.ViewModels
             return loadedImage;
 
         }
-        
+
+        public RenderTargetBitmap CreateBitmapFromVisual(Visual target)
+        {
+            if (target == null)
+            {
+                throw new Exception("Target = null");
+            }
+
+            Rect bounds = VisualTreeHelper.GetDescendantBounds(target);
+
+            RenderTargetBitmap renderTarget = new RenderTargetBitmap((Int32)bounds.Width, (Int32)bounds.Height, 96, 96, PixelFormats.Pbgra32);
+
+            DrawingVisual visual = new DrawingVisual();
+
+            using (DrawingContext context = visual.RenderOpen())
+            {
+                VisualBrush visualBrush = new VisualBrush(target);
+                context.DrawRectangle(visualBrush, null, new Rect(new System.Windows.Point(), bounds.Size));
+            }
+
+            renderTarget.Render(visual);
+            return renderTarget;
+        }
 
         #endregion
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace NovelkaLib.Models
@@ -9,8 +10,8 @@ namespace NovelkaLib.Models
     public class Slide
     {
         public int Id { get; set; }
-        [field:JsonIgnore]
-        public BitmapImage Image { get; set; }
+        [JsonIgnore]
+        public ImageSource Image { get; set; }
         SlideData Data { get; set; } = new SlideData();
         public string Speaker
         {

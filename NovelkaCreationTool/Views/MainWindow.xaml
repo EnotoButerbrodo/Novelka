@@ -235,7 +235,7 @@
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="10" Background="Snow">
                             <TextBlock Text="{Binding Path=Id, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
-                            <Image Margin="10" Source="{Binding Image, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Image Margin="10" Source="{Binding Image, UpdateSourceTrigger=PropertyChanged}" MaxHeight="100" MaxWidth="200"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -252,12 +252,11 @@
 
             <!--SlidePreview-->
             <Viewbox Name="SlidePreviewViewbox" Grid.Column="1" Stretch="Uniform">
+                <i:Interaction.Behaviors>
+                    <infr:UIElementPicker PicketUIElement="{Binding PreviewViewbox, Mode=OneWayToSource}"/>
+                </i:Interaction.Behaviors>
                 <Grid Width="{Binding Path=CurrentProject.Settings.Width}" Height="{Binding Path=CurrentProject.Settings.Height}" Margin="20 5">
-                    <i:Interaction.Behaviors>
-                        <infr:MouseBehaviour MouseX="{Binding MousePreviewX, Mode=OneWayToSource}"
-                             MouseY="{Binding MousePreviewY, Mode=OneWayToSource}" />
-                    </i:Interaction.Behaviors>
-
+                   
                     <!--SlideImages-->
                     <ListBox ItemsSource="{Binding Path=SelectedSlide.Images, IsAsync=True}"
                              SelectedItem="{Binding Path=SelectedSlideObject}"
@@ -448,14 +447,7 @@
             <StatusBarItem>
                 <TextBlock Text="{Binding CurrentProject.Name, StringFormat=Проект: {0}}"/>
             </StatusBarItem>
-            <StatusBarItem>
-                <TextBlock>
-                    <Run Text="MousePrevX: "/>
-                    <Run Text="{Binding MousePreviewX}"/>
-                    <Run Text="MousePrewY: "/>
-                    <Run Text="{Binding MousePreviewY}"/>
-                </TextBlock>
-            </StatusBarItem>
+           
         </StatusBar>
     </Grid>
 </Window>
