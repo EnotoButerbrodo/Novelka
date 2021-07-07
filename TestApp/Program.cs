@@ -12,20 +12,8 @@ namespace TestApp
             {
                 ["Test"] = 0
             };
-            //bool LikeJump() => vars["Test"] == 1;
-            //bool DontLikeJump() => vars["Test"] == 0;
-            //bool UnCondition() => true;
 
-            //Scene s1 = new Scene() { id = 1 };
-            //Scene s2 = new Scene() { id = 2 };
-            //Scene s3 = new Scene() { id = 3 };
-            //Scene s4 = new Scene() { id = 4 };
-
-            //s1.JumpConditions.Add(new JumpCondition(s2, LikeJump));
-            //s1.JumpConditions.Add(new JumpCondition(s3, DontLikeJump));
-            //s1.JumpConditions.Add(new JumpCondition(s4, UnCondition));
-
-            vars["Test"] = 1;
+            vars["Test"] = 2;
             Fragment Hello = new Fragment();
             Hello.Add(new Scene()
             {
@@ -55,11 +43,11 @@ namespace TestApp
             {
                 id = 7
             });
-            Hello[2].AddJumpCondition(Hello[5], () => { return vars["Test"] == 1; });
+            Hello[2].AddConditionalLink(Hello[5], () => { return vars["Test"] == 1; });
 
             StoryUnit currentUnit = Hello.First;
 
-            while(!currentUnit.IsLast)
+            while(!currentUnit.HasUnConditionalLink)
             {
                 Console.WriteLine((currentUnit as Scene).id);
                 if (TryGetNextLink(currentUnit, out StoryUnit nextElement))
@@ -69,8 +57,8 @@ namespace TestApp
 
         static bool TryGetNextLink(StoryUnit element, out StoryUnit nextElement)
         {
-            if (element.HasJumpConditions) 
-                foreach(JumpCondition jc in element.JumpConditions)
+            if (element.HasConditionalLinks) 
+                foreach(ConditionalLink jc in element.ConditionalLinks)
                 {
                     if (jc.Check(out StoryUnit link))
                     {
@@ -78,9 +66,10 @@ namespace TestApp
                         return true;
                     }
                 }
-            if (!element.IsLast)
+
+            if (!element.HasUnConditionalLink)
             {
-                nextElement = element.NextElement;
+                nextElement = element.UnConditionLink;
                 return true;
             }
 
@@ -90,22 +79,21 @@ namespace TestApp
     }
     abstract class StoryUnit
     {
-        public List<JumpCondition> JumpConditions = new();
-        public void AddJumpCondition(JumpCondition jump) =>
-            JumpConditions.Add(jump);
+        public List<ConditionalLink> ConditionalLinks = new();
+        public void AddJumpCondition(ConditionalLink jump) =>
+            ConditionalLinks.Add(jump);
+        public void AddConditionalLink(StoryUnit element, Func<bool> condition) =>
+            ConditionalLinks.Add(new ConditionalLink(element, condition));
 
-        public void AddJumpCondition(StoryUnit element, Func<bool> condition) =>
-            JumpConditions.Add(new JumpCondition(element, condition));
+        public StoryUnit UnConditionLink;
 
-        public StoryUnit NextElement;
-
-        public bool IsLast
+        public bool HasUnConditionalLink
         {
-            get => NextElement == null;
+            get => UnConditionLink == null;
         }
-        public bool HasJumpConditions
+        public bool HasConditionalLinks
         {
-            get => JumpConditions.Count > 0;
+            get => ConditionalLinks.Count > 0;
         }
     }
 
@@ -134,8 +122,7 @@ namespace TestApp
 
         public void Add(StoryUnit element)
         {
-            //Last?.JumpConditions.Add(new JumpCondition(element, new Func<bool>(() => { return true; })));
-            if(Last != null) Last.NextElement = element;
+            if(Last != null) Last.UnConditionLink = element;
             elements.Add(element);
         }
         public StoryUnit this[int number]
@@ -147,7 +134,7 @@ namespace TestApp
     }
 
 
-    class JumpCondition
+    class ConditionalLink
     {
         StoryUnit link;
         Func<bool> Condition;
@@ -161,7 +148,7 @@ namespace TestApp
             link = null;
             return false;
         }
-        public JumpCondition(StoryUnit link, Func<bool> condition)
+        public ConditionalLink(StoryUnit link, Func<bool> condition)
         {
             this.link = link;
             this.Condition = condition;
