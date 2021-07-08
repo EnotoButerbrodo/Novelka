@@ -8,54 +8,14 @@ namespace TestApp
     {
         static void Main(string[] args)
         {
-            Dictionary<string, int> vars = new Dictionary<string, int>()
-            {
-                ["Test"] = 0
-            };
+            List<StoryUnit> elements = new(new[] { new Scene() });
+            List<Package<StoryUnit>> chilrens = new(new[] { new Package<StoryUnit>(null) });
+            Package<StoryUnit> test = new Package<StoryUnit>(null,
+                new[] { new Scene() }, new[] { new Package<StoryUnit>(null) });
 
-            vars["Test"] = 2;
-            Fragment Hello = new Fragment();
-            Hello.Add(new Scene()
-            {
-                id = 1
-            });
-            Hello.Add(new Scene()
-            {
-                id = 2
-            });
-            Hello.Add(new Scene()
-            {
-                id = 3
-            });
-            Hello.Add(new Scene()
-            {
-                id = 4
-            });
-            Hello.Add(new Scene()
-            {
-                id = 5
-            });
-            Hello.Add(new Scene()
-            {
-                id = 6
-            });
-            Hello.Add(new Scene()
-            {
-                id = 7
-            });
-            Hello[2].AddConditionalLink(Hello[5], () => { return vars["Test"] == 1; });
-
-            StoryUnit currentUnit = Hello.First;
-
-            while(!currentUnit.HasUnConditionalLink)
-            {
-                Console.WriteLine((currentUnit as Scene).id);
-                if (TryGetNextLink(currentUnit, out StoryUnit nextElement))
-                    currentUnit = nextElement;
-            }
         }
 
-        static bool TryGetNextLink(StoryUnit element, out StoryUnit nextElement)
+    static bool TryGetNextLink(StoryUnit element, out StoryUnit nextElement)
         {
             if (element.HasConditionalLinks) 
                 foreach(ConditionalLink jc in element.ConditionalLinks)
@@ -67,7 +27,7 @@ namespace TestApp
                     }
                 }
 
-            if (!element.HasUnConditionalLink)
+            if (element.HasUnConditionalLink)
             {
                 nextElement = element.UnConditionLink;
                 return true;
@@ -76,7 +36,7 @@ namespace TestApp
             nextElement = null;
             return false;
         }
-    }
+    
     abstract class StoryUnit
     {
         public List<ConditionalLink> ConditionalLinks = new();
@@ -89,7 +49,7 @@ namespace TestApp
 
         public bool HasUnConditionalLink
         {
-            get => UnConditionLink == null;
+            get => UnConditionLink != null;
         }
         public bool HasConditionalLinks
         {
@@ -102,36 +62,47 @@ namespace TestApp
         public int id;
     }
 
-    class Fragment
+    //class Fragment
+    //{
+    //    public string Name;
+    //    public StoryUnit First
+    //    {
+    //        get => elements.FirstOrDefault();
+    //    }
+    //    public StoryUnit Last
+    //    {
+    //        get => elements.LastOrDefault();
+    //    }
+    //    public int Size
+    //    {
+    //        get => elements.Count;
+    //    }
+
+    //    public List<StoryUnit> Elements = new ();
+    //    public List<Fragment> Childrens;
+    //}
+
+    class Package<ElementType>
     {
-        public string Name;
-        public StoryUnit First
-        {
-            get => elements.FirstOrDefault();
-        }
-        public StoryUnit Last
-        {
-            get => elements.LastOrDefault();
-        }
-        public int Size
-        {
-            get => elements.Count;
-        }
+        List<ElementType> Elements;
+        List<Package<ElementType>> Childrens;
+        Package<ElementType> Parent;
 
-        List<StoryUnit> elements = new ();
-
-        public void Add(StoryUnit element)
+        public Package(Package<ElementType> parent)
         {
-            if(Last != null) Last.UnConditionLink = element;
-            elements.Add(element);
+            this.Parent = parent;
         }
-        public StoryUnit this[int number]
+        public Package(Package<ElementType> parent, IEnumerable<ElementType> elements) : this(parent)
         {
-            get => elements[number];
+            this.Elements = new(elements);
         }
-
-
+        public Package(Package<ElementType> parent, IEnumerable<ElementType> elements, IEnumerable<Package<ElementType>> childrens)
+            : this(parent, elements)
+        {
+            this.Childrens = new(childrens);
+        }
     }
+
 
 
     class ConditionalLink
@@ -156,5 +127,73 @@ namespace TestApp
 
     }
 
+    class Transition<LinkType> where LinkType : class
+    {
+        protected LinkType link;
+        protected Func<bool> condition;
+        public bool Check(out LinkType link)
+        {
+            if (condition is null)
+            {
+                link = this.link;
+                return true;
+            }
+            else if (condition())
+            {
+                link = this.link;
+                return true;
+            }
+            link = default;
+            return false;
+        }
 
+        public Transition(LinkType link, Func<bool> condition = null)
+        {
+            this.link = link;
+            this.condition = condition;
+        }
+    }
+
+    //class MyCollection<ElementType>
+    //{
+    //    List<ElementType> elements;
+
+    //    public void Add
+    //}
+    //class ConditionTransition<LinkType> : Transition<LinkType>
+    //    where LinkType : class
+    //{
+    //    Func<bool> Condition;
+    //    public override bool Check(out LinkType link)
+    //    {
+    //        if (Condition())
+    //        {
+    //            link = this.link;
+    //            return true;
+    //        }
+    //        link = default;
+    //        return false;
+    //    }
+    //    public ConditionTransition(LinkType link, Func<bool> condition) : base(link)
+    //    {
+    //        this.Condition = condition;
+    //    }
+    //}
+    //class UnConditionTransition<LinkType> : Transition<LinkType>
+    //    where LinkType : class
+    //{
+    //    public override bool Check(out LinkType link)
+    //    {
+    //        link = this.link;
+    //        return true;
+    //    }
+
+    //    public UnConditionTransition(LinkType link) : base(link) { }
+    }
 }
+
+
+
+
+
+
